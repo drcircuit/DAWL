@@ -1,0 +1,14 @@
+{
+  "schema": "dawl.external-capture/1",
+  "source_commit": "c1b00ec20fb46fb059b8e56efb868e8f024daa50",
+  "post_run_change": "Enable container init; separately tested shutdown and 20 focused tests after the full-corpus run",
+  "private_keys_included": false,
+  "external_machines_used": false,
+  "compose_engine_validation": "Unavailable on this host; rehearsal uses direct Podman commands",
+  "limits": [
+    "One physical host and administrator",
+    "Private mesh configuration is an operator prerequisite",
+    "No economic penalties, dynamic validator membership, or training",
+    "No live malicious-validator double-vote injection"
+  ]
+}

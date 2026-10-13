@@ -54,6 +54,7 @@ class BootstrapTests(unittest.TestCase):
             self.assertEqual(config.count("@10.55.0."),3)
             self.assertNotIn("127.0.0.1:26657",config)
         self.assertTrue(read_json(self.nodes[5]/"cluster.json")["verify_state"])
+        self.assertTrue(read_json(self.nodes[5]/"compose.json")["services"]["node"]["init"])
 
     def test_install_rejects_wrong_pin_tampered_bundle_and_unadmitted_identity(self):
         result=self.assemble();node=self.nodes[0]

@@ -23,6 +23,8 @@ run, quorum loss and recovery, public certificate verification and current limit
 The [external cluster workflow](docs/external_cluster.md) adds operator-local key
 generation, a shared public genesis bundle, per-host deployment, certified worker
 reads and attributed incident records. External hosts have not yet been deployed.
+The [external rehearsal results](docs/external_run_001.md) record full-corpus
+completion despite network isolation, forged RPC state and corrupted artifact pieces.
 
 - Eight locked public-domain books feed independent CPU tokenization jobs.
 - Signed lineage records connect original bytes, source registries, pinned tokenizer,

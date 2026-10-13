@@ -62,7 +62,7 @@ From the repository on a Linux/WSL host with Podman:
 
 ```sh
 podman build -f consensus/Dockerfile.build -t localhost/dawl-consensus-build:0.1 .
-podman build -f Dockerfile.cluster -t localhost/dawl-cluster:external-v1 .
+podman build -f Dockerfile.cluster -t localhost/dawl-cluster:external-v2 .
 ```
 
 The Go dependencies are locked, verified and built in readonly module mode. The
@@ -129,6 +129,9 @@ inspection; it does not silently reset or regenerate anything.
 The generated `compose.json` uses the pinned image, only the local node volume,
 a readonly root filesystem, dropped capabilities and per-container CPU/memory
 limits. Inspect the UID/GID if transferring a directory between operating systems.
+It enables a container init process to forward termination signals and reap
+verifier subprocesses; do not omit `--init` when translating to direct Podman runs.
+Podman needs its init helper (such as the `catatonit` package) installed on the host.
 
 **4. Seed providers and start each role.**
 

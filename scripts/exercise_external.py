@@ -16,7 +16,7 @@ from urllib.request import Request, urlopen
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--native",type=Path,default=Path("/var/lib/dawl/external-lab-001"))
 parser.add_argument("--output",type=Path,default=Path("artifacts/external-run-001"))
-parser.add_argument("--image",default="localhost/dawl-cluster:external-v1")
+parser.add_argument("--image",default="localhost/dawl-cluster:external-v2")
 args=parser.parse_args()
 ROOT=args.native.resolve();OUT=args.output.resolve();NETWORK="dawl-external-lab"
 if not str(ROOT).startswith("/var/lib/dawl/external-lab-") or ROOT.exists() or OUT.exists():
@@ -56,7 +56,7 @@ def start(name,role,host):
     options=[]
     if role=="publisher": options=["--entrypoint","sleep"];cmd=["infinity"]
     container="dawl-external-"+name
-    podman("run","-d","--name",container,"--label","org.dawl.external=lab-001","--network",NETWORK,"--ip",host,
+    podman("run","-d","--init","--name",container,"--label","org.dawl.external=lab-001","--network",NETWORK,"--ip",host,
            *ports,"--read-only","--tmpfs","/tmp:size=256m","--cap-drop","ALL","--security-opt","no-new-privileges",
            "--cpus","2","--memory","2g","-v",f"{ROOT/'operators'/name/'node'}:/node",*options,args.image,*cmd)
     CREATED.append(container)
@@ -149,7 +149,7 @@ def main():
     for name,address,port,backend,mode in (("rpc-liar","10.89.91.60",26657,"http://10.89.91.12:26657","tamper-state"),
                                           ("provider-liar","10.89.91.61",8900,"http://10.89.91.21:8900","corrupt-piece")):
         container="dawl-external-"+name
-        podman("run","-d","--name",container,"--network",NETWORK,"--ip",address,"--entrypoint","python",args.image,
+        podman("run","-d","--init","--name",container,"--network",NETWORK,"--ip",address,"--entrypoint","python",args.image,
                "/app/scripts/external_fault_proxy.py","--backend",backend,"--port",str(port),"--mode",mode)
         CREATED.append(container)
     verifier=["run","--rm","--network",NETWORK,"-v",f"{bundle/'genesis.json'}:/genesis.json:ro",

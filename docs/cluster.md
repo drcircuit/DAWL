@@ -174,8 +174,16 @@ new chain:
 wsl -d kali-linux -u root --exec podman start dawl-cluster-validator-0 dawl-cluster-validator-1 dawl-cluster-validator-2 dawl-cluster-validator-3 dawl-cluster-provider-0 dawl-cluster-provider-1 dawl-cluster-worker-0 dawl-cluster-worker-1 dawl-cluster-worker-2
 ```
 
-Run the host worker command above and `python scripts/cluster_observer.py` in
-separate terminals with the project virtual environment active. Keep only one
+For the retained **v2** chain, the exact admitted host source is preserved in
+`artifacts/cluster-v2/host-runtime`, copied from its running image and checked
+against its implementation pin. Resume that host worker with:
+
+```powershell
+.\.venv\Scripts\python.exe artifacts/cluster-v2/host-runtime/dawl_cluster.py worker --root artifacts/cluster-v2/worker-3
+```
+
+Run `python scripts/cluster_observer.py` in another terminal with the project
+virtual environment active. Keep only one
 process per worker identity. Host boot integration is not configured. Port 8882
 serves the cluster observatory; stopping it does not stop consensus or workers.
 

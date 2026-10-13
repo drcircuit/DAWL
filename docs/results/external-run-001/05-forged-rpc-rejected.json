@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "reason": "state bytes differ from certified app hash"
+}

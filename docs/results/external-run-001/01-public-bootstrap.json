@@ -1,0 +1,11 @@
+{
+  "chain_id": "dawl-external-lab-001",
+  "genesis_sha256": "3208c3a13a4a586151954370f453c551f3a677399cf379c29e158fa9ed16c6fe",
+  "members": 11,
+  "network_sha256": "26c52e792bfc64ef99e92e96058becfdea3889441a72a41eff66515c2e88a7e5",
+  "scope": "Public bootstrap only; no private keys or remote deployment",
+  "image_id": "dc23c76b40dbfa6ab8d754caf60ca2ed7586b37087131f89cadb8baae7a3af0a",
+  "image_manifest_digest": "sha256:7010c6ade47ce22356fba5486bfb42f74f52a49207c0e2eddc855fb6720231fa",
+  "operator_key_isolation": "Only public registration files were mounted into assembly",
+  "nodes": 11
+}

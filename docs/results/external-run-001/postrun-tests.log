@@ -1,0 +1,28 @@
+test_cannot_reinitialize_or_reset_used_validator (test_external.BootstrapTests.test_cannot_reinitialize_or_reset_used_validator) ... ok
+test_fresh_chain_and_address_rules (test_external.BootstrapTests.test_fresh_chain_and_address_rules) ... ok
+test_install_rejects_wrong_pin_tampered_bundle_and_unadmitted_identity (test_external.BootstrapTests.test_install_rejects_wrong_pin_tampered_bundle_and_unadmitted_identity) ... ok
+test_registration_proves_both_keys_and_cannot_change_address (test_external.BootstrapTests.test_registration_proves_both_keys_and_cannot_change_address) ... ok
+test_shared_genesis_distinct_keys_and_no_private_bundle (test_external.BootstrapTests.test_shared_genesis_distinct_keys_and_no_private_bundle) ... ok
+test_failover_never_uses_unverified_rpc_state (test_external.CertifiedClientTests.test_failover_never_uses_unverified_rpc_state) ... Executing <Task finished name='Task-1' coro=<CertifiedClientTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_external.py:94> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.266 seconds
+ok
+test_persistent_rollback_guard_and_tampered_state (test_external.CertifiedClientTests.test_persistent_rollback_guard_and_tampered_state) ... Executing <Task finished name='Task-7' coro=<CertifiedClientTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_external.py:94> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.157 seconds
+ok
+test_untrusted_rejection_cannot_erase_outbox_before_certified_ack (test_external.CertifiedClientTests.test_untrusted_rejection_cannot_erase_outbox_before_certified_ack) ... Executing <Task finished name='Task-13' coro=<CertifiedClientTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_external.py:94> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.125 seconds
+ok
+test_claims_are_unique_per_actor_and_capacity_bounded (test_external.IncidentTests.test_claims_are_unique_per_actor_and_capacity_bounded) ... ok
+test_conflict_requires_signed_contradiction_and_committed_assignment (test_external.IncidentTests.test_conflict_requires_signed_contradiction_and_committed_assignment) ... ok
+test_engine_evidence_is_durable_only_after_commit (test_external.IncidentTests.test_engine_evidence_is_durable_only_after_commit) ... ok
+test_false_coverage_and_wrong_worker_cannot_complete (test_external.IncidentTests.test_false_coverage_and_wrong_worker_cannot_complete) ... ok
+test_full_distinct_coverage_required_for_release_and_training_plan (test_external.IncidentTests.test_full_distinct_coverage_required_for_release_and_training_plan) ... ok
+test_invalid_is_disputed_but_unavailable_can_retry (test_external.IncidentTests.test_invalid_is_disputed_but_unavailable_can_retry) ... ok
+test_malformed_and_deeply_nested_transactions_reject_without_mutation (test_external.IncidentTests.test_malformed_and_deeply_nested_transactions_reject_without_mutation) ... ok
+test_plan_rejects_gaps_overlaps_and_unadmitted_execution (test_external.IncidentTests.test_plan_rejects_gaps_overlaps_and_unadmitted_execution) ... ok
+test_same_order_produces_same_hash_despite_dictionary_insertion_order (test_external.IncidentTests.test_same_order_produces_same_hash_despite_dictionary_insertion_order) ... ok
+test_signature_role_sequence_and_cross_chain_replay_rejected (test_external.IncidentTests.test_signature_role_sequence_and_cross_chain_replay_rejected) ... ok
+test_stale_completion_is_fenced_after_reassignment (test_external.IncidentTests.test_stale_completion_is_fenced_after_reassignment) ... ok
+test_timeout_is_attributed_without_punishment (test_external.IncidentTests.test_timeout_is_attributed_without_punishment) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 8.404s
+
+OK

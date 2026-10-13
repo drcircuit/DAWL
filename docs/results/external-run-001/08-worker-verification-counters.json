@@ -1,0 +1,42 @@
+{
+  "worker-0": {
+    "certified_state_reads": 185,
+    "certificate_failures": 39,
+    "received_bytes": 336339891,
+    "requests": 573,
+    "corrupt_pieces_rejected": 241,
+    "piece_attempt_failures": 482,
+    "pieces_downloaded": 241,
+    "objects_downloaded": 91
+  },
+  "worker-1": {
+    "certificate_failures": 47,
+    "certified_state_reads": 224,
+    "received_bytes": 334812978,
+    "requests": 561,
+    "corrupt_pieces_rejected": 237,
+    "piece_attempt_failures": 474,
+    "pieces_downloaded": 237,
+    "objects_downloaded": 87
+  },
+  "worker-2": {
+    "certificate_failures": 45,
+    "certified_state_reads": 226,
+    "received_bytes": 335510657,
+    "requests": 552,
+    "corrupt_pieces_rejected": 234,
+    "piece_attempt_failures": 468,
+    "pieces_downloaded": 234,
+    "objects_downloaded": 84
+  },
+  "worker-3": {
+    "certificate_failures": 47,
+    "certified_state_reads": 211,
+    "received_bytes": 337461097,
+    "requests": 579,
+    "corrupt_pieces_rejected": 243,
+    "piece_attempt_failures": 486,
+    "pieces_downloaded": 243,
+    "objects_downloaded": 93
+  }
+}

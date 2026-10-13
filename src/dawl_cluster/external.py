@@ -247,7 +247,7 @@ create_empty_blocks_interval = "1s"
     command = (["validator","/node"] if role == "validator" else
                ["provider","--root","/node","--host",member["host"],"--port","8900","--allow-insecure-lab"] if role == "provider" else
                ["worker","--root","/node"] if role == "worker" else ["status","--root","/node"])
-    service = {"image":manifest["image"], "network_mode":"host", "read_only":True,
+    service = {"image":manifest["image"], "network_mode":"host", "read_only":True,"init":True,
                "user":f"{os.getuid()}:{os.getgid()}" if hasattr(os,"getuid") else "1000:1000",
                "volumes":["./:/node"], "tmpfs":["/tmp:size=256m"], "cap_drop":["ALL"],
                "security_opt":["no-new-privileges:true"], "cpus":2, "mem_limit":"2g", "pids_limit":256,

@@ -1,0 +1,10 @@
+{
+  "schema": "dawl.init-shutdown-check/1",
+  "runtime_image": "dc23c76b40dbfa6ab8d754caf60ca2ed7586b37087131f89cadb8baae7a3af0a",
+  "init_enabled": true,
+  "process_tree": "PID         COMMAND\n1           /run/podman-init -- python /app/scripts/cluster_entrypoint.py worker --root /node \n2           /usr/local/bin/python /app/dawl_cluster.py worker --root /node \n26          dawl-consensus verify --rpc http://10.89.91.60:26657 --genesis /node/genesis.json --genesis-sha256 3208c3a13a4a586151954370f453c551f3a677399cf379c29e158fa9ed16c6fe --min-height 555 --max-age 120s \n",
+  "stop_seconds": 3.016,
+  "exit_code": 143,
+  "forced_kill": false,
+  "scope": "Post-run init forwarding check with original worker image; no new corpus execution"
+}
