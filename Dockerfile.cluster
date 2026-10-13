@@ -1,0 +1,12 @@
+FROM localhost/dawl-consensus-build:0.1 AS consensus
+FROM docker.io/library/python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false
+WORKDIR /app
+COPY requirements-ingestion.txt requirements-swarm.txt ./
+RUN pip install --no-cache-dir -r requirements-swarm.txt && useradd --uid 1000 --create-home dawl
+COPY --from=consensus /usr/local/bin/cometbft /usr/local/bin/dawl-consensus /usr/local/bin/
+COPY src ./src
+COPY dawl_cluster.py .
+COPY scripts/cluster_entrypoint.py ./scripts/
+USER 1000:1000
+ENTRYPOINT ["python", "/app/scripts/cluster_entrypoint.py"]

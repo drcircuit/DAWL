@@ -4,6 +4,10 @@
 !dawl_platform.py
 !dawl_swarm.py
 !requirements-swarm.txt
+!consensus/
+!consensus/**
+!dawl_cluster.py
+!scripts/cluster_entrypoint.py
 !src/
 !src/**
 **/__pycache__

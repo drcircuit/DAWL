@@ -1,0 +1,4 @@
+FROM docker.io/library/golang:1.26.6
+WORKDIR /build
+COPY consensus/go.mod consensus/main.go ./
+RUN go install github.com/cometbft/cometbft/cmd/cometbft@v0.38.26 && cp /go/bin/cometbft /usr/local/bin/cometbft && go mod tidy && go mod verify && go build -trimpath -o /usr/local/bin/dawl-consensus .
