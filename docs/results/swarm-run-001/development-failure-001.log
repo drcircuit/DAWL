@@ -1,0 +1,23 @@
+all-providers-withhold: 0.448 s
+partition-replicator: 3.733 s
+Traceback (most recent call last):
+  File "C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\scripts\exercise_swarm.py", line 79, in main
+    fault("provider-a", withhold=False, corrupt=True)
+  File "C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\scripts\exercise_swarm.py", line 54, in fault
+    pending.replace(path)
+  File "C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1376, in replace
+    os.replace(self, target)
+PermissionError: [WinError 5] Access is denied: 'artifacts\\swarm-lab-001\\provider-a\\fault.pending' -> 'artifacts\\swarm-lab-001\\provider-a\\fault.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\scripts\exercise_swarm.py", line 146, in <module>
+    main()
+  File "C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\scripts\exercise_swarm.py", line 141, in main
+    fault(name, withhold=False, corrupt=False, partition=False, drop_every=0, delay_ms=0)
+  File "C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\scripts\exercise_swarm.py", line 54, in fault
+    pending.replace(path)
+  File "C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1376, in replace
+    os.replace(self, target)
+PermissionError: [WinError 5] Access is denied: 'artifacts\\swarm-lab-001\\provider-a\\fault.pending' -> 'artifacts\\swarm-lab-001\\provider-a\\fault.json'

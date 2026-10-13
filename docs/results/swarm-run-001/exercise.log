@@ -1,0 +1,8 @@
+all-providers-withhold: 6.612 s
+partition-replicator: 6.877 s
+partial-table-transfer: 38.145 s
+honest-provider-stopped: 49.535 s
+interrupted-transfer-unavailable: 49.733 s
+recovered-and-false-approval-detected: 344.715 s
+partition-healed-convergence: 372.733 s
+{"accepted":true,"disputes":1,"elapsed_seconds":373.09265599993523,"receipts":39}

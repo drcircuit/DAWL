@@ -1,4 +1,5 @@
 -r requirements-ingestion.txt
+httpx==0.28.1
 numpy==2.5.3
 safetensors==0.8.0
 onnx==1.23.2

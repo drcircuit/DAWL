@@ -1,0 +1,109 @@
+test_batched_coverage_visits_every_chunk_once_and_rejects_missing_evidence (test_corpus.CorpusTests.test_batched_coverage_visits_every_chunk_once_and_rejects_missing_evidence) ... ok
+test_changed_book_bytes_fail_before_any_output_is_created (test_corpus.CorpusTests.test_changed_book_bytes_fail_before_any_output_is_created) ... ok
+test_metadata_gate_rejects_wrong_identity_status_and_missing_notice (test_corpus.CorpusTests.test_metadata_gate_rejects_wrong_identity_status_and_missing_notice) ... ok
+test_partition_preserves_multibyte_characters_whitespace_and_byte_ranges (test_corpus.CorpusTests.test_partition_preserves_multibyte_characters_whitespace_and_byte_ranges) ... ok
+test_consumer_replicates_and_verifies_all_shards (test_ingestion_http.HTTPNodeTests.test_consumer_replicates_and_verifies_all_shards) ... ok
+test_independent_validator_issues_a_signed_receipt (test_ingestion_http.HTTPNodeTests.test_independent_validator_issues_a_signed_receipt) ... ok
+test_oversized_and_wrongly_typed_challenges_are_rejected (test_ingestion_http.HTTPNodeTests.test_oversized_and_wrongly_typed_challenges_are_rejected) ... ok
+test_role_routes_are_separate (test_ingestion_http.HTTPNodeTests.test_role_routes_are_separate) ... ok
+test_unauthorized_requests_and_non_public_files_are_rejected (test_ingestion_http.HTTPNodeTests.test_unauthorized_requests_and_non_public_files_are_rejected) ... ok
+test_bad_metadata_and_duplicate_document_ids_rejected (test_ingestion_nodes.IngestionNodeTests.test_bad_metadata_and_duplicate_document_ids_rejected) ... ok
+test_changed_source_token_proof_and_nonce_fail (test_ingestion_nodes.IngestionNodeTests.test_changed_source_token_proof_and_nonce_fail) ... ok
+test_disk_corruption_fails_full_verification_and_sampled_audit (test_ingestion_nodes.IngestionNodeTests.test_disk_corruption_fails_full_verification_and_sampled_audit) ... ok
+test_exact_duplicate_documents_keep_alias_provenance (test_ingestion_nodes.IngestionNodeTests.test_exact_duplicate_documents_keep_alias_provenance) ... ok
+test_fresh_challenge_and_honest_audit (test_ingestion_nodes.IngestionNodeTests.test_fresh_challenge_and_honest_audit) ... ok
+test_full_chunk_audit_and_probability (test_ingestion_nodes.IngestionNodeTests.test_full_chunk_audit_and_probability) ... ok
+test_idempotent_ingestion_has_stable_snapshot_id (test_ingestion_nodes.IngestionNodeTests.test_idempotent_ingestion_has_stable_snapshot_id) ... ok
+test_invalid_samples_and_path_traversal_rejected (test_ingestion_nodes.IngestionNodeTests.test_invalid_samples_and_path_traversal_rejected) ... ok
+test_lossless_real_bytelevel_encoding_and_bpe_merge (test_ingestion_nodes.IngestionNodeTests.test_lossless_real_bytelevel_encoding_and_bpe_merge) ... ok
+test_missing_or_reordered_source_coverage_rejected (test_ingestion_nodes.IngestionNodeTests.test_missing_or_reordered_source_coverage_rejected) ... ok
+test_no_empty_or_dense_embedding_artifacts (test_ingestion_nodes.IngestionNodeTests.test_no_empty_or_dense_embedding_artifacts) ... ok
+test_non_loopback_plaintext_requires_explicit_lab_option (test_ingestion_nodes.IngestionNodeTests.test_non_loopback_plaintext_requires_explicit_lab_option) ... ok
+test_persist_reload_and_full_integrity_verification (test_ingestion_nodes.IngestionNodeTests.test_persist_reload_and_full_integrity_verification) ... ok
+test_registered_hash_cannot_be_replaced (test_ingestion_nodes.IngestionNodeTests.test_registered_hash_cannot_be_replaced) ... ok
+test_shard_rollover_preserves_all_tokens (test_ingestion_nodes.IngestionNodeTests.test_shard_rollover_preserves_all_tokens) ... ok
+test_signed_receipt_and_identity_files_not_replaced (test_ingestion_nodes.IngestionNodeTests.test_signed_receipt_and_identity_files_not_replaced) ... ok
+test_source_change_cannot_publish_under_existing_registry (test_ingestion_nodes.IngestionNodeTests.test_source_change_cannot_publish_under_existing_registry) ... ok
+test_stochastic_or_lossy_tokenizers_rejected (test_ingestion_nodes.IngestionNodeTests.test_stochastic_or_lossy_tokenizers_rejected) ... ok
+test_tokenizer_pin_and_runtime_descriptor_are_enforced (test_ingestion_nodes.IngestionNodeTests.test_tokenizer_pin_and_runtime_descriptor_are_enforced) ... ok
+test_untrusted_signer_and_modified_signature_rejected (test_ingestion_nodes.IngestionNodeTests.test_untrusted_signer_and_modified_signature_rejected) ... ok
+test_utf8_chunks_reassemble_without_loss (test_ingestion_nodes.IngestionNodeTests.test_utf8_chunks_reassemble_without_loss) ... ok
+test_validly_signed_bad_tokenization_is_detected (test_ingestion_nodes.IngestionNodeTests.test_validly_signed_bad_tokenization_is_detected) ... ok
+test_fork_gap_and_missing_parent_rejected (test_platform.LedgerTests.test_fork_gap_and_missing_parent_rejected) ... ok
+test_policy_pin_and_offline_database_tamper (test_platform.LedgerTests.test_policy_pin_and_offline_database_tamper) ... ok
+test_replay_persistence_and_immutable_sql (test_platform.LedgerTests.test_replay_persistence_and_immutable_sql) ... ok
+test_replication_rejects_truncated_checkpoint (test_platform.LedgerTests.test_replication_rejects_truncated_checkpoint) ... ok
+test_tamper_untrusted_role_and_signature_rejected (test_platform.LedgerTests.test_tamper_untrusted_role_and_signature_rejected) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_complete_replay_covers_exact_bytes (test_platform.PipelineTests.test_complete_replay_covers_exact_bytes) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_missing_vector_and_false_parent_fail (test_platform.PipelineTests.test_missing_vector_and_false_parent_fail) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_object_tamper_and_token_range_are_rejected (test_platform.PipelineTests.test_object_tamper_and_token_range_are_rejected) ... ok
+Reconstructed book 11: 119,040 vector bytes
+CPU audited book 11: accepted=True
+Public replay 1: accepted=True
+test_public_http_replication_and_audit_without_producer_keys (test_platform.PipelineTests.test_public_http_replication_and_audit_without_producer_keys) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_signed_wrong_vectors_fail_even_with_valid_artifact_hash (test_platform.PipelineTests.test_signed_wrong_vectors_fail_even_with_valid_artifact_hash) ... ok
+test_default_challenge_is_fresh_distinct_and_in_range (test_stage_1.AuditTests.test_default_challenge_is_fresh_distinct_and_in_range) ... ok
+test_exhaustive_samples_match_hypergeometric_prediction (test_stage_1.AuditTests.test_exhaustive_samples_match_hypergeometric_prediction) ... ok
+test_honest_sample_and_full_audit (test_stage_1.AuditTests.test_honest_sample_and_full_audit) ... ok
+test_invalid_sample_counts (test_stage_1.AuditTests.test_invalid_sample_counts) ... ok
+test_malformed_objects_fail_closed (test_stage_1.AuditTests.test_malformed_objects_fail_closed) ... ok
+test_probability_boundary_cases (test_stage_1.AuditTests.test_probability_boundary_cases) ... ok
+test_reject_forged_snippet_token_and_proof (test_stage_1.AuditTests.test_reject_forged_snippet_token_and_proof) ... ok
+test_reject_missing_duplicate_extra_and_unexpected_samples (test_stage_1.AuditTests.test_reject_missing_duplicate_extra_and_unexpected_samples) ... ok
+test_reject_replayed_or_misbound_responses (test_stage_1.AuditTests.test_reject_replayed_or_misbound_responses) ... ok
+test_source_substitution_and_embedding_changes_rejected (test_stage_1.AuditTests.test_source_substitution_and_embedding_changes_rejected) ... ok
+test_sparse_error_can_be_missed (test_stage_1.AuditTests.test_sparse_error_can_be_missed) ... ok
+test_cli_preserves_file_bytes_and_reports_errors_cleanly (test_stage_1.HypothesisTests.test_cli_preserves_file_bytes_and_reports_errors_cleanly) ... ok
+test_end_to_end_report_and_publication (test_stage_1.HypothesisTests.test_end_to_end_report_and_publication) ... ok
+test_h1_1_exact_storage_and_recovery (test_stage_1.HypothesisTests.test_h1_1_exact_storage_and_recovery) ... ok
+test_h1_1_small_blocks_and_smaller_dimensions_disprove_universal_claim (test_stage_1.HypothesisTests.test_h1_1_small_blocks_and_smaller_dimensions_disprove_universal_claim) ... ok
+test_h1_2_precommitted_poison_is_detected_with_measured_cost (test_stage_1.HypothesisTests.test_h1_2_precommitted_poison_is_detected_with_measured_cost) ... ok
+test_canonical_round_trip_and_signing_domain (test_stage_1.ManifestTests.test_canonical_round_trip_and_signing_domain) ... ok
+test_empty_blocks_are_rejected (test_stage_1.ManifestTests.test_empty_blocks_are_rejected) ... ok
+test_full_payload_verification_detects_tampering_and_root_disagreement (test_stage_1.ManifestTests.test_full_payload_verification_detects_tampering_and_root_disagreement) ... ok
+test_metadata_and_source_hash_bind_exact_input (test_stage_1.ManifestTests.test_metadata_and_source_hash_bind_exact_input) ... ok
+test_publish_artifact_and_prevent_accidental_overwrite (test_stage_1.ManifestTests.test_publish_artifact_and_prevent_accidental_overwrite) ... ok
+test_reject_invalid_field_types_values_and_schema (test_stage_1.ManifestTests.test_reject_invalid_field_types_values_and_schema) ... ok
+test_reject_unknown_duplicate_and_missing_keys (test_stage_1.ManifestTests.test_reject_unknown_duplicate_and_missing_keys) ... ok
+test_all_positions_across_odd_even_and_single_leaf_trees (test_stage_1.MerkleTests.test_all_positions_across_odd_even_and_single_leaf_trees) ... ok
+test_index_binding_prevents_reusing_an_equal_value_at_another_position (test_stage_1.MerkleTests.test_index_binding_prevents_reusing_an_equal_value_at_another_position) ... ok
+test_reject_malformed_truncated_and_extended_proofs (test_stage_1.MerkleTests.test_reject_malformed_truncated_and_extended_proofs) ... ok
+test_determinism_across_fresh_processes_and_python_hash_seeds (test_stage_1.TokenizerTests.test_determinism_across_fresh_processes_and_python_hash_seeds) ... ok
+test_embeddings_are_exact_float32_and_depend_on_definition (test_stage_1.TokenizerTests.test_embeddings_are_exact_float32_and_depend_on_definition) ... ok
+test_explicit_little_endian_uint32 (test_stage_1.TokenizerTests.test_explicit_little_endian_uint32) ... ok
+test_invalid_embedding_definitions (test_stage_1.TokenizerTests.test_invalid_embedding_definitions) ... ok
+test_reject_invalid_tokens_and_truncated_payload (test_stage_1.TokenizerTests.test_reject_invalid_tokens_and_truncated_payload) ... ok
+test_unicode_whitespace_and_newlines_round_trip (test_stage_1.TokenizerTests.test_unicode_whitespace_and_newlines_round_trip) ... ok
+test_announcements_expire_replay_and_equivocation_survive_restart (test_swarm.ProtocolTests.test_announcements_expire_replay_and_equivocation_survive_restart) ... ok
+test_challenge_survives_restart_and_unavailable_retries_same_sample (test_swarm.ProtocolTests.test_challenge_survives_restart_and_unavailable_retries_same_sample) ... ok
+test_receipt_is_a_claim_and_does_not_enter_training_ledger (test_swarm.ProtocolTests.test_receipt_is_a_claim_and_does_not_enter_training_ledger) ... ok
+test_role_escalation_endpoint_rebinding_and_wrong_authority (test_swarm.ProtocolTests.test_role_escalation_endpoint_rebinding_and_wrong_authority) ... ok
+
+H1.1 exact byte accounting: {"canonical_manifest_bytes": 583, "dense_float32_bytes": 4587520, "embedding_dimension": 128, "miner_cached_digest_bytes": 1147072, "payload_savings_percent": 99.21875, "published_bytes": 36423, "published_savings_percent": 99.20604160853794, "published_to_raw_ratio": 3.4701791158536586, "raw_utf8_bytes": 10496, "token_count": 8960, "token_payload_bytes": 35840}
+
+H1.2 committed poison: {"audit_ms": 11.290200054645538, "audit_to_ingestion_percent": 2.306398734316236, "corrupt_positions": 53248, "detected": true, "ingestion_ms": 489.5164000336081, "note": "No universal timing assertion; all-token corruption has P(detect)=1.", "samples": 64, "tokens": 53248}
+Reconstructed book 11: 119,040 vector bytes
+test_freeloader_can_sign_pass_but_independent_replay_rejects_bad_vector (test_swarm.SampleReplayTests.test_freeloader_can_sign_pass_but_independent_replay_rejects_bad_vector) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_sampling_checks_selected_chunks_and_full_integrity (test_swarm.SampleReplayTests.test_sampling_checks_selected_chunks_and_full_integrity) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_public_announcements_are_bounded_and_cannot_submit_jobs_or_read_keys (test_swarm.ServiceTests.test_public_announcements_are_bounded_and_cannot_submit_jobs_or_read_keys) ... Executing <Task pending name='Task-2' coro=<ServiceTests.test_public_announcements_are_bounded_and_cannot_submit_jobs_or_read_keys() running at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:212> cb=[_run_until_complete_cb() at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\base_events.py:181] created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 3.609 seconds
+Executing <Task pending name='Task-2' coro=<ServiceTests.test_public_announcements_are_bounded_and_cannot_submit_jobs_or_read_keys() running at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:222> cb=[_run_until_complete_cb() at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\base_events.py:181] created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.125 seconds
+ok
+test_corruption_fallback_and_concurrent_download_deduplication (test_swarm.TransferTests.test_corruption_fallback_and_concurrent_download_deduplication) ... Executing <Task finished name='Task-15' coro=<TransferTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:99> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.141 seconds
+ok
+test_dishonest_catalog_cannot_replace_whole_object_pin (test_swarm.TransferTests.test_dishonest_catalog_cannot_replace_whole_object_pin) ... Executing <Task finished name='Task-26' coro=<TransferTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:99> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.125 seconds
+ok
+test_interrupted_transfer_resumes_and_rejects_unadmitted_requests (test_swarm.TransferTests.test_interrupted_transfer_resumes_and_rejects_unadmitted_requests) ... Executing <Task finished name='Task-36' coro=<TransferTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:99> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.156 seconds
+ok
+test_withholding_is_availability_not_transform_invalidity (test_swarm.TransferTests.test_withholding_is_availability_not_transform_invalidity) ... Executing <Task finished name='Task-46' coro=<TransferTests.asyncSetUp() done, defined at C:\Users\espen\OneDrive\Dokumenter\ChatGPT\DAWL\tests\test_swarm.py:99> result=None created at C:\Users\espen\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\asyncio\runners.py:100> took 0.125 seconds
+ok
+
+----------------------------------------------------------------------
+Ran 84 tests in 31.092s
+
+OK

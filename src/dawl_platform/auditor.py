@@ -26,7 +26,7 @@ def linked(ledger, child, field, kind):
     return parent
 
 
-def verify_book(ledger, objects, peer, vector_entry, table_cache):
+def verify_book(ledger, objects, peer, vector_entry, table_cache, positions=None):
     started = perf_counter()
     vp = vector_entry["body"]["payload"]
     token_entry = linked(ledger, vector_entry, "tokens_entry", "tokens")
@@ -88,6 +88,11 @@ def verify_book(ledger, objects, peer, vector_entry, table_cache):
     if manifest["id"] != tp["snapshot_id"]:
         raise ValueError("snapshot differs from ledger commitment")
     body = validate_manifest(manifest, registry, tokenizer, token_entry["body"]["signer"])
+    if positions is not None and (not isinstance(positions, list) or not 1 <= len(positions) <= 256
+            or positions != sorted(set(positions))
+            or any(type(i) is not int or not 0 <= i < body["chunk_count"] for i in positions)):
+        raise ValueError("invalid retained sample positions")
+    selected = set(positions) if positions is not None else None
     if (tp["chunks"] != body["chunk_count"] or tp["tokens"] != body["token_count"]
             or vp["chunks"] != body["chunk_count"] or vp["tokens"] != body["token_count"]
             or source["registry_id"] != registry["id"] or source["chunks"] != body["chunk_count"]
@@ -114,6 +119,8 @@ def verify_book(ledger, objects, peer, vector_entry, table_cache):
             payload = (directory / f"{shard['name']}.u32le").read_bytes()
             for record in read_records(directory, shard):
                 index = record["source_index"]
+                if selected is not None and index not in selected:
+                    continue
                 start, length = record["token_offset"] * 4, record["token_count"] * 4
                 token_bytes = payload[start:start + length]
                 ids = unpack_ids(token_bytes)
@@ -126,17 +133,20 @@ def verify_book(ledger, objects, peer, vector_entry, table_cache):
                     raise ValueError(f"reconstructed vector mismatch at chunk {index}")
                 dense_bytes += len(vector_bytes)
                 checked += 1
-    if checked != body["chunk_count"] or dense_bytes != vp["dense_bytes_reconstructed"]:
+    if checked != (len(selected) if selected is not None else body["chunk_count"]):
         raise ValueError("incomplete vector audit")
+    if selected is None and dense_bytes != vp["dense_bytes_reconstructed"]:
+        raise ValueError("incomplete vector byte count")
     return {"schema": "dawl.platform-audit/1", "book_id": book["id"], "accepted": True,
             "tokens_entry": token_entry["id"], "vectors_entry": vector_entry["id"],
             "source_entry": source_entry["id"], "table_entry": table_entry["id"],
-            "checked_chunks": checked, "tokens": body["token_count"], "source_bytes": len(book_bytes),
-            "dense_bytes_reconstructed": dense_bytes, "comparison": "byte-exact SHA-256 for every chunk",
+            "checked_chunks": checked, "total_chunks": body["chunk_count"], "positions": positions,
+            "tokens": body["token_count"], "source_bytes": len(book_bytes),
+            "dense_bytes_reconstructed": dense_bytes, "comparison": "byte-exact SHA-256 for selected chunks" if selected is not None else "byte-exact SHA-256 for every chunk",
             "seconds": perf_counter() - started, "runtime": table.runtime,
             "environment": {"python": platform.python_version(), "platform": platform.platform()},
             "implementation_sha256": implementation_digest(),
-            "scope": "Full original-book reconstruction, retokenization and input-embedding reproduction. No training claim."}
+            "scope": "Original-book and snapshot integrity; sampled retokenization and input-embedding reproduction. No training claim." if selected is not None else "Full original-book reconstruction, retokenization and input-embedding reproduction. No training claim."}
 
 
 def audit(root, peer_url, allow_insecure=False, key_path=None):

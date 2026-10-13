@@ -1,0 +1,9 @@
+FROM docker.io/library/python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false
+WORKDIR /app
+COPY requirements-ingestion.txt requirements-swarm.txt ./
+RUN pip install --no-cache-dir -r requirements-swarm.txt && useradd --uid 1000 --create-home dawl
+COPY src ./src
+COPY dawl_swarm.py .
+USER 1000:1000
+ENTRYPOINT ["python", "dawl_swarm.py"]

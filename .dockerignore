@@ -2,6 +2,8 @@
 !requirements-ingestion.txt
 !dawl_node.py
 !dawl_platform.py
+!dawl_swarm.py
+!requirements-swarm.txt
 !src/
 !src/**
 **/__pycache__

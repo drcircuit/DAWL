@@ -86,6 +86,42 @@ def app(root):
     def state():
         return summary(root)
 
+    @application.get("/api/swarm")
+    async def swarm():
+        # Optional operator configuration. Peer-provided URLs are never fetched by this observer.
+        import asyncio
+        import httpx
+        from dawl_node.common import parse_json
+        from urllib.parse import urlsplit
+        configuration = root / "swarm-observer.json"
+        if not configuration.exists():
+            return {"nodes": [], "scope": "No swarm observer configured"}
+        config = read_json(configuration)
+        if not isinstance(config.get("nodes"), list) or len(config["nodes"]) > 64:
+            raise ValueError("invalid observer configuration")
+        async with httpx.AsyncClient(timeout=2, trust_env=False, follow_redirects=False) as client:
+            async def observe(member):
+                address = urlsplit(member["url"])
+                if address.scheme != "http" or address.hostname != "127.0.0.1" or address.path or address.username:
+                    raise ValueError("lab observer requires explicitly configured loopback endpoints")
+                try:
+                    async with asyncio.timeout(3), client.stream("GET", member["url"] + "/swarm/status") as response:
+                        response.raise_for_status()
+                        data = bytearray()
+                        async for block in response.aiter_bytes():
+                            data.extend(block)
+                            if len(data) > 4 * 1024 * 1024:
+                                raise ValueError("status exceeds cap")
+                    state = parse_json(bytes(data))
+                    if state["public"] != member["public"] or state["policy"] != config["policy_sha256"]:
+                        raise ValueError("observer endpoint identity mismatch")
+                    return {**member, "reachable": True, "state": state}
+                except (httpx.HTTPError, TimeoutError, ValueError, KeyError) as error:
+                    return {**member, "reachable": False, "error": str(error)[:200]}
+            nodes = await asyncio.gather(*(observe(m) for m in config["nodes"]))
+        return {"nodes": nodes, "canary_entry": config.get("canary_entry"),
+                "scope": "Five independently running containers on one host; admitted peers, simulated network faults. Observations are node reports."}
+
     @application.get("/api/entries/{entry_id}")
     def entry(entry_id: str):
         return ledger.get(entry_id)

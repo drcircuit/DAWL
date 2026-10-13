@@ -1,5 +1,8 @@
 # DAWL platform prototype
 
+The [admitted swarm layer](swarm.md) adds independent peer discovery, resumable artifact pulls,
+asynchronous CPU auditors, signed receipt gossip and an adversarial container lab around this pipeline.
+
 This is the technical foundation for the Linux-for-AI platform. Human trust experiments
 will use models and training traces built on it later. No training happens in this version.
 The development branch is `codex/platform-prototype`; the research worktree remains on

@@ -13,6 +13,8 @@ recovery and independent CPU replay. It performs **no model training or gradient
 The [platform runbook](docs/platform.md) describes the executable hats and commands.
 The [recorded platform validation](docs/platform_run_001.md) separates measured results
 from remaining engineering work. The local observatory is at `http://127.0.0.1:8880/`.
+The [swarm runbook](docs/swarm.md) and [swarm validation](docs/swarm_run_001.md) cover
+the asynchronous network layer and its five-container adversarial experiment.
 
 - Eight locked public-domain books feed independent CPU tokenization jobs.
 - Signed lineage records connect original bytes, source registries, pinned tokenizer,
@@ -23,8 +25,12 @@ from remaining engineering work. The local observatory is at `http://127.0.0.1:8
   and vector checks. Ledger peers replicate signed records into independent databases.
 - Anyone with independently pinned public trust inputs can run `dawl_platform.py verify`;
   no producer key or admitted signing identity is needed for verification.
+- Admitted swarm peers discover one another, pull and resume hash-checked artifact pieces,
+  gossip signed audit claims, independently recheck those claims and replicate observation batches.
+- The live observatory shows topology, artifact availability, receipt outcomes and disagreements.
 
-This is a bounded local federation, with static job assignment and explicit peer sync.
+This is a bounded local federation, with static production job assignment and asynchronous
+replication/auditing among configured, admitted peers.
 It does not yet provide open peer discovery, adversarial consensus, a distributed job
 queue, training-run lineage or provenance for a generated answer. Imported GPT-2
 pretraining is an explicit boundary. The research branch and its provisional study

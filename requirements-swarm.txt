@@ -1,0 +1,3 @@
+-r requirements-ingestion.txt
+numpy==2.5.3
+httpx==0.28.1
