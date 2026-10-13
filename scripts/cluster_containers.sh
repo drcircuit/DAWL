@@ -1,8 +1,9 @@
 #!/bin/sh
 set -eu
 cd "$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
-root="${DAWL_CLUSTER_ROOT:-$(pwd)/artifacts/cluster-v1}"
-native="${DAWL_CLUSTER_NATIVE:-/var/lib/dawl/cluster-v1}"
+root="${DAWL_CLUSTER_ROOT:-$(pwd)/artifacts/cluster-v2}"
+native="${DAWL_CLUSTER_NATIVE:-/var/lib/dawl/cluster-v2}"
+native="$(realpath -m "$native")"
 image=localhost/dawl-cluster:0.1
 network=dawl-consensus-cluster
 case "$native" in /var/lib/dawl/cluster-*) ;; *) echo 'Native state must be under /var/lib/dawl/cluster-*' >&2; exit 2;; esac

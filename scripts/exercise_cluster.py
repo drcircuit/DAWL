@@ -1,5 +1,6 @@
 """Exercise real quorum loss, complete corpus work, fenced leases and release finality."""
 import asyncio
+import argparse
 import base64
 import json
 from pathlib import Path
@@ -13,8 +14,12 @@ from dawl_node.common import canonical_json,load_key,read_json,sign,write_json
 from dawl_cluster.client import Client
 from dawl_cluster.state import summary
 
-CLUSTER=ROOT/"artifacts/cluster-v1"
-OUT=ROOT/"artifacts/cluster-run-001"
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--root",type=Path,default=ROOT/"artifacts/cluster-v2")
+parser.add_argument("--output",type=Path,default=ROOT/"artifacts/cluster-run-002")
+args=parser.parse_args()
+CLUSTER=args.root.resolve()
+OUT=args.output.resolve()
 
 def podman(*args):
     return subprocess.run(["wsl","-d","kali-linux","-u","root","--exec","podman",*args],

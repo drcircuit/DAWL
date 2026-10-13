@@ -1,5 +1,6 @@
 """Supervise each validator's private ABCI adapter, application and CometBFT process."""
 from pathlib import Path
+import os
 import signal
 import subprocess
 import sys
@@ -7,7 +8,7 @@ import time
 from urllib.request import urlopen
 
 if len(sys.argv)<2 or sys.argv[1]!="validator":
-    raise SystemExit(subprocess.call([sys.executable,"/app/dawl_cluster.py",*sys.argv[1:]]))
+    os.execv(sys.executable,[sys.executable,"/app/dawl_cluster.py",*sys.argv[1:]])
 root=Path(sys.argv[2] if len(sys.argv)>2 else "/node")
 children=[]
 stopping=False

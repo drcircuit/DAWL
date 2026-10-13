@@ -129,6 +129,15 @@ class StateTests(unittest.TestCase):
         bad=copy.deepcopy(self.plan);bad["jobs"].append(bad["jobs"][0])
         with self.assertRaises(ValueError): initial(bad)
 
+    def test_malformed_and_deeply_nested_transactions_reject_without_mutation(self):
+        nested=[]
+        for _ in range(1100): nested=[nested]
+        before=canonical_json(self.state)
+        for tx in (None,[],True,{}, {"body":None},nested):
+            after,result=evaluate(self.state,tx)
+            self.assertEqual(result["code"],1)
+            self.assertEqual(canonical_json(after),before)
+
 
 class RecoveryTests(unittest.TestCase):
     def test_finalize_is_tentative_commit_survives_restart_and_replay(self):

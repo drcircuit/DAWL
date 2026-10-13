@@ -9,7 +9,7 @@ from fastapi.responses import HTMLResponse
 from dawl_cluster.client import Client
 from dawl_cluster.state import summary
 
-ROOT=Path(__file__).resolve().parents[1]/"artifacts/cluster-v1/publisher"
+ROOT=Path(__file__).resolve().parents[1]/"artifacts/cluster-v2/publisher"
 app=FastAPI(docs_url=None,redoc_url=None,openapi_url=None)
 
 @app.get("/api/status")

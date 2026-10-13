@@ -11,7 +11,7 @@ from dawl_node.common import canonical_json, load_key, read_json
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command",choices=("prepare","abci","provider","worker","status","publish","plan-training","inspect-loader"))
-    parser.add_argument("--root",type=Path,default=Path("artifacts/cluster-v1"))
+    parser.add_argument("--root",type=Path,default=Path("artifacts/cluster-v2"))
     parser.add_argument("--source",type=Path,default=Path("artifacts/platform-v1"))
     parser.add_argument("--weights",type=Path,default=Path("artifacts/platform-assets/model.safetensors"))
     parser.add_argument("--workers",type=int,default=4)

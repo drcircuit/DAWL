@@ -196,7 +196,7 @@ def evaluate(state, tx):
     try:
         result = apply(candidate, tx)
         return candidate, {"code": 0, "log": "", "data": result}
-    except (ValueError, KeyError, TypeError, AttributeError, StopIteration, OverflowError):
+    except (ValueError, KeyError, TypeError, AttributeError, StopIteration, OverflowError, RecursionError):
         return state, {"code": 1, "log": "transaction rejected by deterministic DAWL policy"}
 
 

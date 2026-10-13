@@ -10,7 +10,7 @@ from dawl_platform.auditor import verify_book
 from dawl_swarm.node import lineage_files
 from dawl_swarm.transfer import Puller, Unavailable
 from .client import Client
-from .state import AUDIT
+from .state import AUDIT, complete
 
 
 async def run(root, once=False):
@@ -36,6 +36,16 @@ async def run(root, once=False):
     try:
         while True:
             try:
+                observed=await client.state()
+                eligible=any(client.public in j["leases"] or (
+                    not complete(observed,j) and client.public not in j["attestations"]
+                    and len(j["attestations"])+len(j["leases"])<observed["plan"]["replicas"]
+                    and not any(f["outcome"]=="invalid" for f in j["failures"]))
+                    for j in observed["jobs"].values())
+                if not eligible:
+                    if once: return
+                    # Idle workers read committed state without creating empty claim transactions.
+                    await asyncio.sleep(5); continue
                 lease=await client.command("claim",{"capability":AUDIT})
                 if lease["job"] is None:
                     if once: return
