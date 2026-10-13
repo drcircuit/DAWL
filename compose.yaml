@@ -1,0 +1,70 @@
+services:
+  storage:
+    build: .
+    image: dawl-ingestion:0.2
+    command: [serve-storage, --store, /store, --token-file, /identity/api.token, --host, 0.0.0.0]
+    ports: ["127.0.0.1:8765:8765"]
+    volumes:
+      - ./artifacts/ingestion-demo/miner:/store:ro
+      - ./artifacts/ingestion-demo/miner-identity/api.token:/identity/api.token:ro
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 768m
+    cpus: 2
+    pids_limit: 128
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8765/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  validator:
+    image: dawl-ingestion:0.2
+    build: .
+    depends_on:
+      storage:
+        condition: service_healthy
+    command:
+      - serve-validator
+      - --peer
+      - http://storage:8765
+      - --allow-insecure-lab
+      - --peer-token-file
+      - /peer/api.token
+      - --token-file
+      - /identity/api.token
+      - --key
+      - /identity/key.private.pem
+      - --registry
+      - /trust/source.json
+      - --registry-id
+      - ${DAWL_REGISTRY_ID:?Run scripts/prepare_ingestion_demo.py first}
+      - --tokenizer
+      - /trust/tokenizer.json
+      - --tokenizer-sha256
+      - ${DAWL_TOKENIZER_SHA256:?Run scripts/prepare_ingestion_demo.py first}
+      - --miner-public-key
+      - /trust/miner-public.key
+      - --receipts
+      - /receipts
+      - --host
+      - 0.0.0.0
+    ports: ["127.0.0.1:8766:8766"]
+    volumes:
+      - ./artifacts/ingestion-demo/trust:/trust:ro
+      - ./artifacts/ingestion-demo/miner-identity/api.token:/peer/api.token:ro
+      - ./artifacts/ingestion-demo/validator-identity:/identity:ro
+      - ./artifacts/ingestion-demo/receipts:/receipts
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 768m
+    cpus: 2
+    pids_limit: 128
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8766/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5

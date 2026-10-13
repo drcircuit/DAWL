@@ -1,0 +1,6 @@
+*
+!requirements-ingestion.txt
+!dawl_node.py
+!src/
+!src/**
+**/__pycache__

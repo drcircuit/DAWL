@@ -1,0 +1,335 @@
+{
+  "scope": "Role-separated CPU ingestion; no training or GPU execution",
+  "ingestion": {
+    "assets": {
+      "alice.txt": {
+        "bytes": 174311,
+        "sha256": "01b38ea4c710a84bc18d0bd41271a5a1a92b94e97b2812f4dece97d4a694725e",
+        "url": "https://www.gutenberg.org/cache/epub/11/pg11.txt"
+      },
+      "tokenizer.json": {
+        "bytes": 1355256,
+        "sha256": "8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6",
+        "url": "https://huggingface.co/openai-community/gpt2/resolve/210ab4c33a01af45a1914b1cf1928eb915565697/tokenizer.json"
+      }
+    },
+    "chunks": 43,
+    "published_bytes": 1585896,
+    "registry_id": "47f90080ef380eb4d4583aea836424db436a33678dc7401cd8749212382c16e0",
+    "seconds": 0.42330590006895363,
+    "shards": 4,
+    "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+    "source_bytes_unique_chunks": 174311,
+    "token_payload_bytes": 211964,
+    "tokenizer": {
+      "contract": "independent-utf8-chunks/no-added-special-tokens/v1",
+      "library": "tokenizers",
+      "sha256": "8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6",
+      "version": "0.23.3",
+      "vocab_size": 50257
+    },
+    "tokens": 52991
+  },
+  "deployment": {
+    "audits": [
+      {
+        "accepted": true,
+        "checked_chunks": 8,
+        "failures": [],
+        "nonce": "c49329066706022f2dbd33dd2f8e9a43c15d745fbf0a86c58929c628aa1ced5f",
+        "positions": [
+          0,
+          4,
+          13,
+          19,
+          21,
+          30,
+          38,
+          39
+        ],
+        "receipt_id": "a8b01418aca8fb4391b1fb145cdf53c55dd66d8286a5e1de1e5b60cace9ea3cf",
+        "response_bytes": 84896,
+        "round_trip_seconds": 0.7718450610000218,
+        "schema": "dawl.audit-result/v2",
+        "scope": "Source/token consistency of uniformly sampled chunks; not semantic quality or proof of work.",
+        "signer": "471804b400e13dc8ab5efef929632903463ef1032c6da708785db71e1ce7783f",
+        "single_bad_chunk_detection_probability": 0.18604651162790697,
+        "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+        "source_registry": "47f90080ef380eb4d4583aea836424db436a33678dc7401cd8749212382c16e0",
+        "total_chunks": 43,
+        "verification_seconds": 0.053685112000039226
+      },
+      {
+        "accepted": true,
+        "checked_chunks": 43,
+        "failures": [],
+        "nonce": "303a4733d5fd3b33032b9beb1263d78e2595936199dedc99020fac08d931eae1",
+        "positions": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42
+        ],
+        "receipt_id": "ce2dd55c502d47c74727127c7a2b24b772e238b5dc28134280e959bb9a3f0cfb",
+        "response_bytes": 455253,
+        "round_trip_seconds": 0.7038039200001549,
+        "schema": "dawl.audit-result/v2",
+        "scope": "Source/token consistency of uniformly sampled chunks; not semantic quality or proof of work.",
+        "signer": "471804b400e13dc8ab5efef929632903463ef1032c6da708785db71e1ce7783f",
+        "single_bad_chunk_detection_probability": 1.0,
+        "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+        "source_registry": "47f90080ef380eb4d4583aea836424db436a33678dc7401cd8749212382c16e0",
+        "total_chunks": 43,
+        "verification_seconds": 0.1473457629999757
+      }
+    ],
+    "checked_at_utc": "2026-10-13T11:00:09.250975+00:00",
+    "consumer": {
+      "copy_seconds": 0.5875766000244766,
+      "directory": "artifacts/ingestion-demo/deployment-check/consumer-65ff0bcaa0d97263",
+      "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+      "verification": "complete-file integrity; sampled source consistency is a separate audit",
+      "verified_chunks": 43,
+      "verified_tokens": 52991
+    },
+    "consumer_platform": "Windows-11-10.0.26200-SP0",
+    "health": {
+      "storage": {
+        "compute": "cpu",
+        "protocol": "dawl.ingestion/v2",
+        "role": "storage",
+        "status": "ok"
+      },
+      "validator": {
+        "compute": "cpu",
+        "protocol": "dawl.ingestion/v2",
+        "role": "validator",
+        "status": "ok"
+      }
+    },
+    "python": "3.12.14",
+    "separate_signing_identities": true,
+    "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+    "storage_endpoint": "http://127.0.0.1:8765",
+    "validator_endpoint": "http://127.0.0.1:8766"
+  },
+  "containers": [
+    {
+      "name": "dawl-ingestion-storage",
+      "image": "c70034b8f1914b17f80b877ee1f724405d0a04fc09b48c0be0fcbdab5b6b301a",
+      "state": "running",
+      "user": "1000:1000",
+      "read_only_rootfs": true,
+      "memory_bytes": 805306368,
+      "cpu_period": 100000,
+      "cpu_quota": 200000,
+      "pids_limit": 128,
+      "devices": [],
+      "effective_capabilities": null,
+      "mounts": [
+        {
+          "Destination": "/store",
+          "RW": false
+        },
+        {
+          "Destination": "/identity/api.token",
+          "RW": false
+        }
+      ],
+      "ports": {
+        "8765/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8765"
+          }
+        ],
+        "8766/tcp": null
+      }
+    },
+    {
+      "name": "dawl-ingestion-validator",
+      "image": "c70034b8f1914b17f80b877ee1f724405d0a04fc09b48c0be0fcbdab5b6b301a",
+      "state": "running",
+      "user": "1000:1000",
+      "read_only_rootfs": true,
+      "memory_bytes": 805306368,
+      "cpu_period": 100000,
+      "cpu_quota": 200000,
+      "pids_limit": 128,
+      "devices": [],
+      "effective_capabilities": null,
+      "mounts": [
+        {
+          "Destination": "/trust",
+          "RW": false
+        },
+        {
+          "Destination": "/peer/api.token",
+          "RW": false
+        },
+        {
+          "Destination": "/identity",
+          "RW": false
+        },
+        {
+          "Destination": "/receipts",
+          "RW": true
+        }
+      ],
+      "ports": {
+        "8765/tcp": null,
+        "8766/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8766"
+          }
+        ]
+      }
+    }
+  ],
+  "signed_receipts": [
+    {
+      "body": {
+        "accepted": true,
+        "checked_chunks": 8,
+        "failures": [],
+        "nonce": "c49329066706022f2dbd33dd2f8e9a43c15d745fbf0a86c58929c628aa1ced5f",
+        "positions": [
+          0,
+          4,
+          13,
+          19,
+          21,
+          30,
+          38,
+          39
+        ],
+        "response_bytes": 84896,
+        "round_trip_seconds": 0.7718450610000218,
+        "schema": "dawl.audit-result/v2",
+        "scope": "Source/token consistency of uniformly sampled chunks; not semantic quality or proof of work.",
+        "signer": "471804b400e13dc8ab5efef929632903463ef1032c6da708785db71e1ce7783f",
+        "single_bad_chunk_detection_probability": 0.18604651162790697,
+        "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+        "source_registry": "47f90080ef380eb4d4583aea836424db436a33678dc7401cd8749212382c16e0",
+        "total_chunks": 43,
+        "verification_seconds": 0.053685112000039226
+      },
+      "id": "a8b01418aca8fb4391b1fb145cdf53c55dd66d8286a5e1de1e5b60cace9ea3cf",
+      "signature": "4e8cf374377f25aabcb36874f7fb7ab2e14fe2b317ec9ebf3800481fb164c43d07f1b1cfa7c40f53149ed9f9e8b0fb683682017b9ee3be4d71bdc692e026220b"
+    },
+    {
+      "body": {
+        "accepted": true,
+        "checked_chunks": 43,
+        "failures": [],
+        "nonce": "303a4733d5fd3b33032b9beb1263d78e2595936199dedc99020fac08d931eae1",
+        "positions": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42
+        ],
+        "response_bytes": 455253,
+        "round_trip_seconds": 0.7038039200001549,
+        "schema": "dawl.audit-result/v2",
+        "scope": "Source/token consistency of uniformly sampled chunks; not semantic quality or proof of work.",
+        "signer": "471804b400e13dc8ab5efef929632903463ef1032c6da708785db71e1ce7783f",
+        "single_bad_chunk_detection_probability": 1.0,
+        "snapshot_id": "9f93681daf5a4f51f8d15cdef3dd61d13e8d913a5a0cebea561e88881b4de61f",
+        "source_registry": "47f90080ef380eb4d4583aea836424db436a33678dc7401cd8749212382c16e0",
+        "total_chunks": 43,
+        "verification_seconds": 0.1473457629999757
+      },
+      "id": "ce2dd55c502d47c74727127c7a2b24b772e238b5dc28134280e959bb9a3f0cfb",
+      "signature": "2981d70ffbf3a8a3f509aa1a43c947b57123f3b9737f9bdd60a3228f23510937097bd6d1047f105f28e0a621c16c3f8c8f357684943ace84c03ebde2c6d4780b"
+    }
+  ],
+  "validation": {
+    "unit_and_http_tests": 59,
+    "test_failures": 0,
+    "podman_version": "5.8.6",
+    "wsl_distribution": "kali-linux",
+    "container_replacement_preserved_snapshot": true,
+    "fresh_windows_publication_verified_by_non_root_linux_container": true,
+    "docker_compose_execution_tested": false
+  }
+}
