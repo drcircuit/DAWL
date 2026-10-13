@@ -1,3 +1,4 @@
 * text=auto
 *.sh text eol=lf
-docs/results/** -text
+# Preserve exact diagnostic/result bytes, including CRLF, so their hashes survive Git.
+docs/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
