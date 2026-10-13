@@ -168,6 +168,8 @@ labelled for this platform. Mounted data survives. `audit` after restart imports
 entries and reuses completed immutable receipts. `verify` forces recomputation when
 fresh execution evidence is needed. `sync` copies and verifies all referenced public
 artifacts as well as signed records. Peer discovery and periodic gossip are not yet built.
+Run `wsl -d kali-linux -u root --exec sh scripts/platform_containers.sh sync` to mirror
+the final dataset entry and all public artifacts back to the auditor's replica.
 
 ## Verify as a public consumer
 
@@ -189,6 +191,7 @@ their own verifier implementation instead of trusting a green indicator in this 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe scripts/benchmark_platform.py --output artifacts/platform-benchmark-001
+.\.venv\Scripts\python.exe scripts/check_platform_deployment.py --exercise-peer-outage
 ```
 
 The benchmark performs three interleaved runs each with 1, 2 and 4 real worker
