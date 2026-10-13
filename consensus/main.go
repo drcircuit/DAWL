@@ -25,6 +25,13 @@ import (
 )
 
 type bridge struct { abci.BaseApplication; endpoint string; client *http.Client }
+type boundedTransport struct { inner http.RoundTripper }
+type boundedBody struct { io.Reader; io.Closer }
+func (t boundedTransport) RoundTrip(r *http.Request) (*http.Response,error) {
+ res,err:=t.inner.RoundTrip(r)
+ if err==nil { res.Body=boundedBody{io.LimitReader(res.Body,24<<20),res.Body} }
+ return res,err
+}
 func (b *bridge) call(ctx context.Context, path string, in, out any) error {
  data, err := json.Marshal(in); if err != nil { return err }
  req, err := http.NewRequestWithContext(ctx, "POST", b.endpoint+path, bytes.NewReader(data)); if err != nil { return err }
@@ -50,7 +57,7 @@ func (b *bridge) CheckTx(ctx context.Context, r *abci.RequestCheckTx) (*abci.Res
 }
 func (b *bridge) FinalizeBlock(ctx context.Context, r *abci.RequestFinalizeBlock) (*abci.ResponseFinalizeBlock, error) {
  var out struct { Hash []byte `json:"hash"`; Results []*abci.ExecTxResult `json:"results"` }
- err := b.call(ctx, "/finalize", map[string]any{"height":r.Height, "txs":r.Txs}, &out)
+ err := b.call(ctx, "/finalize", map[string]any{"height":r.Height, "txs":r.Txs, "misbehavior":r.Misbehavior}, &out)
  return &abci.ResponseFinalizeBlock{AppHash:out.Hash, TxResults:out.Results}, err
 }
 func (b *bridge) Commit(ctx context.Context, r *abci.RequestCommit) (*abci.ResponseCommit, error) {
@@ -69,6 +76,8 @@ func verify(args []string) error {
  endpoint := flags.String("rpc", "http://127.0.0.1:26657", "reachable consensus RPC")
  genesis := flags.String("genesis", "", "independently obtained genesis file")
  pin := flags.String("genesis-sha256", "", "independent genesis SHA256 pin")
+ minHeight := flags.Int64("min-height",0,"minimum previously verified state height")
+ maxAge := flags.Duration("max-age",0,"maximum certificate age; zero disables freshness policy")
  if err := flags.Parse(args); err != nil { return err }
  data, err := os.ReadFile(*genesis); if err != nil { return err }
  digest := sha256.Sum256(data)
@@ -77,10 +86,14 @@ func verify(args []string) error {
  validators := make([]*types.Validator, len(gen.Validators))
  for i,v := range gen.Validators { validators[i] = types.NewValidator(v.PubKey, v.Power) }
  set := types.NewValidatorSet(validators)
- client, err := rpchttp.New(*endpoint, "/websocket"); if err != nil { return err }
+ transport:=http.DefaultTransport.(*http.Transport).Clone(); transport.Proxy=nil
+ httpClient:=&http.Client{Timeout:10*time.Second,Transport:boundedTransport{transport},
+  CheckRedirect:func(*http.Request,[]*http.Request)error{return fmt.Errorf("RPC redirects are not accepted")}}
+ client, err := rpchttp.NewWithClient(*endpoint, "/websocket",httpClient); if err != nil { return err }
  ctx,cancel := context.WithTimeout(context.Background(),30*time.Second); defer cancel()
  q,err := client.ABCIQueryWithOptions(ctx,"/state",nil,rpcclient.ABCIQueryOptions{}); if err!=nil { return err }
  if q.Response.Code!=0 || q.Response.Height<1 { return fmt.Errorf("no committed application state") }
+ if q.Response.Height<*minHeight { return fmt.Errorf("certified height rollback") }
  h := q.Response.Height+1
  var signed *types.SignedHeader
  for i:=0;i<30;i++ {
@@ -93,6 +106,13 @@ func verify(args []string) error {
   return fmt.Errorf("validator set differs from fixed genesis; dynamic sets are unsupported")
  }
  if err:=set.VerifyCommitLight(gen.ChainID,signed.Commit.BlockID,h,signed.Commit); err!=nil { return err }
+ if *maxAge<0 { return fmt.Errorf("invalid certificate age policy") }
+ if *maxAge>0 {
+  now:=time.Now()
+  if signed.Header.Time.After(now.Add(10*time.Second)) || now.Sub(signed.Header.Time)>*maxAge {
+   return fmt.Errorf("certificate outside configured clock/freshness window")
+  }
+ }
  appHash:=sha256.Sum256(q.Response.Value)
  if !bytes.Equal(appHash[:],signed.Header.AppHash) { return fmt.Errorf("state bytes differ from certified app hash") }
  var state json.RawMessage = q.Response.Value

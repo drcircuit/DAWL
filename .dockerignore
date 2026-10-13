@@ -7,7 +7,9 @@
 !consensus/
 !consensus/**
 !dawl_cluster.py
+!dawl_external.py
 !scripts/cluster_entrypoint.py
+!scripts/external_fault_proxy.py
 !src/
 !src/**
 **/__pycache__

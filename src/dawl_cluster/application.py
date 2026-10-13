@@ -9,6 +9,7 @@ import threading
 from fastapi import FastAPI, Request, HTTPException
 from dawl_node.common import canonical_json, parse_json, read_json, sha256
 from .state import initial, advance, evaluate, MAX_TX
+from .incidents import consensus_reports
 
 
 class Application:
@@ -61,10 +62,11 @@ class Application:
             except (ValueError, TypeError):
                 return {"code": 1, "log": "invalid transaction encoding"}
 
-    def finalize(self, height, txs):
+    def finalize(self, height, txs, misbehavior=None):
         with self.lock:
             state = copy.deepcopy(self.state)
             advance(state, height)
+            consensus_reports(state,misbehavior)
             results = []
             for payload in txs or []:
                 try:
@@ -120,7 +122,7 @@ def app(root):
         if operation == "info": return machine.info()
         if operation == "init": return machine.init(value["chain_id"],value["app_state"])
         if operation == "check": return machine.check(value["tx"])
-        if operation == "finalize": return machine.finalize(value["height"],value["txs"])
+        if operation == "finalize": return machine.finalize(value["height"],value["txs"],value.get("misbehavior"))
         if operation == "commit": return machine.commit()
         if operation == "query": return machine.query(value["path"],value["height"],value["prove"])
         raise HTTPException(404,"unknown local ABCI operation")

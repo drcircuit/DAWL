@@ -20,6 +20,9 @@ leased complete-corpus replay, dataset release rules, streaming training inputs
 and an imported-weight ledger foundation. Its live view is `http://127.0.0.1:8882/`.
 The [cluster validation report](docs/cluster_run_002.md) records the full-corpus
 run, quorum loss and recovery, public certificate verification and current limits.
+The [external cluster workflow](docs/external_cluster.md) adds operator-local key
+generation, a shared public genesis bundle, per-host deployment, certified worker
+reads and attributed incident records. External hosts have not yet been deployed.
 
 - Eight locked public-domain books feed independent CPU tokenization jobs.
 - Signed lineage records connect original bytes, source registries, pinned tokenizer,

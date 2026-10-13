@@ -1,4 +1,6 @@
 FROM docker.io/library/golang:1.26.6
 WORKDIR /build
-COPY consensus/go.mod consensus/go.sum consensus/main.go ./
-RUN go install github.com/cometbft/cometbft/cmd/cometbft@v0.38.26 && cp /go/bin/cometbft /usr/local/bin/cometbft && go mod download && go mod verify && go build -mod=readonly -trimpath -o /usr/local/bin/dawl-consensus .
+COPY consensus/go.mod consensus/go.sum ./
+RUN go install github.com/cometbft/cometbft/cmd/cometbft@v0.38.26 && cp /go/bin/cometbft /usr/local/bin/cometbft && go mod download && go mod verify
+COPY consensus/main.go ./
+RUN go build -mod=readonly -trimpath -o /usr/local/bin/dawl-consensus .

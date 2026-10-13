@@ -7,6 +7,7 @@ import copy
 
 from dawl_node.common import canonical_json, sha256, verify_signature
 from data_ingestion.protocol import require_digest
+from .incidents import observe, worker_conflict
 
 MAX_TX = 65536
 AUDIT = "AUDIT_CPU"
@@ -43,22 +44,28 @@ def initial(plan):
             raise ValueError("unrecognized actor capability")
     if sum(AUDIT in a["hats"] for a in plan["actors"].values()) < plan["replicas"]:
         raise ValueError("insufficient distinct admitted auditors")
-    return {"schema": "dawl.cluster-state/1", "chain_id": plan["chain_id"],
+    state = {"schema": "dawl.cluster-state/1", "chain_id": plan["chain_id"],
             "plan_sha256": sha256(canonical_json(plan)), "plan": plan, "height": 0,
             "jobs": jobs, "actors": {p: {"sequence": 0, "last_tx": None, "last_result": None}
                                       for p in plan["actors"]},
             "dataset_release": None, "training_plans": {},
             "weights": {plan["imported_weight"]["id"]: plan["imported_weight"]},
             "expired_leases": 0, "rejected_transactions": 0}
+    if plan.get("evidence_contract") == "dawl.incidents/1":
+        state["incidents"]={"recent":[],"counts":{},"worker_conflicts":{}}
+    elif "evidence_contract" in plan:
+        raise ValueError("unknown incident contract")
+    return state
 
 
 def advance(state, height):
     if type(height) is not int or height != state["height"] + 1:
         raise ValueError("nonconsecutive block height")
     state["height"] = height
-    for job in state["jobs"].values():
-        for owner, lease in list(job["leases"].items()):
+    for identity,job in sorted(state["jobs"].items()):
+        for owner, lease in sorted(job["leases"].items()):
             if lease["expires"] < height:
+                observe(state,"lease_expired",{"job":identity,"signer":owner,**lease,"misconduct_proven":False})
                 del job["leases"][owner]
                 state["expired_leases"] += 1
 
@@ -148,8 +155,14 @@ def apply(state, tx):
             else:
                 # Keep bounded diagnostic history; invalid marks the shard disputed.
                 job["failures"] = (job["failures"]+[dict(report, signer=public, height=height, transaction=tx["id"])])[-64:]
+                observe(state,"worker_reported_"+report["outcome"],{"job":payload["job"],"signer":public,
+                        "transaction":tx["id"],"error":report["error"],"misconduct_proven":False})
             del job["leases"][public]
             result = {"job": payload["job"], "complete": complete(state,job)}
+    elif kind == "record_worker_conflict":
+        if PUBLISH not in hats:
+            raise ValueError("publisher capability required to submit conflict evidence")
+        result=worker_conflict(state,payload)
     elif kind == "publish_dataset":
         if PUBLISH not in hats or payload != {}:
             raise ValueError("publisher capability required")
@@ -214,4 +227,5 @@ def summary(state):
             "expired_leases": state["expired_leases"], "rejected_transactions": state["rejected_transactions"],
             "dataset_release": state["dataset_release"], "training_plans": state["training_plans"],
             "weights": state["weights"],
+            "incidents": state.get("incidents"),
             "workers": {p:{"name":state["plan"]["actors"][p]["name"], **v} for p,v in state["actors"].items()}}
