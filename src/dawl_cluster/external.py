@@ -101,8 +101,8 @@ def assemble(root, template, registrations, chain_id, image):
         raise ValueError("deployment image must be pinned by registry digest")
     public = [read_json(Path(path)) for path in registrations]
     members = [validate_registration(r) for r in public]
-    if not 8 <= len(members) <= 32:
-        raise ValueError("external bootstrap supports 8 to 32 admitted identities")
+    if not 8 <= len(members) <= 64:
+        raise ValueError("external bootstrap supports 8 to 64 admitted identities")
     for field in ("name", "signer", "host"):
         if len({b[field] for b in members}) != len(members):
             raise ValueError(f"duplicate {field}; each role needs its own identity and mesh address")
@@ -162,7 +162,7 @@ def check_bundle(bundle, pin):
     return manifest
 
 
-def install(root, bundle, pin):
+def install(root, bundle, pin, bind_host=None):
     """Install only into an unused local identity; never rewrite a live node."""
     root,bundle = Path(root),Path(bundle)
     manifest = check_bundle(bundle,pin)
@@ -171,6 +171,11 @@ def install(root, bundle, pin):
             raise ValueError("node already installed or installation incomplete; preserve state and inspect it")
     local = read_json(root/"registration.json")
     member = validate_registration(local)
+    # A Kubernetes ClusterIP is a stable advertised address, not a pod interface.
+    # The wildcard bind is explicit and must be protected by network policy.
+    if bind_host not in (None, member["host"], "0.0.0.0"):
+        raise ValueError("bind host must be the registered address or explicit wildcard")
+    listen = bind_host or member["host"]
     key = load_key(root/"key.private.pem")
     if key.public_key().public_bytes_raw().hex() != member["signer"]:
         raise ValueError("local private key differs from public registration")
@@ -219,12 +224,12 @@ db_backend = "goleveldb"
 db_dir = "data"
 abci = "socket"
 [rpc]
-laddr = "tcp://{member['host']}:26657"
+laddr = "tcp://{listen}:26657"
 unsafe = false
 max_open_connections = 64
 max_body_bytes = 1048576
 [p2p]
-laddr = "tcp://{member['host']}:26656"
+laddr = "tcp://{listen}:26656"
 external_address = "{member['host']}:26656"
 persistent_peers = "{peers}"
 addr_book_strict = false
@@ -245,7 +250,7 @@ create_empty_blocks_interval = "1s"
         (root/"comet/config/config.toml").write_text(toml,encoding="utf-8")
     role = member["role"]
     command = (["validator","/node"] if role == "validator" else
-               ["provider","--root","/node","--host",member["host"],"--port","8900","--allow-insecure-lab"] if role == "provider" else
+               ["provider","--root","/node","--host",listen,"--port","8900","--allow-insecure-lab"] if role == "provider" else
                ["worker","--root","/node"] if role == "worker" else ["status","--root","/node"])
     service = {"image":manifest["image"], "network_mode":"host", "read_only":True,"init":True,
                "user":f"{os.getuid()}:{os.getgid()}" if hasattr(os,"getuid") else "1000:1000",

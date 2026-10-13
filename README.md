@@ -133,6 +133,11 @@ See the [Stage 1 paper and research roadmap](docs/stage_1_data_ingestion.md),
 
 ## Implementation map
 
+The [Azure AKS pilot runbook](docs/azure_testnet.md) covers the prepared 20-worker
+testnet, its EUR 50/four-hour envelope, private networking, persistent identities,
+certificate capture and cleanup. Cloud deployment status is reported separately
+from the existing local rehearsals.
+
 | Location | Responsibility |
 | --- | --- |
 | `src/dawl_node/source.py` | Source admission, exact deduplication, bounded UTF-8 chunks |

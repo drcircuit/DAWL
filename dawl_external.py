@@ -26,6 +26,7 @@ def main():
     node.add_argument("--root",type=Path,required=True)
     node.add_argument("--bundle",type=Path,required=True)
     node.add_argument("--network-sha256",required=True,help="independently agreed network manifest pin")
+    node.add_argument("--bind-host",help="explicit 0.0.0.0 bind behind a private Kubernetes Service")
     seed=commands.add_parser("seed-provider")
     seed.add_argument("--root",type=Path,required=True)
     seed.add_argument("--objects",type=Path,required=True)

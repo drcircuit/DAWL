@@ -54,7 +54,8 @@ public services.
 
 The tool currently requires exactly four validators, one publisher, at least one
 provider and enough worker keys for the plan's replica count. It accepts 8–32 total
-identities. These are implementation bounds, not measured capacity claims.
+identities in the original rehearsal; the Azure bootstrap raises that bound to
+64 identities. These are implementation bounds, not measured capacity claims.
 
 ## Build the runtime
 

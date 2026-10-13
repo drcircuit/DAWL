@@ -10,6 +10,7 @@
 !dawl_external.py
 !scripts/cluster_entrypoint.py
 !scripts/external_fault_proxy.py
+!scripts/kubernetes_node.py
 !src/
 !src/**
 **/__pycache__

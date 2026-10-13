@@ -9,5 +9,6 @@ COPY src ./src
 COPY dawl_cluster.py dawl_external.py .
 COPY scripts/cluster_entrypoint.py ./scripts/
 COPY scripts/external_fault_proxy.py ./scripts/
+COPY scripts/kubernetes_node.py ./scripts/
 USER 1000:1000
 ENTRYPOINT ["python", "/app/scripts/cluster_entrypoint.py"]
