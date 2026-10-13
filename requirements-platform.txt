@@ -1,0 +1,5 @@
+-r requirements-ingestion.txt
+numpy==2.5.3
+safetensors==0.8.0
+onnx==1.23.2
+onnxruntime-directml==1.24.4; sys_platform == 'win32'

@@ -1,6 +1,7 @@
 *
 !requirements-ingestion.txt
 !dawl_node.py
+!dawl_platform.py
 !src/
 !src/**
 **/__pycache__

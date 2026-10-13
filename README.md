@@ -5,10 +5,32 @@ for contributing data and compute, publishing model improvements, preserving the
 provenance, and choosing or developing model branches.
 
 We develop the theory and a working proof of concept together, one stage at a time.
-The current stage validates ingestion and separate node roles. It performs **no
-model training, tokenizer fitting, embedding generation, or gradient updates**.
+The current stage runs real ingestion, a replicated provenance ledger, GPU input-vector
+recovery and independent CPU replay. It performs **no model training or gradient updates**.
 
-## Current implementation: ingestion nodes
+## Current platform prototype
+
+The [platform runbook](docs/platform.md) describes the executable hats and commands.
+The [recorded platform validation](docs/platform_run_001.md) separates measured results
+from remaining engineering work. The local observatory is at `http://127.0.0.1:8880/`.
+
+- Eight locked public-domain books feed independent CPU tokenization jobs.
+- Signed lineage records connect original bytes, source registries, pinned tokenizer,
+  token shards, a real GPT-2 embedding table, vector commitments and audit receipts.
+- The GPU reconstructs 768-dimensional input embeddings from token IDs. Dense vectors
+  are hashed and discarded; another node can reconstruct them from the pinned table.
+- A separate CPU container downloads public artifacts and repeats all source, token
+  and vector checks. Ledger peers replicate signed records into independent databases.
+- Anyone with independently pinned public trust inputs can run `dawl_platform.py verify`;
+  no producer key or admitted signing identity is needed for verification.
+
+This is a bounded local federation, with static job assignment and explicit peer sync.
+It does not yet provide open peer discovery, adversarial consensus, a distributed job
+queue, training-run lineage or provenance for a generated answer. Imported GPT-2
+pretraining is an explicit boundary. The research branch and its provisional study
+materials remain separate; model trust experiments follow the platform work.
+
+## Preserved ingestion-node baseline
 
 | Hat | Responsibility |
 | --- | --- |
@@ -19,14 +41,14 @@ model training, tokenizer fitting, embedding generation, or gradient updates**.
 | Consumer | Download and verify complete token shards into a separate local store |
 
 Roles have separate commands, HTTP routes, trust inputs, and signing identities.
-The pilot uses local CPU ingestion plus separate CPU storage and validator
-containers. The local GPU is reserved for a later, explicitly defined workload.
+The earlier pilot uses local CPU ingestion plus separate CPU storage and validator
+containers. The platform above adds a defined GPU vector-recovery workload.
 A physical node may eventually wear multiple hats without merging their contracts.
 
 Start with the [architecture and deployment guide](docs/ingestion_nodes.md).
 [Execution results](docs/ingestion_nodes_results.md) record what has actually run.
 
-## Run
+## Run the earlier ingestion-only pilot
 
 Use Python 3.10+ and install the ingestion dependencies in a project environment:
 

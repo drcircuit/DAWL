@@ -1,0 +1,19 @@
+{
+  "schema":"dawl.book-selection/1",
+  "corpus":"classics-8/v1",
+  "catalogue_checked":"2026-10-13",
+  "language":"en",
+  "purpose":"Source registration, tokenization, storage and audit scale fixture; no training",
+  "processing":"Exact UTF-8 text including supplied notices; no normalization or boilerplate removal",
+  "download_root":"rsync://gutenberg.pglaf.org/gutenberg-epub/",
+  "books":[
+    {"id":11,"title":"Alice's Adventures in Wonderland","author":"Lewis Carroll","author_death_year":1898},
+    {"id":1342,"title":"Pride and Prejudice","author":"Jane Austen","author_death_year":1817,"edition_note":"Includes a preface by George Saintsbury (died 1933) and textual illustration references to Hugh Thomson."},
+    {"id":84,"title":"Frankenstein; or, the modern prometheus","author":"Mary Wollstonecraft Shelley","author_death_year":1851},
+    {"id":2701,"title":"Moby Dick; Or, The Whale","author":"Herman Melville","author_death_year":1891},
+    {"id":1400,"title":"Great Expectations","author":"Charles Dickens","author_death_year":1870},
+    {"id":76,"title":"Adventures of Huckleberry Finn","author":"Mark Twain","author_death_year":1910},
+    {"id":345,"title":"Dracula","author":"Bram Stoker","author_death_year":1912},
+    {"id":1661,"title":"The Adventures of Sherlock Holmes","author":"Arthur Conan Doyle","author_death_year":1930}
+  ]
+}

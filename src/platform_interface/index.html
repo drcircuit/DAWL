@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAWL · Platform observatory</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body><header><a class="brand" href="/">DAWL <span>Linux for AI</span></a><span id="connection">Connecting to node…</span></header>
+<main><div class="eyebrow">LIVE PLATFORM / INGESTION FOUNDATION</div><h1>Follow the data.<br>Reproduce the work.</h1>
+<p class="intro">Real books, real token streams, recoverable input vectors. Every published transformation links to its inputs and contributor. Independent auditors replay the work.</p>
+<p class="scope">Local federation prototype · pinned node identities · no model training yet</p>
+<section id="metrics" class="metrics" aria-label="Live pipeline totals"></section>
+<section class="panel"><div class="heading"><div><h2>The ingestion pipeline</h2><p>Select a book to inspect its signed lineage and download the underlying artifacts.</p></div><a href="/api/export" class="button">Export ledger ↓</a></div>
+<div class="table-scroll"><table><thead><tr><th>Source</th><th>Chunks</th><th>Tokens</th><th>Tokenization</th><th>Vectors</th><th>CPU audit</th></tr></thead><tbody id="books"></tbody></table></div></section>
+<section class="panel" id="inspector"><h2>Lineage inspector</h2><p id="selection">Select a source above. The auditor checks exact source, token and vector bytes.</p><div id="lineage" class="lineage"></div></section>
+<section class="panel"><h2>Measured operation</h2><div id="measurements"></div><p class="note">These are measurements on one host and its CPU containers. They do not establish internet-scale performance or independent operators.</p></section>
+<section class="panel"><h2>What the evidence establishes</h2><div class="evidence-grid"><div><h3>Reproduced</h3><p>Book bytes → registered chunks → lossless token IDs → exact lookup in a pinned pretrained embedding table.</p></div><div><h3>Recorded and attributed</h3><p>Content hashes, transformation contracts, contributor signatures, lineage links and signed audit observations.</p></div><div><h3>Still to build</h3><p>Training-run lineage, weight updates, model outputs, open peer admission and a resilient public network. Imported GPT-2 training history is outside this ledger.</p></div></div></section>
+<footer><div id="checkpoint"></div><a href="/api/trust">Inspect bootstrap policy</a> · <a href="/api/summary">Raw node status</a><p>Public keys and artifact hashes must be pinned independently. A signature identifies a key; an audit records checks performed.</p></footer></main></body></html>
