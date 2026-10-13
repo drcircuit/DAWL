@@ -1,0 +1,21 @@
+{
+  "schema": "dawl.operational-check/1",
+  "provider_restart_seconds": 3.953,
+  "provider_forced_kill": false,
+  "observatory_status": 200,
+  "validators_reachable": 4,
+  "complete_shards": 26,
+  "provider_restart_stderr": "",
+  "providers_after_restart": {
+    "8930": {
+      "role": "provider",
+      "artifacts": 143
+    },
+    "8931": {
+      "role": "provider",
+      "artifacts": 143
+    }
+  },
+  "observatory_javascript_syntax": "passed",
+  "visual_ui_check": false
+}

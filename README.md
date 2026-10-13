@@ -15,6 +15,11 @@ The [recorded platform validation](docs/platform_run_001.md) separates measured 
 from remaining engineering work. The local observatory is at `http://127.0.0.1:8880/`.
 The [swarm runbook](docs/swarm.md) and [swarm validation](docs/swarm_run_001.md) cover
 the asynchronous network layer and its five-container adversarial experiment.
+The [consensus cluster runbook](docs/cluster.md) adds four CometBFT validators,
+leased complete-corpus replay, dataset release rules, streaming training inputs
+and an imported-weight ledger foundation. Its live view is `http://127.0.0.1:8882/`.
+The [cluster validation report](docs/cluster_run_002.md) records the full-corpus
+run, quorum loss and recovery, public certificate verification and current limits.
 
 - Eight locked public-domain books feed independent CPU tokenization jobs.
 - Signed lineage records connect original bytes, source registries, pinned tokenizer,
@@ -29,10 +34,11 @@ the asynchronous network layer and its five-container adversarial experiment.
   gossip signed audit claims, independently recheck those claims and replicate observation batches.
 - The live observatory shows topology, artifact availability, receipt outcomes and disagreements.
 
-This is a bounded local federation, with static production job assignment and asynchronous
-replication/auditing among configured, admitted peers.
-It does not yet provide open peer discovery, adversarial consensus, a distributed job
-queue, training-run lineage or provenance for a generated answer. Imported GPT-2
+The original platform and swarm remain preserved baselines. The new admitted
+cluster has consensus-ordered leases and complete sharded replay among configured
+workers. Three of four validators are required to commit. It does not yet provide
+open peer discovery, permissionless admission, executed training-run lineage or
+provenance for a generated answer. Imported GPT-2
 pretraining is an explicit boundary. The research branch and its provisional study
 materials remain separate; model trust experiments follow the platform work.
 

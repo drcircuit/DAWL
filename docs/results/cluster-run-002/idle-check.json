@@ -1,0 +1,14 @@
+{
+  "schema": "dawl.idle-check/1",
+  "seconds": 8,
+  "height_before": 334,
+  "height_after": 340,
+  "actor_sequences_unchanged": true,
+  "actor_sequences": {
+    "85aebb55e12e28efdb64a9700a9123f010583497b3b6053514cfea101e7e1455": 29,
+    "87ea40fae6e4cd0c8a4620cba68868e4258aed52f0fd0c18c9b37118f7d7f4e7": 39,
+    "a1aa76bd40827037cafc12aa3602ff4768d352ba56df6a9908d62d42771af224": 38,
+    "b9d2591b42fa6befcfe1b0cc8ce789e5b6cb907dcd3e0d7961a4ed21fc2f69fa": 5,
+    "c45426b00c0d8b84919be48be07efb92cd7ad3f4a90d76d161aabe015176350d": 2
+  }
+}

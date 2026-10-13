@@ -1,0 +1,55 @@
+{
+  "schema": "dawl.cluster-capture/1",
+  "image_id": "357dacd66bd08597a86c2d64d2d8fbbc3e87d25c99ab76b8427ea65b22fef96e",
+  "code_commit": "8f8a7eebb4a5d18ba972dac2112aca4f478a0a41",
+  "implementation_sha256": "bd14dfb8e1c1c82141fdff4d1a44962eab5ce1899fc49ba72385aceb224c22a6",
+  "cometbft": "0.38.26",
+  "validator_count": 4,
+  "final_certificate_height": 302,
+  "final_app_hash": "f13173d0847e476b45809d302384359889d8f94aa51d5f52af892dd59fbfd3dc",
+  "attestations_by_worker": {
+    "worker-1": 19,
+    "worker-2": 18,
+    "worker-3": 14,
+    "worker-0": 1
+  },
+  "transfer_counters": {
+    "worker-0": {
+      "received_bytes": 157808102,
+      "requests": 182,
+      "pieces_downloaded": 165,
+      "objects_downloaded": 17
+    },
+    "worker-1": {
+      "received_bytes": 169160384,
+      "requests": 350,
+      "pieces_downloaded": 250,
+      "objects_downloaded": 100
+    },
+    "worker-2": {
+      "received_bytes": 168184247,
+      "requests": 332,
+      "pieces_downloaded": 241,
+      "objects_downloaded": 91
+    },
+    "worker-3": {
+      "received_bytes": 168745055,
+      "requests": 336,
+      "pieces_downloaded": 243,
+      "objects_downloaded": 93
+    }
+  },
+  "training_executed": false,
+  "baseline_checkpoint_unchanged": {
+    "entries": 36,
+    "policy": "b859f160c0b3c79b710f6674c8e8110f5276de85ac97a7e4319a8a9d3094c91f",
+    "set_sha256": "9394e3fd7dff3dac6446c7774606498ae89d99fb2fe341cf11f378917bb60c3a"
+  },
+  "limits": [
+    "One physical host/operator",
+    "Static validator and worker admission",
+    "Worker signatures are computation claims, not proofs",
+    "Full-state hashing is bounded, not a sharded state database",
+    "No model training, weight promotion or token rewards"
+  ]
+}

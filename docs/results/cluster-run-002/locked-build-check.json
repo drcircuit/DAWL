@@ -1,0 +1,12 @@
+{
+  "schema": "dawl.locked-build-check/1",
+  "go": "1.26.6",
+  "cometbft": "0.38.26",
+  "go_mod_verify": "passed",
+  "go_build_mod": "readonly",
+  "runtime_binary_hashes_match_rebuild": true,
+  "binary_sha256": {
+    "cometbft": "727306409a65de70cd874e7ba3e61ed7e4cf9179b2b53f8a97fe7cf73d9f865d",
+    "dawl-consensus": "2b95fcd7d01f877d78fc8263bf4aa73a1bb0e34246aa352ce9d19fa4036f21bc"
+  }
+}
