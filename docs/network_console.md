@@ -5,6 +5,14 @@ Inactive work and earlier launch attempts are in history. Raw runtime names,
 addresses, hashes and resource diagnostics remain available in technical details.
 The GPU view keeps device inspection separate from the main network page.
 
+The **Active work** panel shows corpus tokenization, data replay, weight training
+and checkpoint replay. It includes progress, epochs, nonpadding target tokens per
+second, recent measured loss, validation score and the last saved checkpoint.
+The TUI header carries current work in every view; **2 Work** shows the job list.
+GPU utilization and used/total memory come from the device observer. Progress is
+bound to the worker's execution identity, so an old stopped container cannot
+inherit a new run's activity. Rates disappear when worker samples become stale.
+
 ## Terminal console
 
 From the repository in PowerShell:
@@ -47,7 +55,8 @@ For two valid samples, `rate = (counter_now - counter_before) / elapsed_seconds`
 New or reset counters, missing samples and gaps over 60 seconds produce unavailable
 rates, never fabricated zero. Memory uses one latest sample. The UI exposes the
 sampling and measurement scope in details. This collector covers its selected
-network containers; standalone fine-tuning histories are displayed separately.
+network containers and labeled Seed workers; older fine-tuning histories are
+displayed separately.
 
 An instrumented trainer/verifier may write `public/compute-metrics.json` in its
 node directory using this contract:
@@ -67,9 +76,11 @@ node directory using this contract:
 multiply-add counted as two. `kind` is `counted` for instrumented counts or
 `estimated` for a documented operation model. Rates aggregate fresh, matching
 counter epochs only; mixed counted/estimated inputs are identified as mixed.
-The dashboard reports coverage. Currently the workers do not emit these counters,
-so FLOP/s is **Not reported**. Neither GPU utilization nor tensor dimensions alone
-are converted to achieved FLOP/s.
+The dashboard reports coverage. Seed training emits an estimate from
+`6 × parameter_count × nonpadding_target_tokens`; this excludes attention overhead,
+padding work, evaluation and replay. Other workers without counters remain
+unreported. GPU utilization is measured separately and is never converted into
+FLOP/s. Device-wide GPU readings can include other processes.
 
 The collector can be kept running in a hidden Windows process:
 

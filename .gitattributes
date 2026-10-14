@@ -7,3 +7,7 @@ output/testnet-presentation/** -text
 *.sh text eol=lf
 # Seed implementation manifests hash source bytes across Windows and Linux.
 src/dawl_scratch/*.py text eol=lf
+src/dawl_seed/*.py text eol=lf
+scripts/verify_seed_data.py text eol=lf
+scripts/audit_seed_overlap.py text eol=lf
+scripts/compare_seed_models.py text eol=lf

@@ -7,6 +7,20 @@ refresh();roadmap();setInterval(refresh,60000);setInterval(freshness,1000);
 async function sources(){try{const r=await fetch('reports/source-lock.json');if(!r.ok)throw Error();const data=await r.json();for(const book of data.books){const item=document.createElement('article'),a=document.createElement('a'),author=document.createElement('p'),hash=document.createElement('code');a.textContent=book.title;const url=new URL(book.catalogue_url || book.source_url);if(url.protocol!=='https:'||url.hostname!=='www.gutenberg.org')continue;a.href=url.href;a.target='_blank';a.rel='noopener';author.textContent=book.author+' · '+book.domain;hash.textContent=book.sha256;item.append(a,author,hash);$('source-library').append(item)}}catch(e){$('source-library').textContent='Source library unavailable.'}}
 sources();
 
+async function seedEvidence(){
+ const section=$('seed-evidence');if(section?.dataset.seedReady!=='true')return;
+ try{const response=await fetch('reports/seed-ii/report.json');if(!response.ok)throw Error('Evidence unavailable');const data=await response.json(),s=data.summary;
+  $('seed-parameters').textContent=(s.parameters/1e6).toFixed(2)+'M';
+  $('seed-exposure').textContent=(s.target_tokens_this_session/1e6).toFixed(1)+'M';
+  const corpusResponse=await fetch('reports/seed-ii/comparison.json');if(!corpusResponse.ok)throw Error('Comparison unavailable');const comparison=await corpusResponse.json();
+  $('seed-corpus').textContent=(data.training_targets_per_epoch/1e6).toFixed(1)+'M';
+  $('seed-replay').textContent=data.replay_tensor_count+' / '+data.replay_tensor_count;
+  $('seed-detail').textContent=data.documents.toLocaleString()+' source documents · '+data.norwegian_documents+' Norwegian texts · selected step '+s.selected_step.toLocaleString()+' · replay intervals '+data.replay_intervals.map(r=>r.start+'–'+r.end).join(', ');
+  $('seed-blueprint').textContent='Blueprint SHA-256: '+data.blueprint_sha256;$('seed-chart').src='reports/seed-ii/learning.png';section.hidden=false;
+ }catch(error){section.hidden=true}
+}
+seedEvidence();
+
 function rate(value,bytes=false){if(value==null)return '—';if(!bytes)return value.toLocaleString(undefined,{maximumFractionDigits:1});for(const unit of ['B','KB','MB','GB']){if(value<1000||unit==='GB')return value.toFixed(1)+' '+unit;value/=1000}}
 function renderNetwork(s){
  const network=s.network||{},nodes=network.nodes||[],roles={'oracle':'The Oracle','cortex':'Cortex Units','trainer':'Trainers','gpu-verifier':'Replay Daemons','token-auditor':'Audit Daemons','publisher':'Publishers'};

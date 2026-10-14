@@ -32,6 +32,8 @@ def tail(path, count=30):
 
 def collect(root, run):
     ids=command('podman','ps','-aq','--filter','label=org.hypertrix.oracle-training='+run).split()
+    ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.seed').split()
+    ids=list(dict.fromkeys(ids))
     containers=json.loads(command('podman','inspect',*ids)) if ids else []
     alive=[c['Name'] for c in containers if c['State']['Running']]; stats={}; errors=[]
     if alive:
@@ -42,6 +44,33 @@ def collect(root, run):
     nodes=[]
     prefix='hypertrix-t4-'+run+'-'
     for c in containers:
+        labels=c['Config'].get('Labels') or {}
+        if labels.get('org.hypertrix.seed'):
+            folder=Path(labels.get('org.hypertrix.work-root','/nonexistent')).resolve()
+            if not folder.is_relative_to(Path('/var/lib/dawl')):continue
+            activity=read(folder/'progress.json',{})
+            if activity.get('execution_id') and not c['Id'].startswith(activity['execution_id']):activity={}
+            if folder.name=='probe' and activity:activity={**activity,'job':'Seed II calibration'}
+            if folder.name=='probe-replay' and activity:activity={**activity,'job':'Calibration replay'}
+            age=None
+            try:age=(datetime.now(timezone.utc)-datetime.fromisoformat(activity['observed_at'])).total_seconds()
+            except (ValueError,KeyError):pass
+            live=c['State']['Running'] and age is not None and -5<=age<=30
+            phase=activity.get('phase','Starting')
+            if activity.get('status')=='running' and not live:phase='Updates paused' if c['State']['Running'] else 'Stopped'
+            activity={**activity,'phase':phase,'live':live,'age_seconds':age,'node_id':c['Id'][:12]}
+            if not live:activity.pop('targets_per_second',None)
+            compute=None
+            if live and activity.get('target_tokens') and activity.get('parameters'):
+                compute={'schema':'hypertrix.node-compute/1','observed_at':activity['observed_at'],
+                    'counter_epoch':c['Id'],'kind':'estimated','convention':'scalar-fp-ops-fma2',
+                    'flops_total':6*activity['parameters']*activity['target_tokens'],
+                    'method':'6 * dense parameter count * training target tokens; excludes attention overhead, padding, evaluation and replay.'}
+            nodes.append({'name':c['Name'],'role':labels.get('org.hypertrix.role','model-trainer'),
+                'id':c['Id'][:12],'running':c['State']['Running'],'status':c['State']['Status'],
+                'exit_code':c['State']['ExitCode'],'stats':stats.get(c['Name'],{}),'activity':activity,
+                'compute':compute,'events':tail(folder/'events.jsonl',30)})
+            continue
         name=c['Name'].removeprefix(prefix); folder=root/name
         role=('oracle' if name.startswith('validator-') else 'trainer' if name.startswith('trainer-')
               else 'gpu-verifier' if name.startswith('verifier-') else 'token-auditor' if name.startswith('worker-')
@@ -87,6 +116,11 @@ def main():
         try:
             value=collect(a.root,a.run);value['aggregate']=aggregate(value,previous);previous=value
             pending=a.exchange/'status.pending';pending.write_text(json.dumps(value));os.replace(pending,a.exchange/'status.json')
+            activities=[n['activity'] for n in value['nodes'] if n.get('activity',{}).get('live') and n['activity'].get('status')=='running']
+            if activities:
+                with (a.exchange/'work-samples.jsonl').open('a') as stream:
+                    stream.write(json.dumps({'observed_at':value['observed_at'],'gpu':value['gpu'],
+                                             'aggregate':value['aggregate'],'activities':activities})+'\n')
         except Exception as error:print(type(error).__name__+': '+str(error)[:200],flush=True)
         if a.once:return
         time.sleep(4)

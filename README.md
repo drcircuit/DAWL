@@ -5,6 +5,9 @@ Run the live terminal dashboard with `./hypertrix-console.ps1`. See the [network
 The [Hypertrix Seed model lab](docs/scratch_model.md) adds a model trained from
 random initialization, a pinned public-code corpus, a small MoE branch and a
 local text/code playground (`http://127.0.0.1:8886/`).
+The [Seed II expansion](docs/seed_expansion.md) adds Nasjonalbiblioteket's CC0
+Norwegian literature, a 40.6M-parameter model, deterministic BF16 training and
+live corpus/training progress in both dashboards.
 
 ## Public research observatory
 

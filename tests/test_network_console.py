@@ -40,5 +40,12 @@ class NetworkAccountingTests(unittest.TestCase):
     def test_terminal_control_sequences_are_removed(self):
         self.assertNotIn('\x1b',clean('\x1b]0;title\x07'))
 
+    def test_stale_work_drops_rate_even_when_main_telemetry_is_fresh(self):
+        p={'certified':True,'state':{},'telemetry':self.sample(10,10,1000,100)}
+        p['telemetry']['nodes'][0].update(role='model-trainer',name='hypertrix-seed',activity={
+            'observed_at':'2026-10-14T17:59:00+00:00','job':'Seed II','live':True,'status':'running','phase':'Training weights','targets_per_second':999})
+        v=view(p,datetime(2026,10,14,18,0,10,tzinfo=timezone.utc))
+        self.assertFalse(v['activities'][0]['live']);self.assertNotIn('targets_per_second',v['activities'][0])
+
 
 if __name__=='__main__':unittest.main()

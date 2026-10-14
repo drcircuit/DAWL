@@ -6,7 +6,8 @@ import re
 
 ROLES={'oracle':'Oracle','cortex':'Cortex Unit','trainer':'Trainer','gpu-verifier':'Replay Daemon',
        'token-auditor':'Audit Daemon','discovery':'Discovery','console':'Console',
-       'local-adaptation':'Fine-tuning','local-replay':'Replay','publisher':'Publisher'}
+       'local-adaptation':'Fine-tuning','local-replay':'Replay','publisher':'Publisher',
+       'tokenizer':'Tokenizer','model-trainer':'Weight trainer','model-replay':'Weight replay'}
 
 
 def clean(value):return re.sub(r'[\x00-\x1f\x7f-\x9f]','',str(value))[:160]
@@ -21,6 +22,7 @@ def display_name(node):
 
 
 def phase(node):
+    if node.get('activity'):return node['activity'].get('phase','Starting')
     if not node.get('running'):return 'Complete' if node.get('exit_code')==0 else 'Stopped'
     if node.get('final'):return 'Serving checkpoint'
     events=node.get('events') or []
@@ -77,12 +79,23 @@ def view(payload,now=None):
                    'contacts':(n.get('dht') or {}).get('contacts'),'raw':n}
         (nodes if n.get('running') and not n.get('historical_attempt') else history).append(presented)
     jobs=list(s.get('training_jobs',{}).values());checkpoints=list(s.get('training_checkpoints',{}).values())
+    activities=[]
+    for n in tele.get('nodes',[]):
+        if not n.get('activity',{}).get('job'):continue
+        activity=dict(n['activity'])
+        try:current=fresh and -5<=(now-datetime.fromisoformat(activity['observed_at'])).total_seconds()<=30 and activity.get('live',False)
+        except (ValueError,KeyError):current=False
+        activity['live']=current
+        if not current:
+            activity.pop('targets_per_second',None)
+            if activity.get('status')=='running':activity['phase']='Updates paused' if n.get('running') else 'Stopped'
+        activities.append(activity)
     work={'accepted_contributions':sum(bool(j.get('contribution')) for j in jobs),'pending_jobs':sum(not j.get('contribution') for j in jobs),
           'checkpoints':len(checkpoints),'checkpoint_receipts':sum(len(c.get('receipts',{})) for c in checkpoints),
           'completed_target_tokens':sum(j['spec'].get('target_tokens',0) for j in jobs if j.get('contribution'))}
     return {'health':'Network synced' if payload['certified'] and fresh else 'Updates paused','fresh':fresh and payload['certified'],
             'height':s.get('height',0),'age':age,'nodes':nodes,'history':history,'work':work,
             'metrics':tele.get('aggregate',{}) if fresh else {},'gpu':tele.get('gpu') if fresh else None,
-            'stages':list(s.get('training_stages',{}).values()),'mode':'observer',
+            'stages':list(s.get('training_stages',{}).values()),'mode':'observer','activities':activities,
             'chain':s.get('chain_id'),'genesis':payload.get('genesis_sha256'),'errors':payload.get('errors',[]),
             'verification':'Quorum verified by the observer. Resource counters are operational measurements.'}

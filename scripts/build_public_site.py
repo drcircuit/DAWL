@@ -11,6 +11,7 @@ from dawl_node.common import verify_signature
 
 PUBLIC_KEY='3eedb69bceac39ca67320c3a6d704fe12dc4462cac7a56171ab804f2bc3ec537'
 STRICT_PUBLIC_KEY='a30bc71e898549c4f43320fe30c6c3ad90779c87fa39ed490fb4ef2349ba8eb5'
+SEED_PUBLIC_KEY='487126ddb843e78c4ed992362c9e84878a32460909310e4f536f187b8c5b5f34'
 
 def hashfile(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -84,6 +85,25 @@ def build(output=None):
         copy(strict/'README.md','reports/finetune-strict-002.md')
         copy(strict/'strict-results.png','figures/strict-results.png')
     for name in ('index.html','style.css','app.js','404.html','roadmap.json'):copy(ROOT/'site'/name,name)
+    seed=ROOT/'docs/results/scratch-003'
+    if (seed/'release-attestation.json').is_file():
+        from verify_seed_release import verify_release
+        checks['seed_release']=verify_release(seed,SEED_PUBLIC_KEY)
+        allowed=[seed/name for name in ('report.json','artifact-verification.json','release-attestation.json','sha256-manifest.json','comparison.json','comparison-receipt.json',
+            'comparison-implementation.py','paragraph-audit.json','paragraph-audit-implementation.py','benchmark.json','benchmark-flash.json',
+            'benchmark-blueprint.json','calibration-replay.json','README.md','learning.png','learning.pdf')]
+        for directory in ('dataset','intake','dense'):
+            allowed.extend(path for path in (seed/directory).rglob('*') if path.is_file() and path.suffix in ('.json','.jsonl','.py','.key','.txt'))
+        if any('private' in path.name or not path.resolve().is_relative_to(seed.resolve()) for path in allowed):raise ValueError('Private or unsafe Seed export')
+        archive=output/'reports/seed-ii.zip';archive.parent.mkdir(parents=True,exist_ok=True)
+        with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as bundle:
+            for path in sorted(set(allowed)):
+                if not path.is_file():raise ValueError('Incomplete Seed publication')
+                bundle.write(path,path.relative_to(seed))
+        files['reports/seed-ii.zip']=hashfile(archive)
+        for name in ('report.json','comparison.json','README.md','learning.png'):copy(seed/name,'reports/seed-ii/'+name)
+        copy(ROOT/'docs/seed_expansion.md','reports/seed-ii/methodology.md')
+        index=output/'index.html';index.write_text(index.read_text(encoding='utf-8').replace('data-seed-ready="false"','data-seed-ready="true"'),encoding='utf-8')
     for name in ('research-handoff-2026-10-14.md',):copy(ROOT/'docs'/name,'reports/'+name)
     for name in ('oracle_training.md','training_verification.md','public_observatory.md'):copy(ROOT/'docs'/name,'reports/'+name)
     oracle=ROOT/'docs/results/oracle-training-run-003'

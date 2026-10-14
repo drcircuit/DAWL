@@ -23,6 +23,20 @@ def amount(value,units=('B','KB','MB','GB','TB')):
         value/=1000
 
 
+def work_rows(model):
+    rows=[];seen=set()
+    activities=sorted(model.get('activities',[]),key=lambda a:(bool(a.get('live')),a.get('observed_at','')),reverse=True)
+    for a in activities:
+        identity=(a.get('job'),a.get('role'))
+        if not a.get('live') and identity in seen:continue
+        seen.add(identity)
+        rate=f"{a['targets_per_second']:,.0f} tok/s" if a.get('targets_per_second') is not None else ''
+        if a.get('loss') is not None:rate+=f"  loss {a['loss']:.3f}"
+        rows.append((Text(clean(a.get('job','Work'))),f"{a.get('completed',0):,} / {a.get('total',0):,} {a.get('unit','')}",rate,Text(clean(a.get('phase','Unknown')))))
+    for i,s in enumerate(model['stages']):rows.append((f'Oracle stage {i+1}',f"{s.get('round',0)} / {s.get('body',{}).get('rounds','?')} rounds",'',Text(clean(s.get('status','Unknown')))))
+    return rows
+
+
 def render(model,tab='network',page=0,height=36,paused=False,error=None):
     status='PAUSED' if paused else 'DISCONNECTED' if error else model['health'].upper()
     color='yellow' if paused or error or not model['fresh'] else 'green'
@@ -33,7 +47,16 @@ def render(model,tab='network',page=0,height=36,paused=False,error=None):
     flop=amount(m.get('flops_per_second'),('FLOP/s','kFLOP/s','MFLOP/s','GFLOP/s','TFLOP/s'))
     metric.append('   Compute '+flop+(' ('+m['compute_kind']+')' if m.get('flops_per_second') is not None else ''))
     cpu=m.get('cpu_cores');metric.append('   CPU '+(f'{cpu:.2f} cores' if cpu is not None else '—'))
-    header=Panel(Group(heading,summary,metric),border_style=color)
+    activities=model.get('activities',[])
+    active=[a for a in activities if a.get('live') and a.get('status')=='running']
+    live=Text('GPU '+str(gpu.get('utilization_percent','—'))+'%')
+    if gpu.get('memory_used_mib') is not None:live.append(f"  VRAM {gpu['memory_used_mib']/1024:.1f} / {gpu['memory_total_mib']/1024:.0f} GiB")
+    for a in active:
+        live.append('  |  '+clean(a.get('phase','Working'))+f" {a.get('completed',0):,}/{a.get('total',0):,}",style='bold green')
+        if a.get('targets_per_second') is not None:live.append(f"  {a['targets_per_second']:,.0f} tokens/s")
+        if a.get('loss') is not None:live.append(f"  loss {a['loss']:.3f}")
+        if a.get('epoch') is not None:live.append(f"  epoch {a['epoch']:.2f}/{a.get('epochs','?')}")
+    header=Panel(Group(heading,summary,metric,live),border_style=color)
     table=Table(expand=True,box=None,header_style='bold cyan',padding=(0,1))
     page_size=max(2,height-13)
     if tab in ('network','history'):
@@ -44,10 +67,11 @@ def render(model,tab='network',page=0,height=36,paused=False,error=None):
         if not selected:table.add_row('No nodes in this view','','','')
         caption=f'{len(items)} nodes · page {page+1} / {max(1,(len(items)+page_size-1)//page_size)}'
     elif tab=='work':
-        for name in ('Training stage','Rounds','Checkpoints','State'):table.add_column(name)
-        for i,s in enumerate(model['stages']):table.add_row(f'Stage {i+1}',f"{s.get('round',0)} / {s.get('body',{}).get('rounds','?')}",str(len(s.get('checkpoints',[]))),Text(clean(s.get('status','Unknown'))))
-        if not model['stages']:table.add_row('No registered stages','','','')
-        caption=f"{model['work'].get('pending_jobs',0)} pending jobs · {model['work'].get('checkpoint_receipts',0)} checkpoint receipts · {model['work'].get('completed_target_tokens',0):,} accepted target tokens"
+        for name in ('Work','Progress','Throughput / loss','State'):table.add_column(name)
+        rows=work_rows(model)
+        for row in rows[page*page_size:(page+1)*page_size]:table.add_row(*row)
+        if not rows:table.add_row('No work reported','','','')
+        caption=f"Page {page+1} / {max(1,(len(rows)+page_size-1)//page_size)} · {model['work'].get('pending_jobs',0)} pending jobs · {model['work'].get('checkpoint_receipts',0)} checkpoint receipts"
     else:
         table.add_column('Signal');table.add_column('Current value')
         for key,value in [('Verification',model['verification']),('Genesis',model['genesis']),('Chain',model['chain']),
@@ -114,8 +138,8 @@ def main():
                     future=None;next_fetch=time.monotonic()+a.interval
                 if not paused and future is None and time.monotonic()>=next_fetch:future=pool.submit(fetch,a.endpoint)
                 model=view(payload) if payload else empty
-                if error:model={**model,'fresh':False,'metrics':{},'nodes':[{**n,'running':False,'status':'Last seen'} for n in model['nodes']]}
-                count=len(model['nodes'] if tab=='network' else model['history']);page=min(page,max(0,(count-1)//max(2,console.height-13)))
+                if error:model={**model,'fresh':False,'metrics':{},'gpu':None,'activities':[{**a,'live':False,'targets_per_second':None,'phase':'Last seen'} for a in model.get('activities',[])],'nodes':[{**n,'running':False,'status':'Last seen'} for n in model['nodes']]}
+                count=len(work_rows(model)) if tab=='work' else len(model['nodes'] if tab=='network' else model['history']);page=min(page,max(0,(count-1)//max(2,console.height-13)))
                 live.update(render(model,tab,page,console.height,paused,error),refresh=True);time.sleep(.1)
     except KeyboardInterrupt:pass
     console.print('Hypertrix Console closed.',style='dim');return 0
