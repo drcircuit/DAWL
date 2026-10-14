@@ -75,3 +75,16 @@ certificate checking, immutable release signing and a separate deployment
 identity. Browser display currently trusts the HTTPS publication service and
 offers certificate downloads for outside verification; it does not itself run
 CometBFT verification. Azure serving availability is not consensus liveness.
+
+## Console presentation
+
+The platform presents the Collective by node role, independently of deployment
+location. `site/roadmap.json` is the single UI source for completed, in-progress
+and planned development milestones. Operational conditions (stale updates, failed
+verification and unavailable nodes) remain visible as measured state. Evidence
+cards name the exact successful checks; execution context and full receipts are
+available in their details and archives.
+
+The participant study has its own interface on port 8885. Platform pages and
+participant pages contain no navigation links to each other. Research protocol
+material is not listed in the platform UI or its publication manifest.

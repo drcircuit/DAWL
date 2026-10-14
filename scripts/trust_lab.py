@@ -31,6 +31,7 @@ from dawl_node.common import canonical_json, sha256, write_json
 
 p=argparse.ArgumentParser();p.add_argument('--pilot',type=Path,required=True)
 p.add_argument('--root',type=Path,default=REPO/'artifacts/trust-lab-001');p.add_argument('--port',type=int,default=8885)
+p.add_argument('--study-pilot',type=Path);p.add_argument('--study-documentation',type=Path)
 args=p.parse_args();args.root.mkdir(parents=True,exist_ok=True)
 CASES=json.loads((REPO/'research/finance-trust-cases-v1.json').read_text(encoding='utf-8'))
 CASE_MAP={c['id']:c for c in CASES['cases']}
@@ -373,7 +374,8 @@ async def research_summary():
 
 
 study=Study(args.root.parent/'trust-study-002',REPO/'research/trust-study-v2.json',
-            [REPO/'scripts'/f for f in ('trust_study.html','trust_study.js','trust_study.css','study-advice.js','study-provenance.js','trust_study.py')],args.pilot)
+            [REPO/'scripts'/f for f in ('trust_study.html','trust_study.js','trust_study.css','study-advice.js','study-provenance.js','trust_study.py')],
+            args.study_pilot or args.pilot,args.study_documentation)
 
 
 @app.get('/participant')
@@ -388,7 +390,7 @@ async def study_admin():
     <title>Forskeroversikt · Hypertrix</title><link rel="stylesheet" href="/assets/trust_study.css"><main><span class="eyebrow">Hypertrix · Forskeroversikt</span>
     <h1>Faste råd, variert dokumentasjon</h1><div class="card"><p>Tre scenarioer fra Yngvar. Seks ordrette rådvarianter. Faglig vurdering og vanskelighetskalibrering gjenstår; dette er en pilot.</p>
     <p>Én dokumentasjonsbetingelse per deltaker: A uten ekstra dokumentasjon, B utviklingsbeskrivelse, C samme beskrivelse med kontrollerbare dokumenter. Rådene er forskerskrevne, ikke modellgenererte.</p>
-    <p><a href="/participant">Åpne deltakerpiloten</a> · <a href="/">Tidligere modellforsøk og tekniske resultater</a></p></div>
+    <p><a href="/participant">Åpne deltakerpiloten</a></p></div>
     <div class="card"><h2>Forhåndsvis uten å lagre svar</h2><div id="previews"></div></div>
     <div class="card"><h2>Datainnsamling</h2><p id="counts"></p><button id="export">Last ned forskerdata (JSON)</button><p class="small">Kun lokal eksport. Ingen svar eller øktnøkler publiseres til Azure. Visningstider inkluderer pauser og er ikke et mål på aktiv lesetid.</p></div></main>
     <script>const token='''+json.dumps(TOKEN)+''';
@@ -468,6 +470,7 @@ async def study_evidence(digest:str):
     if len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):raise HTTPException(404)
     path=study.root/'evidence'/digest
     if not path.is_file():raise HTTPException(404)
+    if hashlib.sha256(path.read_bytes()).hexdigest()!=digest:raise HTTPException(409,'Evidence integrity check failed')
     return FileResponse(path,media_type='application/json')
 
 

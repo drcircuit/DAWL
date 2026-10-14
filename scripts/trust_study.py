@@ -26,7 +26,7 @@ def utc():
     return datetime.now(timezone.utc).isoformat()
 
 
-def documentation(condition):
+def documentation(condition, model_document=None):
     # B and C have exactly the same statements. C adds the supporting records.
     steps = [
         {'title': 'Utgangspunkt', 'text': 'Demonstrasjonsmodellen bygger på de publiserte vektene til Qwen3-0.6B. Den nøyaktige modellversjonen er registrert.', 'file': 'base-lock.json'},
@@ -35,6 +35,8 @@ def documentation(condition):
         {'title': 'Kontroll', 'text': 'Filkontroll og sammenslåing av modellvektene bestod. En gjentakelse av første treningsepoke ga små tallforskjeller og bestod ikke kravet om helt identiske vekter. En senere kort test med nye innstillinger ga identiske resultater etter 12 oppdateringer.', 'file': 'replay-verification.json'},
         {'title': 'Ferdig versjon', 'text': 'Modellversjonen fra epoke 3 er eksportert og kjøres lokalt i Ollama. Kontrollene er utført av samme prosjektoperatør; de er ikke en ekstern sertifisering.', 'file': 'serving-package.json'},
     ]
+    if model_document is not None:
+        steps = model_document['steps']
     if condition == 'A':
         return {'title': 'Dokumentasjon', 'steps': [], 'text': 'Ingen ekstra modelldokumentasjon vises i denne versjonen.'}
     return {'title': 'Modellens utviklingshistorie',
@@ -44,15 +46,18 @@ def documentation(condition):
 
 
 class Study:
-    def __init__(self, root, protocol, interface_files, evidence_root):
+    def __init__(self, root, protocol, interface_files, evidence_root, documentation_path=None):
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
         self.protocol = json.loads(Path(protocol).read_text(encoding='utf-8'))
         self.cases = {c['id']: c for c in self.protocol['cases']}
-        self.docs = {c: documentation(c) for c in 'ABC'}
+        model_document = json.loads(Path(documentation_path).read_text(encoding='utf-8')) if documentation_path else None
+        self.docs = {c: documentation(c, model_document) for c in 'ABC'}
         self.interface = {Path(p).name: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in interface_files}
         self.evidence = {}
-        for filename in ('base-lock.json', 'verification.json', 'training-summary.json', 'replay-verification.json', 'serving-package.json'):
+        filenames = [s['evidence'].rsplit('/',1)[-1] for s in self.docs['C']['steps']]
+        for filename in filenames:
+            if Path(filename).name != filename: raise ValueError('Invalid evidence filename')
             path = Path(evidence_root)/filename
             if path.is_file():
                 raw = path.read_bytes()
@@ -60,6 +65,8 @@ class Study:
                 target = self.root/'evidence'/self.evidence[filename]
                 target.parent.mkdir(exist_ok=True)
                 if not target.exists(): target.write_bytes(raw)
+                elif hashlib.sha256(target.read_bytes()).hexdigest() != self.evidence[filename]:
+                    raise ValueError('Frozen evidence integrity check failed')
         for step in self.docs['C']['steps']:
             filename = step['evidence'].rsplit('/', 1)[-1]
             if filename in self.evidence:

@@ -60,5 +60,16 @@ class FixedStudyTests(unittest.TestCase):
         self.assertEqual(D('.40')+D('.05'),D('.45'))
         self.assertEqual(48*2500+2000-24*4500,14000)
 
+    def test_documentation_revision_preserves_existing_trial_and_checks_evidence(self):
+        original=self.study.start();before=self.study.current(original['session_id'],original['session_token'])
+        evidence=self.root/'revised-evidence';evidence.mkdir();(evidence/'release.json').write_text('{"test_fixture":true}')
+        path=self.root/'model-doc.json';path.write_text(json.dumps({'steps':[{'title':'Fixture','text':'Revised documentation','file':'release.json'}]}))
+        revised=Study(self.root,self.args[1],self.args[2],evidence,path)
+        self.assertNotEqual(revised.version,self.study.version)
+        self.assertEqual(revised.current(original['session_id'],original['session_token']),before)
+        self.assertEqual(revised.docs['B']['steps'][0]['text'],revised.docs['C']['steps'][0]['text'])
+        frozen=revised.root/'evidence'/revised.evidence['release.json'];frozen.write_text('{"tampered":true}')
+        with self.assertRaises(ValueError):Study(self.root,self.args[1],self.args[2],evidence,path)
+
 
 if __name__=='__main__':unittest.main()

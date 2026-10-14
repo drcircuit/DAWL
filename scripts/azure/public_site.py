@@ -61,6 +61,9 @@ def setup():
 
 
 def deploy(container):
+    # Rebuild and verify this checkout; never deploy an old manifest after a failed build.
+    from build_public_site import build
+    build()
     root=REPO/'output/public-site';manifest=json.loads((root/'manifest.json').read_text())
     for name,digest in manifest['files'].items():
         path=(root/name).resolve()

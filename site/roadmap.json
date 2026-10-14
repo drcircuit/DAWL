@@ -1,0 +1,69 @@
+{
+  "updated": "2026-10-14",
+  "milestones": [
+    {
+      "status": "complete",
+      "title": "Traceable data ingestion",
+      "detail": "Source records, content-addressed Frags, corpus Blueprints and token replay.",
+      "evidence": "reports/oracle-training-run-003.zip"
+    },
+    {
+      "status": "complete",
+      "title": "Multiple tokenizer profiles",
+      "detail": "GPT-2, SmolLM2 and o200k profiles with CPU/GPU vector reconstruction."
+    },
+    {
+      "status": "complete",
+      "title": "Peer discovery and role topology",
+      "detail": "Signed DHT records, role discovery and separate node execution."
+    },
+    {
+      "status": "complete",
+      "title": "Consensus and distributed training",
+      "detail": "Four-validator Oracle, shared-manifest training, expiring leases and verified checkpoints.",
+      "evidence": "reports/oracle-training-run-003.zip"
+    },
+    {
+      "status": "complete",
+      "title": "Model lineage and executable export",
+      "detail": "Qwen3 fine-tuning, source-to-token checks, signed records and verified weight merging.",
+      "evidence": "reports/finetune-economics-001.zip"
+    },
+    {
+      "status": "complete",
+      "title": "Network continuity",
+      "detail": "Verified state publication, retained state during a split and checked recovery.",
+      "evidence": "reports/public-observatory-001.zip"
+    },
+    {
+      "status": "in_progress",
+      "title": "Full-epoch deterministic replay",
+      "detail": "New strict-policy fine-tune and a fresh-process replay of all 228 updates."
+    },
+    {
+      "status": "planned",
+      "title": "Distributed optimizer state",
+      "detail": "Extend Qwen/AdamW training contracts with optimizer-state exchange and DiLoCo-style outer updates."
+    },
+    {
+      "status": "planned",
+      "title": "Heterogeneous training branches",
+      "detail": "Calibrate numerical verification across GPUs and runtimes; extend branch selection and contribution policies."
+    },
+    {
+      "status": "planned",
+      "title": "Independent operators and WAN hardening",
+      "detail": "Admission and revocation, authenticated transport, eclipse resistance and adversarial testing."
+    },
+    {
+      "status": "planned",
+      "title": "Artifact availability and verifier recovery",
+      "detail": "Availability challenges, verifier replacement and broader checkpoint replication."
+    },
+    {
+      "status": "planned",
+      "title": "Model splitting and larger workloads",
+      "detail": "Training partitions across devices, sustained multi-machine runs and scaling measurements."
+    }
+  ]
+}

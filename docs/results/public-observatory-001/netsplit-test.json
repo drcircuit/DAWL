@@ -1,0 +1,12 @@
+{
+  "started": "2026-10-14T16:37:33.065788+00:00",
+  "initial_height": 20044,
+  "header_time": "2026-10-14T16:35:27.616182181Z",
+  "scope": "Publication-link interruption only. Local training and validator quorum continue.",
+  "recovered_at": "2026-10-14T16:40:18.403112+00:00",
+  "retained_height_observed_in_browser": 20044,
+  "local_height": 20382,
+  "local_quorum": true,
+  "stale_banner_observed": true,
+  "resumed_public_height": 20371
+}
