@@ -68,7 +68,9 @@ published as experiment evidence only after its own checks and explicit release.
 Only files named in the generated site manifest are uploaded. Participant
 databases, session tokens, model APIs and operator controls are absent. This
 public site is a demonstration and evidence surface, not a participant collection
-server. The fixed-advice pilot remains on local port 8885.
+server. The fixed-advice collection pilot remains on local port 8885. A separate
+review-only study site lets the research team preview the flow
+without collecting responses.
 
 Further hardening: independent publication verifiers/operators, client-side
 certificate checking, immutable release signing and a separate deployment
@@ -85,6 +87,7 @@ verification and unavailable nodes) remain visible as measured state. Evidence
 cards name the exact successful checks; execution context and full receipts are
 available in their details and archives.
 
-The participant study has its own interface on port 8885. Platform pages and
+The participant study has its own interface on port 8885 and a separate cloud
+review site. Platform pages and
 participant pages contain no navigation links to each other. Research protocol
 material is not listed in the platform UI or its publication manifest.

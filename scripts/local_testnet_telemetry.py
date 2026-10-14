@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
+from network_metrics import aggregate,namespace_counters
 
 
 def command(*args):
@@ -55,7 +56,8 @@ def collect(root, run):
               'historical_attempt':name.endswith('-launch-failed'), 'public':public,
               'host':config.get('training_host',config.get('abci_host','127.70.0.27' if role in ('cortex','discovery') else None)),
               'stats':stats.get(c['Name'],{}),'events':events,'dht':read(folder/'dht-status.json'),
-              'final':read(folder/'public/final.json'),'replays':[]}
+              'final':read(folder/'public/final.json'),'replays':[],
+              'compute':read(folder/'public/compute-metrics.json')}
         if role=='discovery':node['dht']=read(root/'provider/dht-status.json')
         if role=='gpu-verifier':
             node['replays']=[read(p) for p in sorted((folder/'public').glob('replay-*.json'))]
@@ -73,15 +75,18 @@ def collect(root, run):
              'scope':'Shared physical GPU; utilization and memory are device-wide, not per-node attribution.'}
     except (OSError,subprocess.SubprocessError,IndexError) as error:errors.append('GPU telemetry: '+str(error)[:120])
     return {'observed_at':datetime.now(timezone.utc).isoformat(),'run':run,'nodes':nodes,'gpu':gpu,'errors':errors,
+            'network_namespaces':namespace_counters(containers),
             'scope':'Operational telemetry only; node liveness and resource measurements are not quorum-certified claims.'}
 
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--exchange',type=Path,required=True)
     p.add_argument('--run',default='003');p.add_argument('--once',action='store_true');a=p.parse_args();a.exchange.mkdir(parents=True,exist_ok=True)
+    previous=None
     while True:
         try:
-            value=collect(a.root,a.run); pending=a.exchange/'status.pending';pending.write_text(json.dumps(value));os.replace(pending,a.exchange/'status.json')
+            value=collect(a.root,a.run);value['aggregate']=aggregate(value,previous);previous=value
+            pending=a.exchange/'status.pending';pending.write_text(json.dumps(value));os.replace(pending,a.exchange/'status.json')
         except Exception as error:print(type(error).__name__+': '+str(error)[:200],flush=True)
         if a.once:return
         time.sleep(4)

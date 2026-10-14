@@ -13,6 +13,7 @@ import httpx
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from dawl_node.common import canonical_json
+from network_view import public_network
 
 GENESIS_PIN='5764519561f755af339ee6a0898dee7e2f8fe5966f489bccdc72b500959bb9a9'
 
@@ -65,9 +66,19 @@ def capture(output, previous=None):
             'header_time':certificate['signed_header']['header']['time'],'height':height,'app_hash':digest,
             'chain_id':state['chain_id'],'genesis_sha256':GENESIS_PIN,'verification':receipt,
             'stages':stages,'actors':actors,'training_members':state.get('training_members',{}),'validator_count':4,
+            'network':public_network(state,json.loads(genesis.read_bytes())),
             'scope':'Quorum-certified local protocol-4 ledger. Admission/receipts are ledger facts, not live process or GPU telemetry. One host/operator. Older hybrid chain is separate.',
             'certificate_sha256':hashlib.sha256(raw).hexdigest(),
             'certificate':'live/certificate.json','genesis':'live/genesis.json'}
+    activity={'target_tokens_per_second':None,'accepted_bytes_per_second':None,'flops_per_second':None}
+    if previous and previous.get('network'):
+        seconds=(datetime.fromisoformat(result['header_time'].replace('Z','+00:00'))-datetime.fromisoformat(previous['header_time'].replace('Z','+00:00'))).total_seconds()
+        if 0<seconds<=300:
+            for target,source in [('target_tokens_per_second','completed_target_tokens'),('accepted_bytes_per_second','accepted_artifact_bytes')]:
+                difference=result['network'][source]-previous['network'].get(source,0)
+                if difference>=0:activity[target]=difference/seconds
+            activity['sample_seconds']=seconds
+    result['activity']=activity
     return result,raw,genesis.read_bytes()
 
 
