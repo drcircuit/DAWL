@@ -3,6 +3,7 @@ import argparse
 import asyncio
 from pathlib import Path
 import sys
+import ipaddress
 
 sys.path.insert(0,str(Path(__file__).resolve().parent/"src"))
 from dawl_node.common import canonical_json, load_key, read_json
@@ -19,6 +20,7 @@ def main():
     parser.add_argument("--lease-blocks",type=int,default=60)
     parser.add_argument("--port",type=int,default=8900)
     parser.add_argument("--host",default="127.0.0.1")
+    parser.add_argument("--uds",type=Path,help="private Unix socket for the ABCI application")
     parser.add_argument("--allow-insecure-lab",action="store_true")
     parser.add_argument("--once",action="store_true")
     parser.add_argument("--verify-weights",action="store_true")
@@ -31,11 +33,12 @@ def main():
         import uvicorn
         if args.command=="abci":
             from dawl_cluster.application import app
-            if args.host!="127.0.0.1": parser.error("ABCI application must bind to container loopback")
+            if not ipaddress.IPv4Address(args.host).is_loopback: parser.error("ABCI application must bind to container loopback")
         else:
             from dawl_cluster.provider import app
             if args.host!="127.0.0.1" and not args.allow_insecure_lab: parser.error("explicit lab bind required")
-        uvicorn.run(app(args.root),host=args.host,port=args.port,access_log=False,limit_concurrency=32)
+        if args.uds and args.command!='abci': parser.error('Unix socket is only supported for ABCI')
+        uvicorn.run(app(args.root),host=args.host,port=args.port,uds=str(args.uds) if args.uds else None,access_log=False,limit_concurrency=32)
         return
     elif args.command=="worker":
         from dawl_cluster.worker import run

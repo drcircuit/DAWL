@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vurdering av råd · Forskningspilot</title><link rel="stylesheet" href="/assets/trust_study.css"></head>
+<body><header><span class="wordmark">RÅD & DOKUMENTASJON</span><span id="progress">Forskningspilot</span></header>
+<main><div id="preview" hidden class="notice"></div>
+<section id="intro" class="card intro"><span class="eyebrow">Tre korte situasjoner</span><h1>Hvordan vurderer du et råd?</h1>
+<p>Du får lese tre konstruerte økonomiske situasjoner og forhåndslagrede råd. Vurder rådet, og velg hva du ville gjort i hver oppgave.</p>
+<p>I noen versjoner vises dokumentasjon om utviklingen av en demonstrasjonsmodell. Rådene er skrevet for forsøket; dokumentasjonen gjelder modellens utvikling.</p>
+<p class="small">Denne piloten lagrer valgene og vurderingene dine, tidsbruk og om du åpner dokumentasjonen, under en tilfeldig øktkode. Vi ber ikke om navn eller opplysninger om din egen økonomi. Ikke skriv personopplysninger i fritekstfeltet. Piloten brukes til å prøve ut oppgavene og grensesnittet.</p>
+<label class="consent"><input type="checkbox" id="consent"> Jeg har lest informasjonen og ønsker å prøve piloten.</label><button id="start" disabled>Start de tre oppgavene →</button></section>
+<div id="task" hidden><div class="columns"><article id="advice" class="card"></article><aside id="documentation" class="card"></aside></div>
+<form id="assessment" class="card"><h2>Din vurdering</h2><div id="questions"></div><label>Hva la du mest vekt på? <span class="small">Valgfritt, uten personopplysninger.</span><textarea name="reason" maxlength="1500" rows="3"></textarea></label><button id="save" type="submit">Lagre og fortsett →</button><span id="preview-note" class="small"></span></form></div>
+<section id="done" class="card intro" hidden><span class="eyebrow">Alle tre oppgavene er fullført</span><h1>Takk for vurderingene dine.</h1><p>Svarene er lagret. Oppgavene og dokumentasjonsvisningen prøves ut før et større forsøk. Rådstekstene er faste; vi undersøker hvordan dokumentasjonen inngår i vurderingen.</p><p class="small" id="receipt"></p></section>
+<p id="error" role="alert"></p></main>
+<script>window.STUDY_CSRF='__LAB_TOKEN__';</script><script type="module" src="/assets/trust_study.js"></script></body></html>

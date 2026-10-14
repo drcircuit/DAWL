@@ -1,0 +1,21 @@
+{
+  "base_tied_weights_identical": true,
+  "tensors": {
+    "model.embed_tokens.weight": {
+      "sha256": "8f29acf519434862d95613b2b4f6b9d14933a5e4d16baebf8ac0b33b410acfb6",
+      "dtype": "BF16",
+      "shape": [
+        151936,
+        1024
+      ]
+    },
+    "lm_head.weight": {
+      "sha256": "8f29acf519434862d95613b2b4f6b9d14933a5e4d16baebf8ac0b33b410acfb6",
+      "dtype": "BF16",
+      "shape": [
+        151936,
+        1024
+      ]
+    }
+  }
+}

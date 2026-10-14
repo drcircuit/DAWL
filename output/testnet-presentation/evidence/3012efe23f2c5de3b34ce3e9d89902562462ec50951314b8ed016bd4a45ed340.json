@@ -1,0 +1,370 @@
+{
+  "schema": "hypertrix.multi-profile-pilot/1",
+  "started_utc": "2026-10-14T01:20:40.489885+00:00",
+  "scope": "Local signed token Blueprints; shared CAS; no vector replay, model weights, training or Oracle activation.",
+  "python": "3.12.14",
+  "tokenizers": "0.23.3",
+  "tiktoken": "0.14.0",
+  "source_books": [
+    {
+      "id": 11,
+      "sha256": "01b38ea4c710a84bc18d0bd41271a5a1a92b94e97b2812f4dece97d4a694725e",
+      "bytes": 174311
+    },
+    {
+      "id": 35,
+      "sha256": "2892e919000e17c83e1dac51b30f4675db50536b644d7579fe8a89bb399a9bdc",
+      "bytes": 204384
+    },
+    {
+      "id": 36,
+      "sha256": "8417469e3ab664749f7b36ebb85799075818207b0380b54c27d07d592a44117d",
+      "bytes": 366624
+    },
+    {
+      "id": 62,
+      "sha256": "d35d09d2b9b7691822909636085c6a01903bae375e51ee10b45377021b122b66",
+      "bytes": 399822
+    },
+    {
+      "id": 76,
+      "sha256": "d617a37aa7ae1e1a93dcde2634db2bccb86824e31e29a55230bdbf77d6872d59",
+      "bytes": 622460
+    },
+    {
+      "id": 84,
+      "sha256": "7810cd483cffcf2cc8a1d8f0d5807931e69d4f48cd14149b8c76f88af82fead3",
+      "bytes": 448885
+    },
+    {
+      "id": 201,
+      "sha256": "03dd4508636e44ab9b37efda856745545f22ea5ace95e2eb16c3ef50307cd9f7",
+      "bytes": 227452
+    },
+    {
+      "id": 345,
+      "sha256": "96cd16eacdbfebae8fdda5591f66e0cc8ee76be18e0cd1aca02bc00615782d28",
+      "bytes": 890348
+    },
+    {
+      "id": 1342,
+      "sha256": "3f6bb9d6f78e0293b56acd4714dd68cb7d6d1d293402031ce9d5a216bcaf9d75",
+      "bytes": 772386
+    },
+    {
+      "id": 1400,
+      "sha256": "9a637118af8e953e9764ec603d9b0a032883384d465acac2e27966a80cf1c6f8",
+      "bytes": 1058204
+    },
+    {
+      "id": 1661,
+      "sha256": "922e2a12ccb43a4c9544c260b2166c6ad2097aeb5957faeee113f173bb857cd0",
+      "bytes": 607606
+    },
+    {
+      "id": 2701,
+      "sha256": "b5e88b71a1cda068e9ab1d94344c9d932338ba6da1a66def97a1aecd9cfcc87d",
+      "bytes": 1276315
+    },
+    {
+      "id": 5230,
+      "sha256": "28c70e3809ce945efbe5f8681532916a2c4253fee5cca6e1a191707af22280d3",
+      "bytes": 306387
+    }
+  ],
+  "source_bytes": 7355184,
+  "profiles": [
+    {
+      "name": "o200k_base",
+      "profile": {
+        "id": "f5f2c3a4941166019064c50b515bcbe9397f26deb36a848ae66f57a4d85acc85",
+        "body": {
+          "schema": "hypertrix.tokenizer-profile/1",
+          "label": "o200k_base",
+          "tokenizer": {
+            "artifact": {
+              "sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d",
+              "bytes": 3613922
+            },
+            "library": "tiktoken",
+            "version": "0.14.0",
+            "contract": "o200k_base/independent-utf8-frags/encode-ordinary/v1",
+            "normalization": "none"
+          },
+          "model": null,
+          "chunking": {
+            "part_bytes": 524288,
+            "frag_bytes": 4096,
+            "boundary": "utf8-codepoint/v1"
+          }
+        }
+      },
+      "upstream": {
+        "artifact": {
+          "bytes": 3613922,
+          "sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d"
+        },
+        "definition": "https://github.com/openai/tiktoken/blob/0.14.0/tiktoken_ext/openai_public.py",
+        "profile_id": "f5f2c3a4941166019064c50b515bcbe9397f26deb36a848ae66f57a4d85acc85",
+        "runtime": "0.14.0",
+        "url": "https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken"
+      },
+      "blueprint": {
+        "id": "49ca44991442dae96739ffc1b9beee2a6849d0b7875d054dfb46486804158abe",
+        "body": {
+          "schema": "dawl.lineage/1",
+          "policy": "f95292df1c854c282066553af1764e9c55673b9dcbbf844ef55d580bb3d58170",
+          "sequence": 26,
+          "previous": "98ea87dd1d7003c21243bff26a97c389a21d5ab6da475117306239d219d0bb4d",
+          "kind": "dataset",
+          "parents": [
+            "066540f564b32c68d190f114ff037b303fd91d671f2d41c0b9b2ec2dda97fef4",
+            "350fd1fccddd401d82ffdd04e8f35fa906b26f3d11ddc67dd999c6caf28d30be",
+            "3ad8b4f2ae090d17c65c663adc7ca7e5da3f55b78fddb37f7c17cd6aed912c81",
+            "4d69a372a8a0769f55de8555bed8881f0078230a852352859456e4512f3f2e82",
+            "5f54e44d1a1178564fdbccd68c2fcd3f4fc74cfed87fa026196862f18408b7f0",
+            "6522e51f3c9649f5ff897b6d09afeacf396bfa01540d3ad9f6696c700d324a85",
+            "7e1268e8297741742cd480a6abbc2d0928ac077fbeb82c3a7031caa1f59ade9f",
+            "8d3ed6027129ac7ef2033eff98ab4bbc5b629a047aa0a5e079c4f4baa7c3693a",
+            "98ea87dd1d7003c21243bff26a97c389a21d5ab6da475117306239d219d0bb4d",
+            "c48bec7bae62c961f6477839c91cb35c7012d0f47ff8da622be8b01103ed11d8",
+            "d1e9876abeaa44e5344d7fea4ecaf67447e175f1233356687aeda54c767c4f04",
+            "e5477ebeb8ba400a537b317fc7bf9bc07da2ace08398d7a54f8232d9e9670ba2",
+            "eb9679cd34e77df713fcc840d83f686c5ae0b8929f5914a5e589e8d042c7aeb9"
+          ],
+          "payload": {
+            "profile_id": "f5f2c3a4941166019064c50b515bcbe9397f26deb36a848ae66f57a4d85acc85",
+            "data": {
+              "schema": "hypertrix.token-blueprint/1",
+              "profile_id": "f5f2c3a4941166019064c50b515bcbe9397f26deb36a848ae66f57a4d85acc85",
+              "parent_blueprint": null,
+              "token_entries": [
+                "066540f564b32c68d190f114ff037b303fd91d671f2d41c0b9b2ec2dda97fef4",
+                "350fd1fccddd401d82ffdd04e8f35fa906b26f3d11ddc67dd999c6caf28d30be",
+                "3ad8b4f2ae090d17c65c663adc7ca7e5da3f55b78fddb37f7c17cd6aed912c81",
+                "4d69a372a8a0769f55de8555bed8881f0078230a852352859456e4512f3f2e82",
+                "5f54e44d1a1178564fdbccd68c2fcd3f4fc74cfed87fa026196862f18408b7f0",
+                "6522e51f3c9649f5ff897b6d09afeacf396bfa01540d3ad9f6696c700d324a85",
+                "7e1268e8297741742cd480a6abbc2d0928ac077fbeb82c3a7031caa1f59ade9f",
+                "8d3ed6027129ac7ef2033eff98ab4bbc5b629a047aa0a5e079c4f4baa7c3693a",
+                "98ea87dd1d7003c21243bff26a97c389a21d5ab6da475117306239d219d0bb4d",
+                "c48bec7bae62c961f6477839c91cb35c7012d0f47ff8da622be8b01103ed11d8",
+                "d1e9876abeaa44e5344d7fea4ecaf67447e175f1233356687aeda54c767c4f04",
+                "e5477ebeb8ba400a537b317fc7bf9bc07da2ace08398d7a54f8232d9e9670ba2",
+                "eb9679cd34e77df713fcc840d83f686c5ae0b8929f5914a5e589e8d042c7aeb9"
+              ],
+              "books": [
+                11,
+                35,
+                36,
+                62,
+                76,
+                84,
+                201,
+                345,
+                1342,
+                1400,
+                1661,
+                2701,
+                5230
+              ],
+              "frags": 1807,
+              "tokens": 1753309,
+              "scope": "Locally replayed tokenized corpus; not Oracle-certified, vector-audited or training-ready."
+            }
+          },
+          "signer": "6ec3bcdc9645f4154f412b70375e60627d7c54af630a781d4d69b096a68a9b59"
+        },
+        "signature": "f33c61a673b0a43114f0ec17465c1d03192c6d5c291c305a00aee84d067558c424781c5917ffc5aef94030fb5f8ca5396b6afb9b3890ed0efc034a79569ffd0f"
+      },
+      "trust": {
+        "schema": "dawl.trust/1",
+        "profile_id": "f5f2c3a4941166019064c50b515bcbe9397f26deb36a848ae66f57a4d85acc85",
+        "identities": {
+          "6ec3bcdc9645f4154f412b70375e60627d7c54af630a781d4d69b096a68a9b59": [
+            "source",
+            "tokenizer"
+          ]
+        },
+        "scope": "Local profile-isolation experiment; one operator, no distributed consensus."
+      },
+      "checkpoint": {
+        "policy": "f95292df1c854c282066553af1764e9c55673b9dcbbf844ef55d580bb3d58170",
+        "entries": 27,
+        "set_sha256": "5425e950dedbf5af1f14ab8def2acd653d1c9c68d80778083992148dd0bf1406"
+      },
+      "tokens": 1753309,
+      "frags": 1807,
+      "books": 13,
+      "smoke": {
+        "empty": {
+          "tokens": 0,
+          "raw_roundtrip": true,
+          "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "normalized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "whitespace": {
+          "tokens": 2,
+          "raw_roundtrip": true,
+          "input_sha256": "e5c6bf42065f46678c0117ad8c09e8d0b49f3dc85acc754f002894bf8dd2aae9",
+          "normalized_sha256": "e5c6bf42065f46678c0117ad8c09e8d0b49f3dc85acc754f002894bf8dd2aae9"
+        },
+        "norwegian": {
+          "tokens": 21,
+          "raw_roundtrip": true,
+          "input_sha256": "b6d9112d32b58f042499eb522ba580145dca1cefa42e0b208dc5a35df3466f39",
+          "normalized_sha256": "b6d9112d32b58f042499eb522ba580145dca1cefa42e0b208dc5a35df3466f39"
+        },
+        "combining": {
+          "tokens": 6,
+          "raw_roundtrip": true,
+          "input_sha256": "0d136a256557f96a6fa658fc286376fb11f50a8dd38bb297b4d5d9f39f1c8dea",
+          "normalized_sha256": "0d136a256557f96a6fa658fc286376fb11f50a8dd38bb297b4d5d9f39f1c8dea"
+        },
+        "cjk": {
+          "tokens": 9,
+          "raw_roundtrip": true,
+          "input_sha256": "9f1112a58fc12fd028cf37c4503219c88d47448ee47d4131bc30dfc7e2159eef",
+          "normalized_sha256": "9f1112a58fc12fd028cf37c4503219c88d47448ee47d4131bc30dfc7e2159eef"
+        },
+        "emoji": {
+          "tokens": 11,
+          "raw_roundtrip": true,
+          "input_sha256": "557296209dee7e459adb28e011b37698fde3ee307e0826ef162f5508a5e25664",
+          "normalized_sha256": "557296209dee7e459adb28e011b37698fde3ee307e0826ef162f5508a5e25664"
+        },
+        "code": {
+          "tokens": 12,
+          "raw_roundtrip": true,
+          "input_sha256": "c2dad9dba98ec756536506df02e04f41b0fb57b3b6448bf5f4bc627a19825838",
+          "normalized_sha256": "c2dad9dba98ec756536506df02e04f41b0fb57b3b6448bf5f4bc627a19825838"
+        },
+        "literal_controls": {
+          "tokens": 24,
+          "raw_roundtrip": true,
+          "input_sha256": "11d211817fd10be79ad4883203420a6f7b59d952fd836aa46309b4238779b1dd",
+          "normalized_sha256": "11d211817fd10be79ad4883203420a6f7b59d952fd836aa46309b4238779b1dd"
+        },
+        "null": {
+          "tokens": 3,
+          "raw_roundtrip": true,
+          "input_sha256": "a8bf3285e2c06883247ccc859fa41ad965f343ae6579b6b6b127c5d8280c9701",
+          "normalized_sha256": "a8bf3285e2c06883247ccc859fa41ad965f343ae6579b6b6b127c5d8280c9701"
+        }
+      },
+      "per_book": [
+        {
+          "book_id": 11,
+          "frags": 43,
+          "tokens": 41384,
+          "normalized_frags": 0,
+          "source_bytes": 174311
+        },
+        {
+          "book_id": 35,
+          "frags": 50,
+          "tokens": 46939,
+          "normalized_frags": 0,
+          "source_bytes": 204384
+        },
+        {
+          "book_id": 36,
+          "frags": 90,
+          "tokens": 84330,
+          "normalized_frags": 0,
+          "source_bytes": 366624
+        },
+        {
+          "book_id": 62,
+          "frags": 98,
+          "tokens": 90859,
+          "normalized_frags": 0,
+          "source_bytes": 399822
+        },
+        {
+          "book_id": 76,
+          "frags": 153,
+          "tokens": 158500,
+          "normalized_frags": 0,
+          "source_bytes": 622460
+        },
+        {
+          "book_id": 84,
+          "frags": 110,
+          "tokens": 102127,
+          "normalized_frags": 0,
+          "source_bytes": 448885
+        },
+        {
+          "book_id": 201,
+          "frags": 56,
+          "tokens": 52514,
+          "normalized_frags": 0,
+          "source_bytes": 227452
+        },
+        {
+          "book_id": 345,
+          "frags": 219,
+          "tokens": 217922,
+          "normalized_frags": 0,
+          "source_bytes": 890348
+        },
+        {
+          "book_id": 1342,
+          "frags": 190,
+          "tokens": 176001,
+          "normalized_frags": 0,
+          "source_bytes": 772386
+        },
+        {
+          "book_id": 1400,
+          "frags": 259,
+          "tokens": 256507,
+          "normalized_frags": 0,
+          "source_bytes": 1058204
+        },
+        {
+          "book_id": 1661,
+          "frags": 150,
+          "tokens": 142954,
+          "normalized_frags": 0,
+          "source_bytes": 607606
+        },
+        {
+          "book_id": 2701,
+          "frags": 314,
+          "tokens": 310924,
+          "normalized_frags": 0,
+          "source_bytes": 1276315
+        },
+        {
+          "book_id": 5230,
+          "frags": 75,
+          "tokens": 72348,
+          "normalized_frags": 0,
+          "source_bytes": 306387
+        }
+      ],
+      "token_reduction_vs_gpt2_percent": 14.942828174042976,
+      "declared_embedding_rows": null,
+      "token_id_space": 200019,
+      "tokenizer_entries": 200000,
+      "declared_dimension": null,
+      "projected_float32_table_bytes": null,
+      "matrix_scope": "Tokenizer-only: no model weights or embedding dimension claimed.",
+      "ingestion_seconds": 78.00617049999983,
+      "timing_scope": "Local tokenization + CAS writes + signatures; no controlled timing benchmark.",
+      "accepted": true
+    }
+  ],
+  "completed_utc": "2026-10-14T01:22:45.700251+00:00",
+  "unique_objects": 3641,
+  "stored_object_bytes": 25936044,
+  "shared_raw_books": 13,
+  "raw_book_references": 13,
+  "implementation_files": {
+    "src/dawl_profiles/profiles.py": "4f4152f5148af8784f617bb9a91006819da0fe3c01a455a72b0bfa76b83a9b0d",
+    "src/dawl_profiles/workspace.py": "4d2f0b30f51a1bfff8865ee6ef20cb88dc5befd2b441d4561e2ac57c121f974a",
+    "scripts/profile_corpus_pilot.py": "62de480f1f56a42dbe8f5d0c74484c143abdf9d661c963041aa945489784ad06"
+  }
+}

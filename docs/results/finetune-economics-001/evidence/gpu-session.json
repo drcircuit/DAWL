@@ -1,0 +1,1 @@
+{"cuda":"12.8","deadline_unix":1791987690.8845713,"gpu":"NVIDIA GeForce RTX 5090 Laptop GPU","packages":{"numpy":"2.5.3","peft":"0.21.2","torch":"2.11.0+cu128","transformers":"5.19.0"},"recipe_sha256":"1ca49ee4c37254f928b7c90c7353fd530a1d318ded2f5630bdbd107b93568cd5","started_unix":1791980590.8845713}

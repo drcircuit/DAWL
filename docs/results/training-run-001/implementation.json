@@ -1,0 +1,36 @@
+{
+  "execution_image": "b6cda76ace3520fed690cb6087769909ebf7557771c3572b132c692200ef6a85",
+  "runtime_image": "ce75010629d29bb449b323cf5c5baab202992de36411ae7f898a4f88f5385517",
+  "source_files": {
+    "src/dawl_training/data.py": "d8f6a2eed0e1561c6db4e043777927f124661547e7aa4ebaa2e3668f9d21a0ae",
+    "src/dawl_training/model.py": "d5bf2c376d97b898ba4813ecf9c5c47fadc7206f62dd6672080beeb03357bebb",
+    "src/dawl_training/network.py": "ef7c1868279e04e640becf6d8912d3b1e6a8ed0cdd27494669697e0326359299",
+    "src/dawl_training/protocol.py": "9ebb5cf6957d94103b0c8c94c070d37bdc45102d8c75de8d6fd4bb0f530ee9a0",
+    "src/dawl_training/__init__.py": "23924d10bfabd4ebe2a58c773b94c59181d70dc780b78973faafd057e3205c96",
+    "scripts/training_peer.py": "7624c4e3874adf93c3ff4cdc0da8284f7b6679b28a5ab3dfb9b1e233740e9c2f",
+    "scripts/training_pilot.py": "2e12695dff6835ce15bc064abd2f9a3273ddee8405fbf23c326561816dbd0d7e",
+    "scripts/training_pilot.sh": "90c6ae8bc1069d5f5b6079e4c624a3b9953c917d3138a3f3ea669809d2a3ebc5",
+    "scripts/verify_training.py": "afc8b78f1a7f98eb6e78ed101866a666dc98cac6c9b978f493328251993361d7",
+    "scripts/report_training.py": "75b4c1a8167cd1d24fd3a9dbe40c05697f6a474985226bd77eca19b9bfcd2686",
+    "Dockerfile.training": "5ce5f0ac882416e7c66c933d4d3474a82c4a1a75a76db95a90552a5a7098287d",
+    "Dockerfile.training-runtime": "7485defbba7f987a0416ec88397c2a111208f1d4bda0f527dafcd60bb3d15893",
+    "tests/test_training_protocol.py": "4e61363c60405467cc442e3141d3d5f250e411e44e2c522e7f010594fd9ae17e",
+    "tests/test_training_model.py": "65478f602a5568c10390538b2629a2aa458fd5a735103472b7e3d102fe89faab",
+    "scripts/check_training_replica.py": "0ece2be06d90ec3dcf0799a748b0561b3db1955bbac165cbd73cc59722c633a0"
+  },
+  "tests": {
+    "host_regression": {
+      "run": 198,
+      "passed": 194,
+      "cuda_skipped": 4
+    },
+    "focused_protocol": {
+      "run": 5,
+      "passed": 5
+    },
+    "adapter_numerical": {
+      "run": 1,
+      "passed": 1
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{"event": "joined", "stage": "64493100f2d77352e621a74086937458ec8a5ed644ab8754735c9bfa3cae9c91", "peer": 0, "device": "cuda:0"}
+{"event": "committed", "peer": 0, "round": 0, "checkpoint": "e41b911defa2e8a695c3277fa944a16f5b85e89554d2e093af4510d957ae0a9d"}
+{"event": "committed", "peer": 0, "round": 1, "checkpoint": "df3f49e6c9e6afc75f5f4a74035089db588b8a47636e4da859fab8caedfc5cf2"}
+{"event": "update", "peer": 0, "round": 2, "loss": 3.3097540140151978, "artifact": {"sha256": "8554fb1e4cbdf5771a2b5bf48dc1f50eab82f1b24ad65dc248535e9ac3b20766", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 2, "checkpoint": "dc2aabbb9f28e972ea7ee062773aac4ac571116c673b8d1bd93bb167cf91266c"}
+{"event": "update", "peer": 0, "round": 3, "loss": 3.485145134930559, "artifact": {"sha256": "b1aa5db9402f4e5e7e86c61f40c39817d21a59a0b09b86e98a5deb3519208f9f", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 3, "checkpoint": "d40691278179e14b3b0333f948add7ae8ab8aac9afce504d01a607dc2897b738"}
+{"event": "update", "peer": 0, "round": 4, "loss": 3.4332082972342137, "artifact": {"sha256": "0ef9b325b13c95037964c8cb31af380662b1aa3a72378ec7e5dad9e8e73179dd", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 4, "checkpoint": "776e6b3b9f4ce434b330126b6384e642a5ac69cc12aa003f50fbba9d6a42ad88"}
+{"event": "update", "peer": 0, "round": 5, "loss": 3.198453981695975, "artifact": {"sha256": "c86e3fa48671127d9c845682105ba8e43419538fbeb226572e8e7bef9c81579a", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 5, "checkpoint": "8fb6f2a7200f19c1a65cb66bc3aba3d199653a45c769053f03be7922ee33e6ef"}
+{"event": "update", "peer": 0, "round": 6, "loss": 3.3421767354011536, "artifact": {"sha256": "4b8d21ad8a28547977bab6143a163bf7bc9f58f7327b63a4dbbd5a1ee4870c06", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 6, "checkpoint": "696b7c0d4cff159ba94708b409c194e9482374c255e6f36a305fcf998cb6cf08"}
+{"event": "update", "peer": 0, "round": 7, "loss": 3.265311995685329, "artifact": {"sha256": "1409c57ebbfbf1b0464a5d34a6ed8a7330a855c22849ac30a5c36a081485a3c1", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 7, "checkpoint": "346d7d07579ec379f8e34152b81afaa4f761faf7a2fd2bf2cca1eaa30941edfb"}
+{"event": "update", "peer": 0, "round": 8, "loss": 3.2906819581985474, "artifact": {"sha256": "fc0e39085dcaa902eacc2fc982a62f447e9a961750f9b68c0c6f8a7d6651eb08", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 8, "checkpoint": "a1958e88aa405479d041b89e4a9f712c74e907f1aaf57cbac18e7c58fda3ab4a"}
+{"event": "update", "peer": 0, "round": 9, "loss": 3.4794294559241927, "artifact": {"sha256": "314d3a85d2b0456403682b16726cab1660db76719e2ed418998346157206a78e", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 9, "checkpoint": "382239995f185892527bcd267606b5cd27fd9dabd0592306a3a823ce04df528f"}
+{"event": "update", "peer": 0, "round": 10, "loss": 3.3534759283065796, "artifact": {"sha256": "d77a7a1a24ad36444e75f16e3fe704c653f6396a02752950e812a178de8c0ca7", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 10, "checkpoint": "1363a41ed267c96d453a3b6d30431f86a4ce38a9392e71a80005e277d1d3b7c5"}
+{"event": "update", "peer": 0, "round": 11, "loss": 3.254028558731079, "artifact": {"sha256": "bc6da2cf815889f03d3aa46341ca0d5a385be361a07c6917e42d2fa647d8e412", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 11, "checkpoint": "be3f594a7de7b0f006cd1453a8aac7e8cc99d643909870f54e4698f0187a25b4"}
+{"event": "update", "peer": 0, "round": 12, "loss": 3.413897752761841, "artifact": {"sha256": "a332bb6539b05769f9a5edb3feae6a2795b6fc328c6a8346b9b65c6ab022a99f", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 12, "checkpoint": "d0775c680a441ff70beb4c83833e6a14bc37ed49f6e47ec1a37e9c3ff24b643d"}
+{"event": "update", "peer": 0, "round": 13, "loss": 3.298022279780799, "artifact": {"sha256": "a678bf7ebb3d78402beac84e9315dea317f2aaf0828c50282f65d62629a68487", "bytes": 737280}}
+Waiting for peer update round 13
+{"event": "committed", "peer": 0, "round": 13, "checkpoint": "0158be9da0c76e071b5fe86063a3a030ed3f700c8bdd805a0dad8642d8d170ba"}
+{"event": "update", "peer": 0, "round": 14, "loss": 3.2449821299138453, "artifact": {"sha256": "85f5f0b2ba07e677b27c39999ff378202e1c1f2451f3a80ec8e6254431177e81", "bytes": 737280}}
+Waiting for peer update round 14
+{"event": "committed", "peer": 0, "round": 14, "checkpoint": "c9b3ea0ec2b466de9d94b5d25e6dad906f53f3f05691dffcb4636e0ecf387ddb"}
+{"event": "update", "peer": 0, "round": 15, "loss": 3.218533364340093, "artifact": {"sha256": "c62b9a3bbc6899cd856da0f881287f4f11deafae8c0d2a10bbc1887481057586", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 15, "checkpoint": "8209682d0a34c7122c7f36bb35807adf4ffafd2600fc394a41a3036aa411dd48"}
+{"event": "update", "peer": 0, "round": 16, "loss": 3.4132433460979925, "artifact": {"sha256": "d6597c8c9b2ac5f5f9c0e96bfa5830da6bb27430930530e2a48bafdbdb9cb63a", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 16, "checkpoint": "ff4f350b0f56fd22ae88e590bced82304182f0f1c59b489a3e3bdade576f2952"}
+{"event": "update", "peer": 0, "round": 17, "loss": 3.297987997531891, "artifact": {"sha256": "b9c180806e4ae28f60b7bdc1ade83cb8eeba528ecb30d2f82e0f9563517ee6b8", "bytes": 737280}}
+Waiting for peer update round 17
+{"event": "committed", "peer": 0, "round": 17, "checkpoint": "941aaae1f3a17e62d9e61f10e8e5cc5e3134ce0ecf46913c18fd26019868cf9f"}
+{"event": "update", "peer": 0, "round": 18, "loss": 2.9754998683929443, "artifact": {"sha256": "29e5b58414e853e798f3aa57409982659cd7e72b4557233b7cde97494a7bb8e3", "bytes": 737280}}
+Waiting for peer update round 18
+{"event": "committed", "peer": 0, "round": 18, "checkpoint": "f5c2eb3ab15694fabc2bd77fd83ccc037d7b1e05f3462a7937f7db7339f8def7"}
+{"event": "update", "peer": 0, "round": 19, "loss": 3.376135802318549, "artifact": {"sha256": "3c209253293d65c96e19c3f7edfaf821e9226965a93bb6d2edeb02a9f53ddb55", "bytes": 737280}}
+Waiting for peer update round 19
+{"event": "committed", "peer": 0, "round": 19, "checkpoint": "519b81ac022eebe0c0b3a02d4e619a9aad0d553e71ae1a7248facd498110c6aa"}
+{"event": "update", "peer": 0, "round": 20, "loss": 3.364093822870195, "artifact": {"sha256": "5b95bc506064dc0fefa098001e3a2fabca1ee241f2ee8fcce7d1e45608f6f85b", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 20, "checkpoint": "10c2f47870faeebd464e4e527d7e076b84a99553deaaf861598bfd78e32e78f3"}
+{"event": "update", "peer": 0, "round": 21, "loss": 3.108430492022279, "artifact": {"sha256": "318f7327afe0767fa41ea76f6ac9b627a9f6978ae07806739bc5bab211d91af8", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 21, "checkpoint": "db671ced9478ce388343ebc43b312c9ecc29753e2b7521944bcad48704c6d551"}
+{"event": "update", "peer": 0, "round": 22, "loss": 3.410405675490538, "artifact": {"sha256": "fc0a6e31f50c3f90407900370d16d2da6ed1f80872236d1cecb2feb9c4544e2e", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 22, "checkpoint": "8211ef28f7f341309341787d6a24a375e7fb0fb48453eaba91b3897d4a3bb76a"}
+{"event": "update", "peer": 0, "round": 23, "loss": 3.2071347402489705, "artifact": {"sha256": "724cbf617128a84e6f35781a3bf725d38852accafcf6fb83746fbb02a7f2393d", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 23, "checkpoint": "9a99df7211e0f1831b196c2ea935b577e3eb51d3e93acce590e01c51ff4ac264"}
+{"event": "update", "peer": 0, "round": 24, "loss": 3.1108574867248535, "artifact": {"sha256": "c7666befc0066f7db11f0531ee3bb3254a7d613c1d720dbaaf3c8ef012129282", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 24, "checkpoint": "2f7dc6aefcf0b8016de65d33aecd5a68567a0ab169240a055a35c4cfe2fafa02"}
+{"event": "update", "peer": 0, "round": 25, "loss": 3.5500708750912384, "artifact": {"sha256": "4b55b5fa31d20a452726d134c2fc889272a1b3e94877ea01a5e44d3b1a005bcd", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 25, "checkpoint": "15ed733e7170e7fc44c85524279cfaddf66c2a7c46cd08c8d76cadc5c49b6928"}
+{"event": "update", "peer": 0, "round": 26, "loss": 3.343629846037913, "artifact": {"sha256": "ede91aad7747058de0b6612c0097c354e91057b650e9483beda88f6b925dbb90", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 26, "checkpoint": "ff6b539449285a8bed406a716006b597e557ad645b70ee5e483a58b9060cbc45"}
+{"event": "update", "peer": 0, "round": 27, "loss": 3.213120939321893, "artifact": {"sha256": "07639bc7adedeb6a95c5d4fdca0a20b4f9d43d588105ff13deb9553d1db86fbf", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 27, "checkpoint": "c5417fcba9c4071b5ef994313675bae897982d7a8f8e11b6e7799144e3406a99"}
+{"event": "update", "peer": 0, "round": 28, "loss": 3.251305639743805, "artifact": {"sha256": "10baa5784790f761f3630cf636ee0fcafd4945aa95dfeea39abc25a6778d2898", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 28, "checkpoint": "f2ccb397b660969bc44e01816405bc6225ebaa22eb747dc75b70ec0d9c3b00ff"}
+{"event": "update", "peer": 0, "round": 29, "loss": 3.164633482087719, "artifact": {"sha256": "60d537a3f1d0209da4866340519217ce5c48041155147ef0d35f4ada31a9254e", "bytes": 737280}}
+Waiting for peer accept round 29
+{"event": "committed", "peer": 0, "round": 29, "checkpoint": "28882f6ae1672fe28955a176a13264fb92cc892b3cb78e23294f1657a5499683"}
+{"event": "update", "peer": 0, "round": 30, "loss": 3.3043800575357762, "artifact": {"sha256": "f59a2faf17554a35040d717b57334cd4f27572f6afccfbade9fbb09213884b5f", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 30, "checkpoint": "c7b7e37eab3f27fdd132360156790394078120a470bc558da58d0787fc386779"}
+{"event": "update", "peer": 0, "round": 31, "loss": 3.1649545431137085, "artifact": {"sha256": "88402a3d444784408bfdb74dec785a027cb543c4d2387b17f70aa0f1686e2ba0", "bytes": 737280}}
+{"event": "committed", "peer": 0, "round": 31, "checkpoint": "17b0c416349efa5e996a418d13267620b977872561be1f335eaf0d678bc9f755"}
+{"event": "finished", "peer": 0, "checkpoint": "17b0c416349efa5e996a418d13267620b977872561be1f335eaf0d678bc9f755", "evaluation": {"train": {"loss": 3.2213737070560455, "perplexity": 25.06252511236835, "target_tokens": 2048, "sequences": 16}, "validation": {"loss": 3.204986466698468, "perplexity": 24.655166348397927, "target_tokens": 1870, "sequences": 16}, "test": {"loss": 3.2333091325146235, "perplexity": 25.363449269250445, "target_tokens": 1896, "sequences": 16}}}
+{"event": "released", "peer": 0, "release": "a2a0c82faefd242e6e1b027c8f4645312e6f77fc473087b1ce6f071e0845da68"}

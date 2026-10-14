@@ -1,0 +1,12 @@
+{
+  "verified": true,
+  "stage": "64493100f2d77352e621a74086937458ec8a5ed644ab8754735c9bfa3cae9c91",
+  "release": "a2a0c82faefd242e6e1b027c8f4645312e6f77fc473087b1ce6f071e0845da68",
+  "rounds": 32,
+  "signed_contributions": 64,
+  "target_tokens": 62696,
+  "unique_training_windows": 512,
+  "changed_checkpoints": 32,
+  "numerically_replayed_contributions": 2,
+  "scope": "Offline signature, allocation and history checks. Trust pins must be independently obtained. Numerical replay, source re-tokenization and historical quorum verification ran in the separate auditor."
+}

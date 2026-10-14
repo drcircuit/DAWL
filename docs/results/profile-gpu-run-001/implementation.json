@@ -1,0 +1,33 @@
+{
+  "schema": "hypertrix.gpu-implementation/1",
+  "gpu_image": "1e5b88d37c2f0df1b9814e56ef845681fe9855a8bc36bebcc1978d46d99d5eb1",
+  "early_cpu_preparation_image": "4a494b8718b97c7de8e8f1038146fdc3302162c7db91faee81b0facb5d5e3106",
+  "image_change": "Before GPU replay: refreshable provider index and rejection of a row larger than the 64 MiB output buffer. Import and commitment algorithm unchanged.",
+  "source_files": {
+    "src/dawl_profiles/vectors.py": "f8d310cb3374c8686ebc01dd23907b042cd57dbb2e55f9a001d3196c77c84d0f",
+    "scripts/profile_gpu_pilot.py": "9c50150c67223c9a4013079f346057c9875724a94aa0023476478653f2a12c6a",
+    "scripts/cuda_gather.py": "1c45385ae7e5c55116c9f22ecc686836c4236602e5a1712476ac7a0b185d30a6",
+    "scripts/profile_gpu_pilot.sh": "74a7e225d53408960d905ea4c1695e072a6b263ccaffae24e42c5246fdb86a35",
+    "scripts/fetch_profile_weights.py": "87a1220e6745ec5447d792fec2771bed68ae49bbfaf94ff778113df044b044ab",
+    "scripts/fetch_profile_weight_ranges.py": "866184e183de98f1d866caca50316b3c9d021cae6317501038cb55a58a2cf602",
+    "scripts/verify_profile_gpu.py": "5a55e311c1d8e62473e80d4c54e1a358c41c62d5673aec05aa93b6424238ba8a",
+    "Dockerfile.profile-gpu": "e56e5ebf358bee5b8ef51782f8712bec13af79478065c04a927378ae1422cd7d",
+    "scripts/report_profile_gpu.py": "abf686fb0d3942e32e48eda5aef8b6584893566cb3a87960f6f04df1ee560d89",
+    "tests/test_profile_vectors.py": "8b2a2d69720c2abba168c729d45ef0cb0ac26bb20b16dd0c1e6a8c6a7ae3cf23"
+  },
+  "test_evidence": {
+    "host_suite": {
+      "run": 190,
+      "passed": 187,
+      "cuda_skipped": 3
+    },
+    "cuda_profile_suite": {
+      "run": 5,
+      "passed": 5
+    },
+    "cuda_legacy_suite": {
+      "run": 4,
+      "passed": 4
+    }
+  }
+}

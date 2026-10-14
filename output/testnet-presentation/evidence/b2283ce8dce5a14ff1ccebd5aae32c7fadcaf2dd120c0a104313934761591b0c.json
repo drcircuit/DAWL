@@ -1,0 +1,8 @@
+{
+  "verified": true,
+  "signed_cpu_commitments": 5,
+  "signed_gpu_receipts": 5,
+  "profile_frags": 9035,
+  "dense_bytes": 39731770880,
+  "scope": "Offline signatures and binding/coverage checks. Numerical replay and source CometBFT quorum checks are separate."
+}

@@ -1,0 +1,16 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:  15%|█▌        | 47/311 [00:00<00:00, 465.45it/s]Loading weights:  33%|███▎      | 102/311 [00:00<00:00, 511.37it/s]Loading weights:  50%|████▉     | 154/311 [00:00<00:00, 488.35it/s]Loading weights:  67%|██████▋   | 207/311 [00:00<00:00, 498.86it/s]Loading weights:  83%|████████▎ | 257/311 [00:00<00:00, 486.38it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 572.23it/s]
+/usr/local/lib/python3.12/site-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 1, "loss": 3.6586074233055115, "seconds": 37.87812805175781}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 2, "loss": 3.762871563434601, "seconds": 5.3069939613342285}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 3, "loss": 3.437186598777771, "seconds": 5.431806325912476}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 4, "loss": 3.5482192635536194, "seconds": 5.135901927947998}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 5, "loss": 3.585051119327545, "seconds": 5.401137590408325}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 6, "loss": 3.4035619497299194, "seconds": 5.680647134780884}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 7, "loss": 3.214793026447296, "seconds": 5.586873531341553}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 8, "loss": 3.4571223855018616, "seconds": 5.8955841064453125}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 9, "loss": 3.622591555118561, "seconds": 5.692385196685791}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 10, "loss": 3.320690095424652, "seconds": 6.063663959503174}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 11, "loss": 3.368273973464966, "seconds": 6.018916130065918}
+{"policy": "strict-math", "attempt": "strict-math-1", "step": 12, "loss": 3.279507339000702, "seconds": 5.561200857162476}
+{"completed": "strict-math-1", "attention_operations": ["aten::_scaled_dot_product_attention_math", "aten::scaled_dot_product_attention"], "wall_seconds": 106.05360317230225}

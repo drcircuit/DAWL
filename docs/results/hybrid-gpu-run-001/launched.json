@@ -1,0 +1,10 @@
+{
+  "container": "ef58e34d5f55b1fb374e3619d51f1f900da8b8c12ef481df8801df8e63466822",
+  "image": "a0ce8315388ddb6d11135eb99dac499ccc832fe0d84961630b861c410817b32e",
+  "deadline": "2026-10-14T18:41:52.415768+00:00",
+  "started_at": "2026-10-13T23:36:47.510358+00:00",
+  "name": "dawlh1013185918-nodes-gpu-0",
+  "cpu_limit": 2,
+  "memory_limit_gb": 2,
+  "gpu": "WSL /dev/dxg; resident table + bounded output buffers; no cloud GPU"
+}

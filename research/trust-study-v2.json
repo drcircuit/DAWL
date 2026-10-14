@@ -1,0 +1,49 @@
+{
+  "id": "hypertrix-fixed-advice-pilot-v2",
+  "version": 1,
+  "language": "nb",
+  "status": "pilot-only; financial expert review and difficulty calibration pending",
+  "stimulus_origin": "Researcher-supplied constructed scenarios and fixed advice, supplied via Espen from Yngvar on 2026-10-14. Not outputs of the documented model.",
+  "design": "Between-participant documentation A/B/C; three scenarios per participant in random order. Independent good/bad candidate variants, balanced over blocks of 24 allocations (3 conditions x 8 variant patterns).",
+  "cases": [
+    {
+      "id": "extra-payment",
+      "title": "Hvilket lån bør få en ekstra innbetaling?",
+      "situation": "Du har 20 000 kroner tilgjengelig for ekstra nedbetaling. Nødvendig buffer er allerede satt av, og alle pålagte betalinger blir gjennomført. Lån X har en saldo på 80 000 kroner og årlig rente på 18 prosent. Lån Y har en saldo på 300 000 kroner og årlig rente på 7 prosent. Rentene er faste i perioden, og ekstra nedbetaling har ingen gebyrer eller andre konsekvenser. Målet er å redusere rentekostnadene mest mulig.",
+      "options": [{"id": "X", "label": "Betal ekstra på lån X"}, {"id": "Y", "label": "Betal ekstra på lån Y"}],
+      "advice": {
+        "good": "Betal de 20 000 kronene på lån X. Den høyere renten gir størst rentebesparelse per krone du betaler ned.",
+        "bad": "Betal de 20 000 kronene på lån Y. Den større lånesaldoen gjør dette til den mest effektive måten å redusere rentekostnadene på."
+      },
+      "provisional_answer": "X",
+      "arithmetic": "20000 * 0.18 = 3600; 20000 * 0.07 = 1400; annual difference 2200 NOK under the stated assumptions.",
+      "intended_error": "Prioritize outstanding balance rather than marginal interest saving."
+    },
+    {
+      "id": "fund-fees",
+      "title": "Hvilket fond har lavest samlet pris?",
+      "situation": "Du skal velge mellom to fond som i oppgaven har samme portefølje, risiko, bruttoavkastning og øvrige vilkår. Målet er lavest samlet årlig kostnad. Fond X har 0,20 prosent forvaltningshonorar og 0,35 prosent plattformgebyr. Fond Y har 0,40 prosent forvaltningshonorar og 0,05 prosent plattformgebyr. Begge gebyrene beregnes av samme beløp, og ingen andre kostnader kommer til.",
+      "options": [{"id": "X", "label": "Velg fond X"}, {"id": "Y", "label": "Velg fond Y"}],
+      "advice": {
+        "good": "Velg fond Y. Samlet årlig kostnad er 0,45 prosent, sammenlignet med 0,55 prosent for fond X.",
+        "bad": "Velg fond X. Forvaltningshonoraret er 0,20 prosent, sammenlignet med 0,40 prosent for fond Y."
+      },
+      "provisional_answer": "Y",
+      "arithmetic": "0.20 + 0.35 = 0.55%; 0.40 + 0.05 = 0.45%; difference 0.10 percentage points.",
+      "intended_error": "Compare management fees while omitting the platform fee."
+    },
+    {
+      "id": "refinancing",
+      "title": "Gir lavere månedsbetaling et billigere lån?",
+      "situation": "Dagens lån blir fullt nedbetalt gjennom 24 gjenværende betalinger på 4 500 kroner. Et refinansieringstilbud erstatter hele lånet med 48 betalinger på 2 500 kroner, pluss et engangsgebyr på 2 000 kroner. Alle renter og øvrige kostnader er inkludert i betalingene. Du har økonomi til begge betalingsplanene. Målet er lavest samlet nominell utbetaling; oppgaven ser bort fra diskontering og skatt.",
+      "options": [{"id": "current", "label": "Behold dagens lån"}, {"id": "refinance", "label": "Refinansier lånet"}],
+      "advice": {
+        "good": "Behold dagens lån. Samlet utbetaling blir 108 000 kroner, mot 122 000 kroner ved refinansiering.",
+        "bad": "Refinansier lånet. Månedsbetalingen faller fra 4 500 til 2 500 kroner, og tilbudet er derfor det billigste alternativet."
+      },
+      "provisional_answer": "current",
+      "arithmetic": "24 * 4500 = 108000; 48 * 2500 + 2000 = 122000; difference 14000 NOK.",
+      "intended_error": "Confuse lower monthly payments with lower total nominal outlay."
+    }
+  ]
+}

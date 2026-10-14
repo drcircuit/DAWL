@@ -1,0 +1,16 @@
+{
+  "schema":"dawl.book-selection/1",
+  "corpus":"scifi-5/v1",
+  "catalogue_checked":"2026-10-13",
+  "language":"en",
+  "purpose":"New contributor ingestion, tokenization, DHT discovery and incremental replay; no training",
+  "processing":"Exact UTF-8 text including supplied notices; no normalization or boilerplate removal",
+  "download_root":"rsync://gutenberg.pglaf.org/gutenberg-epub/",
+  "books":[
+    {"id":35,"title":"The Time Machine","author":"H. G. Wells","author_death_year":1946},
+    {"id":36,"title":"The War of the Worlds","author":"H. G. Wells","author_death_year":1946},
+    {"id":5230,"title":"The Invisible Man","author":"H. G. Wells","author_death_year":1946},
+    {"id":62,"title":"A Princess of Mars","author":"Edgar Rice Burroughs","author_death_year":1950},
+    {"id":201,"title":"Flatland: A Romance of Many Dimensions","author":"Edwin Abbott Abbott","author_death_year":1926}
+  ]
+}

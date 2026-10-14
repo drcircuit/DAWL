@@ -24,6 +24,14 @@ from .state import AUDIT, PUBLISH, initial
 ROLES = {"validator", "worker", "publisher", "provider"}
 NETWORKS = tuple(ipaddress.ip_network(s) for s in ("10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "100.64.0.0/10"))
 NODE_DOMAIN = b"DAWL/external-node-possession/1\x00"
+TUNNEL_NETWORK = ipaddress.ip_network("127.70.0.0/24")
+
+
+def valid_host(host, transport):
+    address = ipaddress.IPv4Address(host)
+    if transport == "ssh-loopback/1":
+        return address in TUNNEL_NETWORK and address not in (TUNNEL_NETWORK.network_address, TUNNEL_NETWORK.broadcast_address)
+    return transport is None and any(address in net for net in NETWORKS)
 
 
 def private_json(path, value):
@@ -45,14 +53,17 @@ def validate_registration(registration):
         raise ValueError("unexpected registration fields")
     envelope = registration["registration"]
     body = verify_signature(envelope, envelope["body"]["signer"])
-    if set(body) != {"schema", "name", "role", "host", "node_public", "signer"}:
+    fields = {"schema", "name", "role", "host", "node_public", "signer"}
+    if body.get("schema") == "dawl.external-identity/2": fields.add("transport")
+    if set(body) != fields:
         raise ValueError("unexpected identity fields")
-    if body["schema"] != "dawl.external-identity/1" or body["role"] not in ROLES:
+    if body["schema"] not in ("dawl.external-identity/1", "dawl.external-identity/2") or body["role"] not in ROLES:
         raise ValueError("unsupported operator identity")
     if not re.fullmatch(r"[a-z][a-z0-9-]{0,39}", body["name"]):
         raise ValueError("invalid operator name")
-    address = ipaddress.IPv4Address(body["host"])
-    if not any(address in net for net in NETWORKS):
+    if body["schema"].endswith("/2") and body.get("transport") != "ssh-loopback/1":
+        raise ValueError("unsupported identity transport")
+    if not valid_host(body["host"], body.get("transport")):
         raise ValueError("use an explicit private IPv4 mesh address")
     if body["role"] == "validator":
         raw = bytes.fromhex(body["node_public"])
@@ -65,20 +76,22 @@ def validate_registration(registration):
     return body
 
 
-def identity(root, name, role, host):
+def identity(root, name, role, host, transport=None):
     root = Path(root)
     if root.exists():
         raise ValueError("identity root exists; never overwrite keys or signing state")
     # Check public fields before creating any private material.
     if role not in ROLES or not re.fullmatch(r"[a-z][a-z0-9-]{0,39}", name):
         raise ValueError("invalid role or name")
-    if not any(ipaddress.IPv4Address(host) in net for net in NETWORKS):
+    if not valid_host(host, transport):
         raise ValueError("use an explicit private IPv4 mesh address")
     keygen(root/"key.private.pem", root/"public.key")
     key = load_key(root/"key.private.pem")
     node = Ed25519PrivateKey.generate() if role == "validator" else None
-    envelope = sign({"schema": "dawl.external-identity/1", "name": name, "role": role,
-                     "host": host, "node_public": node.public_key().public_bytes_raw().hex() if node else None}, key)
+    body = {"schema": "dawl.external-identity/2" if transport else "dawl.external-identity/1", "name": name, "role": role,
+            "host": host, "node_public": node.public_key().public_bytes_raw().hex() if node else None}
+    if transport: body["transport"] = transport
+    envelope = sign(body, key)
     registration = {"registration": envelope,
                     "node_proof": node.sign(NODE_DOMAIN+canonical_json(envelope)).hex() if node else None}
     validate_registration(registration)
@@ -90,7 +103,7 @@ def identity(root, name, role, host):
     return {"public_registration": str(root/"registration.json"), "name": name, "role": role}
 
 
-def assemble(root, template, registrations, chain_id, image):
+def assemble(root, template, registrations, chain_id, image, role_images=None):
     """Build a public bundle from a pinned public corpus plan and signed identities."""
     root, template = Path(root), Path(template)
     if root.exists():
@@ -99,8 +112,14 @@ def assemble(root, template, registrations, chain_id, image):
         raise ValueError("invalid chain ID")
     if not re.fullmatch(r"[A-Za-z0-9./:_-]+@sha256:[0-9a-f]{64}", image):
         raise ValueError("deployment image must be pinned by registry digest")
+    if role_images is not None:
+        if set(role_images) != ROLES or any(not isinstance(v,str) or not re.fullmatch(
+                r"[A-Za-z0-9./:_-]+@sha256:[0-9a-f]{64}",v) for v in role_images.values()):
+            raise ValueError("exactly one immutable image pin per node role is required")
     public = [read_json(Path(path)) for path in registrations]
     members = [validate_registration(r) for r in public]
+    if len({m.get("transport") for m in members}) != 1:
+        raise ValueError("all members must agree on one transport profile")
     if not 8 <= len(members) <= 64:
         raise ValueError("external bootstrap supports 8 to 64 admitted identities")
     for field in ("name", "signer", "host"):
@@ -141,8 +160,10 @@ def assemble(root, template, registrations, chain_id, image):
                        ("artifact-index.json",read_json(template/"artifact-index.json"))):
         write_json(root/name,value)
     manifest = {"schema":"dawl.external-network/1", "chain_id":chain_id, "image":image,
-                "transport":"preconfigured-private-ipv4-mesh", "files":{
+                "transport":members[0].get("transport") or "preconfigured-private-ipv4-mesh", "files":{
                     p.name:sha256(p.read_bytes()) for p in sorted(root.iterdir())}}
+    if role_images is not None:
+        manifest.update(schema="dawl.external-network/2",role_images=role_images)
     write_json(root/"network.json",manifest)
     return {"network_sha256":sha256(canonical_json(manifest)), "genesis_sha256":manifest["files"]["genesis.json"],
             "chain_id":chain_id, "members":len(members), "scope":"Public bootstrap only; no private keys or remote deployment"}
@@ -151,8 +172,12 @@ def assemble(root, template, registrations, chain_id, image):
 def check_bundle(bundle, pin):
     bundle = Path(bundle)
     manifest = read_json(bundle/"network.json")
-    if sha256((bundle/"network.json").read_bytes()) != pin or manifest["schema"] != "dawl.external-network/1":
+    if sha256((bundle/"network.json").read_bytes()) != pin or manifest["schema"] not in ("dawl.external-network/1","dawl.external-network/2"):
         raise ValueError("network bundle pin mismatch")
+    if manifest["schema"].endswith('/2') and (set(manifest.get('role_images',{})) != ROLES or any(
+            not isinstance(v,str) or not re.fullmatch(r"[A-Za-z0-9./:_-]+@sha256:[0-9a-f]{64}",v)
+            for v in manifest['role_images'].values())):
+        raise ValueError('invalid role image pins')
     expected = {"genesis.json", "plan.json", "trust.json", "lineage.json", "registrations.json", "artifact-index.json"}
     if set(manifest["files"]) != expected:
         raise ValueError("unexpected bundle files")
@@ -176,6 +201,11 @@ def install(root, bundle, pin, bind_host=None):
     if bind_host not in (None, member["host"], "0.0.0.0"):
         raise ValueError("bind host must be the registered address or explicit wildcard")
     listen = bind_host or member["host"]
+    tunnel = member.get("transport") == "ssh-loopback/1"
+    if tunnel and bind_host not in (None, member["host"]):
+        raise ValueError("tunnel nodes must bind only their loopback address")
+    abci_host = member["host"] if tunnel else "127.0.0.1"
+    private_unix = tunnel and manifest["schema"] == "dawl.external-network/2"
     key = load_key(root/"key.private.pem")
     if key.public_key().public_bytes_raw().hex() != member["signer"]:
         raise ValueError("local private key differs from public registration")
@@ -211,13 +241,15 @@ def install(root, bundle, pin, bind_host=None):
     config = {"plan_sha256":manifest["files"]["plan.json"], "genesis_sha256":manifest["files"]["genesis.json"],
               "rpcs":[f"http://{v['host']}:26657" for v in validators],
               "providers":[f"http://{m['host']}:8900" for m in members if m["role"] == "provider"],
-              "verify_state":True, "max_certificate_age_seconds":120, "network_sha256":pin}
+              "verify_state":True, "max_certificate_age_seconds":120, "network_sha256":pin,
+              "abci_host":abci_host, "abci_unix":private_unix}
     write_json(root/"cluster.json",config)
     if member["role"] == "validator":
         write_json(root/"comet/config/genesis.json",genesis)
         peers = ",".join(f"{sha256(bytes.fromhex(v['node_public']))[:40]}@{v['host']}:26656"
                          for v in validators if v["name"] != member["name"])
-        toml = f'''proxy_app = "tcp://127.0.0.1:26658"
+        abci_endpoint = "unix://"+str(root/"sockets/abci.sock") if private_unix else f"tcp://{abci_host}:26658"
+        toml = f'''proxy_app = "{abci_endpoint}"
 moniker = "{member['name']}"
 log_level = "error"
 db_backend = "goleveldb"
@@ -233,7 +265,7 @@ laddr = "tcp://{listen}:26656"
 external_address = "{member['host']}:26656"
 persistent_peers = "{peers}"
 addr_book_strict = false
-allow_duplicate_ip = false
+allow_duplicate_ip = {str(tunnel).lower()}
 pex = false
 [mempool]
 size = 1000
@@ -252,7 +284,8 @@ create_empty_blocks_interval = "1s"
     command = (["validator","/node"] if role == "validator" else
                ["provider","--root","/node","--host",listen,"--port","8900","--allow-insecure-lab"] if role == "provider" else
                ["worker","--root","/node"] if role == "worker" else ["status","--root","/node"])
-    service = {"image":manifest["image"], "network_mode":"host", "read_only":True,"init":True,
+    service = {"image":manifest.get("role_images",{}).get(role,manifest["image"]), "network_mode":"host", "read_only":True,"init":True,
+               "entrypoint":["python","/app/scripts/cluster_entrypoint.py"],
                "user":f"{os.getuid()}:{os.getgid()}" if hasattr(os,"getuid") else "1000:1000",
                "volumes":["./:/node"], "tmpfs":["/tmp:size=256m"], "cap_drop":["ALL"],
                "security_opt":["no-new-privileges:true"], "cpus":2, "mem_limit":"2g", "pids_limit":256,

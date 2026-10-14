@@ -1,0 +1,9 @@
+test_real_table_shape_and_addressing_beyond_two_gib (test_o200k_weights.O200kLargeCudaTests.test_real_table_shape_and_addressing_beyond_two_gib) ... ok
+test_changed_token_row_pattern_and_config_rejected (test_o200k_weights.O200kWeightTests.test_changed_token_row_pattern_and_config_rejected) ... ok
+test_new_namespace_padded_model_rows_and_ordinary_controls (test_o200k_weights.O200kWeightTests.test_new_namespace_padded_model_rows_and_ordinary_controls) ... ok
+test_signed_source_swap_and_implicit_namespace_reuse_rejected (test_o200k_weights.O200kWeightTests.test_signed_source_swap_and_implicit_namespace_reuse_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 16.205s
+
+OK

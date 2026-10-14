@@ -1,0 +1,6 @@
+test_only_B_is_trained_and_frozen_A_makes_linear_averaging_valid (test_training_model.AdapterTests.test_only_B_is_trained_and_frozen_A_makes_linear_averaging_valid) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 16.108s
+
+OK

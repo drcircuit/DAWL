@@ -8,6 +8,7 @@ import copy
 from dawl_node.common import canonical_json, sha256, verify_signature
 from data_ingestion.protocol import require_digest
 from .incidents import observe, worker_conflict
+from . import contributions, profile_protocol, training_protocol, collaboration
 
 MAX_TX = 65536
 AUDIT = "AUDIT_CPU"
@@ -62,7 +63,7 @@ def advance(state, height):
     if type(height) is not int or height != state["height"] + 1:
         raise ValueError("nonconsecutive block height")
     state["height"] = height
-    for identity,job in sorted(state["jobs"].items()):
+    for identity,job in sorted({**state["jobs"], **profile_protocol.active_jobs(state), **training_protocol.active_jobs(state)}.items()):
         for owner, lease in sorted(job["leases"].items()):
             if lease["expires"] < height:
                 observe(state,"lease_expired",{"job":identity,"signer":owner,**lease,"misconduct_proven":False})
@@ -81,8 +82,10 @@ def apply(state, tx):
     body = tx["body"]
     public = body["signer"]
     actor = state["actors"].get(public)
-    if actor is None:
+    newcomer=actor is None and body.get('kind')=='announce_provider' and state.get('protocol_upgrade')
+    if actor is None and not newcomer:
         raise ValueError("unadmitted transaction signer")
+    if newcomer: actor={'sequence':0,'last_tx':None,'last_result':None}
     body = verify_signature(tx, public)
     if set(body) != {"schema", "chain_id", "plan_sha256", "signer", "sequence", "valid_until", "kind", "payload"}:
         raise ValueError("invalid transaction fields")
@@ -95,9 +98,24 @@ def apply(state, tx):
     if type(body["valid_until"]) is not int or not height <= body["valid_until"] <= height + 600:
         raise ValueError("transaction expired or validity window exceeds bound")
     kind, payload = body["kind"], body["payload"]
-    hats = state["plan"]["actors"][public]["hats"]
+    hats = contributions.actor_hats(state,public)
     result = {}
-    if kind == "claim":
+    if kind in collaboration.COMMANDS:
+        result = collaboration.apply(state, public, hats, kind, payload, tx['id'])
+    elif kind in training_protocol.COMMANDS:
+        result = training_protocol.apply(state, public, hats, kind, payload, tx['id'])
+    elif kind in profile_protocol.COMMANDS:
+        result = profile_protocol.apply(state, public, hats, kind, payload, tx['id'])
+    elif kind == 'activate_contributions':
+        if PUBLISH not in hats:raise ValueError('publisher required for protocol activation')
+        result=contributions.activate(state,payload,tx['id'])
+    elif kind == 'announce_provider':
+        result=contributions.announce(state,public,payload,tx['id'])
+        actor=state['actors'][public]
+    elif kind == 'contribute':
+        if state.get('profile_protocol'): raise ValueError('v3 contributions must select a registered profile')
+        result=contributions.contribute(state,public,payload,tx['id'])
+    elif kind == "claim":
         if AUDIT not in hats or payload != {"capability": AUDIT}:
             raise ValueError("signer cannot claim this capability")
         for identity, job in sorted(state["jobs"].items()):
@@ -138,7 +156,7 @@ def apply(state, tx):
             if set(report) != {"outcome", "checked_chunks", "tokens_checked", "dense_bytes", "implementation_sha256", "execution_ms", "error"}:
                 raise ValueError("invalid result fields")
             require_digest(report["implementation_sha256"])
-            if report["implementation_sha256"] != state["plan"]["implementation_sha256"]:
+            if report["implementation_sha256"] != contributions.recipe(state,job):
                 raise ValueError("worker implementation differs from admitted execution recipe")
             if (report["outcome"] not in ("pass", "invalid", "unavailable", "error")
                     or not isinstance(report["error"], str) or len(report["error"]) > 512
@@ -168,7 +186,9 @@ def apply(state, tx):
             raise ValueError("publisher capability required")
         if not all(complete(state,j) for j in state["jobs"].values()):
             raise ValueError("dataset requires complete independent shard coverage")
-        if state["dataset_release"] is None:
+        if state.get('protocol_upgrade'):
+            result=contributions.publish(state,height)
+        elif state["dataset_release"] is None:
             release = {"schema": "dawl.dataset-release/1", "plan_sha256": state["plan_sha256"],
                        "lineage_checkpoint": state["plan"]["lineage_checkpoint"],
                        "training_manifest": state["plan"]["training_manifest"],
@@ -198,7 +218,7 @@ def apply(state, tx):
         state["training_plans"][identity] = record
         result = {"training_plan": identity}
     else:
-        raise ValueError("unsupported command; training and weight promotion are not enabled")
+        raise ValueError("unsupported command")
     actor.update(sequence=body["sequence"], last_tx=tx["id"], last_result=result)
     return result
 
@@ -221,11 +241,16 @@ def summary(state):
             "leases": sum(len(j["leases"]) for j in jobs), "attempts": sum(j["attempts"] for j in jobs),
             "attestations": sum(len(j["attestations"]) for j in jobs),
             "verified_chunk_executions": sum(len(j["spec"]["positions"])*len(j["attestations"]) for j in jobs),
-            "corpus_chunks": sum(b["chunks"] for b in state["plan"]["books"]),
-            "corpus_tokens": sum(b["tokens"] for b in state["plan"]["books"]),
+            "corpus_chunks": sum(b["chunks"] for b in contributions.all_books(state)),
+            "corpus_tokens": sum(b["tokens"] for b in contributions.all_books(state)),
             "disputed": sum(any(f["outcome"] == "invalid" for f in j["failures"]) for j in jobs),
             "expired_leases": state["expired_leases"], "rejected_transactions": state["rejected_transactions"],
             "dataset_release": state["dataset_release"], "training_plans": state["training_plans"],
             "weights": state["weights"],
             "incidents": state.get("incidents"),
-            "workers": {p:{"name":state["plan"]["actors"][p]["name"], **v} for p,v in state["actors"].items()}}
+            "profiles":profile_protocol.summary(state), 'profile_protocol':state.get('profile_protocol'),
+            "training":training_protocol.summary(state), 'training_protocol':state.get('training_protocol'),
+            "collaboration":collaboration.summary(state),
+            "providers":state.get('providers',{}),'contributions':state.get('contributions',{}),
+            "dataset_releases":state.get('dataset_releases',[]),'protocol_upgrade':state.get('protocol_upgrade'),
+            "workers": {p:{"name":state["plan"]["actors"].get(p,state.get('providers',{}).get(p,{})).get('name',p), **v} for p,v in state["actors"].items()}}

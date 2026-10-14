@@ -1,0 +1,29 @@
+{
+  "schema": "hypertrix.gpu-implementation/1",
+  "execution_image": "35b808fa2e746da527dfe44ddc4a4109b151701f97a9863e51170e9e822daedf",
+  "source_files": {
+    "src/dawl_profiles/profiles.py": "cf519e29940cafb21234b17239502a5ce315e03482da28699c3e969dce00dcfb",
+    "src/dawl_profiles/vectors.py": "451deafa73866e1aa856aadcad73fb5b7cb77c9e2734ad116116f01ffdbd67c7",
+    "src/dawl_profiles/o200k_weights.py": "7d37d22735e3bcf9fa1f15df72a6eac0b5629b23043e08491774f437f50b96fa",
+    "scripts/profile_gpu_pilot.py": "123e9fc21c6c72edce2fa7308693a03274823e70c296b030358e9cefd41f696d",
+    "scripts/o200k_gpu_pilot.sh": "eee3620cc0993ab6e939cf6e02608023c34b5e860563df852942512a9193d2f4",
+    "scripts/cuda_gather.py": "5097898cbfeb7ef15677979248ff19e5a6b15109078f557d639817345147e68a",
+    "scripts/verify_profile_gpu.py": "11c2209b424ff0ce6bb135b43c2cbaa4b7c454697536d1d6f3b4b1b06b428515",
+    "scripts/report_o200k_gpu.py": "9de829eb0c16bf934b2606b7f8b4a0848221199190f80318ea2ae41bfd73bc88",
+    "scripts/fetch_o200k_model.py": "36dadee885166b8b6b7f22e221972df5a21c9a41ee245893264092fdece0d401",
+    "scripts/fetch_profile_weights.py": "f8375d46539d5e909cacacc47ab820cdc0ec230578c1975d0e77221a831ae03b",
+    "scripts/fetch_profile_weight_ranges.py": "88448392168df0aeff4fe4688e3a740d90a71e6349a2d9ba907980d472ec16c1",
+    "tests/test_o200k_weights.py": "25153d5c533a5027fafe3f6f6113a380a30cd0fb04d3fae93cdb1d7c411ae177",
+    "Dockerfile.profile-gpu": "e56e5ebf358bee5b8ef51782f8712bec13af79478065c04a927378ae1422cd7d"
+  },
+  "host_tests": {
+    "run": 194,
+    "passed": 190,
+    "cuda_skipped": 4
+  },
+  "cuda_suites": {
+    "o200k_weights": 4,
+    "profile_vectors": 5,
+    "legacy_gpu": 4
+  }
+}

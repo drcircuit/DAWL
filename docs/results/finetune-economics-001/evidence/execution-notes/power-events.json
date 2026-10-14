@@ -1,0 +1,30 @@
+{
+  "scope": "Power events during the pilot; Modern Standby intervals are not a direct GPU-active-time measurement.",
+  "events": [
+    {
+      "event": "Modern Standby entered",
+      "event_id": 506,
+      "utc": "2026-10-14T12:53:59.8941655Z",
+      "message": "The system is entering Modern Standby \r\n\r\nReason: Idle Timeout."
+    },
+    {
+      "event": "Modern Standby exited",
+      "event_id": 507,
+      "utc": "2026-10-14T13:24:11.8370326Z",
+      "message": "The system is exiting Modern Standby \r\n\r\nReason: 52."
+    },
+    {
+      "event": "Modern Standby entered",
+      "event_id": 506,
+      "utc": "2026-10-14T13:39:13.9111924Z",
+      "message": "The system is entering Modern Standby \r\n\r\nReason: Idle Timeout."
+    },
+    {
+      "event": "Modern Standby exited",
+      "event_id": 507,
+      "utc": "2026-10-14T13:42:22.7155555Z",
+      "message": "The system is exiting Modern Standby \r\n\r\nReason: Input Touchpad."
+    }
+  ],
+  "captured_utc": "2026-10-14T13:45:20.2689018Z"
+}

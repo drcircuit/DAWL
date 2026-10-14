@@ -131,7 +131,7 @@ class Client:
         while time.monotonic()-start < 55:
             try:
                 state=await self.state()
-                actor=state["actors"][self.public]
+                actor=state["actors"].get(self.public,{'sequence':0,'last_tx':None})
                 if actor["last_tx"]==tx["id"]:
                     with closing(self.connect()) as db, db: db.execute("DELETE FROM outbox WHERE id=1")
                     return actor["last_result"]
@@ -167,7 +167,7 @@ class Client:
                 except ValueError: pass
             state=await self.state()
             tx=sign({"schema":"dawl.cluster-tx/1","chain_id":state["chain_id"],"plan_sha256":state["plan_sha256"],
-                     "sequence":state["actors"][self.public]["sequence"]+1,"valid_until":state["height"]+120,
+                     "sequence":state["actors"].get(self.public,{'sequence':0})["sequence"]+1,"valid_until":state["height"]+120,
                      "kind":kind,"payload":payload},self.key)
             with closing(self.connect()) as db, db:
                 db.execute("INSERT OR REPLACE INTO outbox VALUES (1,?)",(canonical_json(tx),))

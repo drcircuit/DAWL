@@ -1,0 +1,5 @@
+FROM localhost/dawl-cluster:hybrid-base
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends openssh-server && rm -rf /var/lib/apt/lists/* && rm -f /etc/ssh/ssh_host_* && passwd -d dawl
+COPY scripts/hybrid_pool.py scripts/hybrid_topology.py /app/scripts/
+ENTRYPOINT ["python", "/app/scripts/hybrid_pool.py"]

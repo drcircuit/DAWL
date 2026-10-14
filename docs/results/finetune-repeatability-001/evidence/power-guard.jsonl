@@ -1,0 +1,2 @@
+{"utc": "2026-10-14T14:34:45.705144+00:00", "event": "idle-sleep-guard-active", "pid": 4068, "deadline_unix": 1791989668.3256493, "system_required": true, "display_required": true, "scope": "Temporary thread execution state; no power-plan, lid, lock, or explicit-sleep policy changed."}
+{"utc": "2026-10-14T14:45:45.999704+00:00", "event": "idle-sleep-guard-released", "pid": 4068}

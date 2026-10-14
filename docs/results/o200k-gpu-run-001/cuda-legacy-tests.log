@@ -1,0 +1,11 @@
+Reconstructed book 11: 119,040 vector bytes
+test_released_fixture_matches_gpu_cpu_and_committed_index (test_gpu_reconstruction.CUDALineageTests.test_released_fixture_matches_gpu_cpu_and_committed_index) ... ok
+Reconstructed book 11: 119,040 vector bytes
+test_valid_signature_with_wrong_vector_commitment_is_rejected_on_gpu (test_gpu_reconstruction.CUDALineageTests.test_valid_signature_with_wrong_vector_commitment_is_rejected_on_gpu) ... ok
+test_changed_bit_is_not_a_tolerance_match (test_gpu_reconstruction.GPUChecks.test_changed_bit_is_not_a_tolerance_match) ... ok
+test_corrupt_provider_fails_over_without_accepting_bad_bytes (test_gpu_reconstruction.GPUChecks.test_corrupt_provider_fails_over_without_accepting_bad_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.129s
+
+OK

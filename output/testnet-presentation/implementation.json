@@ -1,0 +1,12 @@
+{
+  "files": {
+    "scripts/build_experiment_presentation.py": "503ce55636aaa31cfecebafc7ec17d2b30ee63a76e768b2055256908f807f643",
+    "scripts/local_testnet_console.py": "4e286e6cabdaf60a5c4158c75abcfaede3cb76a05a4535bada099bb650eae88e",
+    "scripts/local_testnet_console.html": "3be8e9ab6c09b03bef5ecb98f48bf700a165d7718b01ed2f0834db15694a7e4b",
+    "scripts/local_testnet_experiments.html": "08fbba5375ecc05669272adb0bae2dbbf631e2d013b174f8b8a93d736eec39a1",
+    "scripts/local_testnet_telemetry.py": "444b0454e4e72d6ac79ae01a46905b4d8bc52a48f2ef189c06041220b7e8e50f",
+    "scripts/local_testnet_console.sh": "7cbc2623005507f0acc7a882a4e92f1d7b513cab38ff425a4fcdd3df35cc84ea"
+  },
+  "validation": "Live browser: graphs, equations, chapter navigation, stage walkthrough, quorum 4\u21922\u21923, sampling slider, evidence category/search filters and SHA-256 preview. HTTP: all 38 public files match archives; unknown evidence IDs return 404. All four Oracle validators caught up; 11 running and 14 visible current containers.",
+  "boundary": "Read-only observer and presentation; no change to pinned training implementation."
+}

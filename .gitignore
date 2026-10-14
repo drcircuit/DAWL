@@ -8,3 +8,9 @@ artifacts/
 secrets/
 *.private.pem
 *.token
+tmp/
+output/public-site/
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm

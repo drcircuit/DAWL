@@ -1,0 +1,1 @@
+{"checkpoint":"epoch-1","exact_match":false,"exact_tensors":0,"expected_checkpoint_sha256":"92955c8b16f9219b8d1dc300bd76aac165575fdf8a96ac51c2d49a6ddd925107","max_abs_difference":0.002402006182819605,"optimizer_steps":228,"relative_l2":0.007971630019533929,"tensor_count":392}

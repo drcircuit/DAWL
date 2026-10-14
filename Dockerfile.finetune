@@ -1,0 +1,7 @@
+FROM localhost/hypertrix-oracle-training:003
+USER root
+RUN python -m pip install --no-cache-dir peft==0.21.2 gradio==6.30.0
+COPY src /app/src
+COPY scripts/finetune_prepare.py scripts/finetune_chat.py /app/scripts/
+USER 1000:1000
+ENTRYPOINT ["python", "-P", "-m", "dawl_finetune.run"]

@@ -70,7 +70,7 @@ def main():
         usage = {v['name']['value'].lower():v for v in check['usage']}
         for name in ('cores', 'standarddasv5family'):
             u = usage.get(name)
-            if not u or u['limit']-u['currentValue'] < 72:
+            if not u or int(u['limit'])-int(u['currentValue']) < 72:
                 raise ValueError(f'insufficient/unverified quota: {name}; need 72 spare vCPUs')
         if az('group', 'exists', '--name', a.resource_group, '--subscription', a.subscription):
             raise ValueError('pilot requires a new dedicated resource group; refusing to adopt existing resources')

@@ -1,0 +1,7 @@
+FROM localhost/hypertrix-finetune:002
+USER root
+# Isolated converter dependencies required by the pinned llama.cpp checkout.
+# The training image and its Transformers version remain immutable.
+RUN python -m pip install --no-cache-dir transformers==4.57.6 "sentencepiece>=0.1.98,<0.3.0" "protobuf>=4.21.0,<5.0.0"
+USER 1000:1000
+ENTRYPOINT ["python", "/converter/convert_hf_to_gguf.py"]

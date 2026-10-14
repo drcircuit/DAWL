@@ -1,0 +1,7 @@
+FROM localhost/hypertrix-training-runtime:v1
+USER root
+COPY src ./src
+COPY scripts ./scripts
+COPY artifacts/check-certificate /usr/local/bin/check-certificate
+USER 1000:1000
+ENTRYPOINT ["python", "/app/scripts/training_peer.py"]

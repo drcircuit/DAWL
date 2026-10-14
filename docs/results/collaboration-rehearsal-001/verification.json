@@ -1,0 +1,1 @@
+{"accepted_transactions":81,"consumer_selections_verified":3,"cross_branch_substitution_rejected":true,"exact_replay":true,"rejected_transactions":2,"scope":"Synthetic signed metadata rehearsal; no tensor execution, DHT traffic or CometBFT certificate.","state_sha256":"de4adf48e2d894209d77924cfba8d8ef77e988c58754996744f970acef4f70e5"}

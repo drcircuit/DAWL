@@ -1,0 +1,7 @@
+# Preserve the original 002 image and its Python/CUDA dependencies.
+FROM localhost/hypertrix-finetune:002
+USER root
+COPY src/dawl_finetune /app/src/dawl_finetune
+COPY scripts/replay_finetune.py /app/scripts/replay_finetune.py
+USER 1000:1000
+ENTRYPOINT ["python", "-P", "-m", "dawl_finetune.run"]

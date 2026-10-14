@@ -1,4 +1,7 @@
-* text=auto
+# Evidence manifests commit literal file bytes; checkout must not rewrite them.
+docs/results/** -text
+output/testnet-presentation/** -text
+*.pdf -text
+*.zip -text
+*.png -text
 *.sh text eol=lf
-# Preserve exact diagnostic/result bytes, including CRLF, so their hashes survive Git.
-docs/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

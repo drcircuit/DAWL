@@ -1,0 +1,42 @@
+FROM localhost/dawl-cluster:node-base AS node
+USER root
+COPY scripts/container_node.py scripts/peer_node.py scripts/runtime_upgrade.py /app/scripts/
+ENTRYPOINT ["python", "/app/scripts/container_node.py"]
+
+FROM node AS validator
+ENV DAWL_ROLE=validator
+
+FROM node AS provider
+ENV DAWL_ROLE=provider
+
+FROM node AS worker
+ENV DAWL_ROLE=worker
+
+FROM node AS publisher
+ENV DAWL_ROLE=publisher
+
+FROM node AS contributor
+RUN apt-get update && apt-get install -y --no-install-recommends rsync && rm -rf /var/lib/apt/lists/*
+COPY scripts/contributor_node.py /app/scripts/
+COPY research/corpora/scifi-5-v1.json /app/research/corpora/
+USER 1000:1000
+ENTRYPOINT ["python", "/app/scripts/contributor_node.py"]
+
+FROM localhost/dawl-cluster:node-base AS observer
+USER 1000:1000
+COPY scripts/hybrid_observer.py /app/scripts/
+ENTRYPOINT ["python", "/app/scripts/hybrid_observer.py"]
+
+FROM docker.io/library/caddy:2 AS caddy
+FROM observer AS console
+USER root
+COPY --from=caddy /usr/bin/caddy /usr/local/bin/caddy
+COPY scripts/cloud_console.py /app/scripts/
+ENV XDG_DATA_HOME=/tls XDG_CONFIG_HOME=/tmp/caddy DAWL_SITE=cloud
+ENTRYPOINT ["python", "/app/scripts/cloud_console.py"]
+
+FROM docker.io/library/python:3.12-slim AS gateway
+RUN apt-get update && apt-get install -y --no-install-recommends openssh-server && rm -rf /var/lib/apt/lists/* /etc/ssh/ssh_host_* && useradd --uid 1000 --create-home dawl && passwd -d dawl
+WORKDIR /app
+COPY scripts/tunnel_gateway.py scripts/hybrid_topology.py /app/scripts/
+ENTRYPOINT ["python", "/app/scripts/tunnel_gateway.py"]

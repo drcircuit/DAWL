@@ -1,0 +1,13 @@
+{
+  "release": "fd8760e4f3878a1bcb79645f42f0f55bcbbaab74f20d9aa2cfe53ac005743950",
+  "receipt": "26145a140ce3d60a3f9b26aec997b3b4c3b7f7f256253657b38e4c7f2339efd6",
+  "public_key": "581e0bb4da820894c02ed51684268c7b17a84fdcd3c408f19eb58559a8cc20f5",
+  "discovery_peers": 29,
+  "height": 2516,
+  "cuda_launches": 1807,
+  "seconds": 66.57654572800675,
+  "cuda_kernel_ms": 211.63420865684748,
+  "cuda_roundtrip_seconds": 6.6638645769126015,
+  "numpy_reference_seconds": 3.3232156310332357,
+  "received_bytes": 172517031
+}

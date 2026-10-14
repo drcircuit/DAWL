@@ -1,0 +1,9 @@
+# The tested protocol-v3 environment; diagnostic source has its own image/digest.
+FROM localhost/hypertrix-profiles:v3
+USER root
+COPY src ./src
+COPY scripts ./scripts
+COPY artifacts/check-certificate /usr/local/bin/check-certificate
+ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
+USER 1000:1000
+ENTRYPOINT ["python", "/app/scripts/profile_gpu_pilot.py"]

@@ -1,0 +1,11 @@
+{
+  "experiments": 13,
+  "public_evidence_files_checked": 38,
+  "all_hashes_match_archives": true,
+  "unknown_evidence_returns_404": true,
+  "certified": true,
+  "caught_up_validators": 4,
+  "running_nodes": 11,
+  "visible_nodes": 14,
+  "errors": []
+}

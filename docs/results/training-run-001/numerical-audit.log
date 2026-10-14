@@ -1,0 +1,4 @@
+hypertrix-training-001-cortex
+{"event": "replayed_training", "round": 1, "peer": 0, "bit_exact": true}
+{"event": "replayed_training", "round": 30, "peer": 0, "bit_exact": true}
+{"event": "audit_complete", "checkpoint": "17b0c416349efa5e996a418d13267620b977872561be1f335eaf0d678bc9f755", "rounds": 32}

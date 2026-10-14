@@ -1,0 +1,12 @@
+{
+  "schema": "dawl.book-selection/1",
+  "corpus": "economics-3/v1",
+  "language": "en",
+  "purpose": "Local domain-adaptation experiment; historical economic theory and banking",
+  "download_root": "rsync://gutenberg.pglaf.org/gutenberg-epub/",
+  "books": [
+    {"id": 3300, "title": "An Inquiry into the Nature and Causes of the Wealth of Nations", "author": "Adam Smith", "author_death_year": 1790},
+    {"id": 33310, "title": "On The Principles of Political Economy, and Taxation", "author": "David Ricardo", "author_death_year": 1823},
+    {"id": 4359, "title": "Lombard Street: A Description of the Money Market", "author": "Walter Bagehot", "author_death_year": 1877}
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "verification": {
+    "verified": true,
+    "stage": "64493100f2d77352e621a74086937458ec8a5ed644ab8754735c9bfa3cae9c91",
+    "release": "a2a0c82faefd242e6e1b027c8f4645312e6f77fc473087b1ce6f071e0845da68",
+    "rounds": 32,
+    "signed_contributions": 64,
+    "target_tokens": 62696,
+    "unique_training_windows": 512,
+    "changed_checkpoints": 32,
+    "numerically_replayed_contributions": 2,
+    "scope": "Offline signature, allocation and history checks. Trust pins must be independently obtained. Numerical replay, source re-tokenization and historical quorum verification ran in the separate auditor."
+  },
+  "prepared": {
+    "adapter_bytes": 737280,
+    "base_parameters": 134515008,
+    "books": 13,
+    "fixed_projection_bytes": 1105920,
+    "planned_sequences": 512,
+    "planned_target_tokens": 62696,
+    "source_tokens": 1933422,
+    "split_books": {
+      "test": [
+        84
+      ],
+      "train": [
+        11,
+        35,
+        36,
+        62,
+        76,
+        201,
+        345,
+        1400,
+        1661,
+        2701,
+        5230
+      ],
+      "validation": [
+        1342
+      ]
+    },
+    "split_windows": {
+      "test": 912,
+      "train": 13471,
+      "validation": 1601
+    },
+    "stage": "64493100f2d77352e621a74086937458ec8a5ed644ab8754735c9bfa3cae9c91",
+    "trainable_parameters": 184320
+  },
+  "artifact_transfers": {
+    "peer-0": {
+      "bytes": 323244478,
+      "objects": 3711,
+      "origins": [
+        "http://127.70.0.30:8900",
+        "http://127.70.0.32:8910"
+      ]
+    },
+    "peer-1": {
+      "bytes": 323244478,
+      "objects": 3711,
+      "origins": [
+        "http://127.70.0.30:8900",
+        "http://127.70.0.31:8910"
+      ]
+    },
+    "auditor": {
+      "bytes": 370430398,
+      "objects": 3775,
+      "origins": [
+        "http://127.70.0.31:8910"
+      ]
+    }
+  },
+  "availability": {
+    "artifact_bytes": 273009012,
+    "fixed_projection_and_trained_adapter_verified": true,
+    "full_parent_checkpoint_verified": true,
+    "objects": 37,
+    "release": "a2a0c82faefd242e6e1b027c8f4645312e6f77fc473087b1ce6f071e0845da68",
+    "scope": "Cold download from peer 1 after original Cortex and peer 0 were stopped. Public integrity/signature verification; no private key or training execution.",
+    "sole_source": "http://127.70.0.32:8910",
+    "stage": "64493100f2d77352e621a74086937458ec8a5ed644ab8754735c9bfa3cae9c91",
+    "verified": true
+  },
+  "evaluation": {
+    "baseline": {
+      "test": {
+        "loss": 3.2663839961154553,
+        "perplexity": 26.216369247592148,
+        "sequences": 16,
+        "target_tokens": 1896
+      },
+      "train": {
+        "loss": 3.2671198546886444,
+        "perplexity": 26.235667887324798,
+        "sequences": 16,
+        "target_tokens": 2048
+      },
+      "validation": {
+        "loss": 3.2463707941738678,
+        "perplexity": 25.696911104051082,
+        "sequences": 16,
+        "target_tokens": 1870
+      }
+    },
+    "final": {
+      "test": {
+        "loss": 3.2333091325146235,
+        "perplexity": 25.363449269250445,
+        "sequences": 16,
+        "target_tokens": 1896
+      },
+      "train": {
+        "loss": 3.2213737070560455,
+        "perplexity": 25.06252511236835,
+        "sequences": 16,
+        "target_tokens": 2048
+      },
+      "validation": {
+        "loss": 3.204986466698468,
+        "perplexity": 24.655166348397927,
+        "sequences": 16,
+        "target_tokens": 1870
+      }
+    }
+  },
+  "training_seconds": [
+    65.28392001699967,
+    48.534732532000135
+  ],
+  "adapter_exchange_bytes": 47185920,
+  "scope": "One local stage with two CUDA containers sharing one physical GPU; fixed admitted membership; sampled numerical audit. No distributed speedup or general model quality claim."
+}

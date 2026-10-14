@@ -1,4 +1,17 @@
-# DAWL — Decentralized Asynchronous Weight Ledger
+# The Hypertrix
+
+## Public research observatory
+
+[Live Azure observatory](https://dawlh1013185918state.z1.web.core.windows.net/) ·
+[Norwegian technical handoff](docs/research-handoff-2026-10-14.md) ·
+[Fixed-advice participant pilot](docs/trust-study-v2.md) ·
+[Publication and network-split design](docs/public_observatory.md)
+
+Local compute publishes quorum-checked ledger snapshots to a read-only Azure
+site. The older cloud compute pilot is stopped with closed signing-state archives
+preserved. Participant responses stay local. The current strict full-epoch
+fine-tuning/replay run is a new lineage; the original failed replay stays recorded.
+
 
 A research project toward a **Linux of AI**: independently operated infrastructure
 for contributing data and compute, publishing model improvements, preserving their
@@ -6,7 +19,68 @@ provenance, and choosing or developing model branches.
 
 We develop the theory and a working proof of concept together, one stage at a time.
 The current stage runs real ingestion, a replicated provenance ledger, GPU input-vector
-recovery and independent CPU replay. It performs **no model training or gradient updates**.
+recovery, independent CPU replay and Oracle-managed training. The
+[local training testnet](docs/results/oracle-training-run-003/README.md) continues
+SmolLM2 with leased training shards, replacement trainers, two GPU replay verifiers
+and four Oracle-certified weight checkpoints. A cold consumer recovered the model
+and its provenance from one surviving verifier after the original provider and both
+trainers stopped. The earlier [fixed-roster run](docs/results/training-run-001/README.md)
+remains a preserved baseline.
+
+The Hypertrix is the platform; **DAWL (Decentralized Asynchronous Weight Ledger)**
+remains the name of the underlying research and implementation. See the
+[terminology](docs/hypertrix_terminology.md) for The Collective, The Oracle,
+Cortex Units, Daemons, Frags, Synapses, Cipher-Logs and The Blueprint.
+The [hybrid testnet runbook](docs/hybrid_testnet.md) describes the current
+one-container-per-node Azure/local deployment and its shared 3-vCPU cloud pool.
+The [Hypertrix validation report](docs/hypertrix_run_001.md) records full-corpus
+completion, individual-node outages and WAN quorum loss/recovery.
+The [contributor protocol](docs/contributor_protocol.md) adds signed DHT role
+discovery, incremental corpus proposals and append-only Blueprint releases.
+Auditor/Oracle certificates, reputation and reward policies are deferred.
+The [model-profile experiment](docs/model_profiles.md) adds separate tokenizer/model
+ledgers and token Blueprints over a shared artifact store. [Protocol 3](docs/profile_protocol_v3.md)
+implements certified profile registration, compatible worker routing, independent
+Blueprint heads and offline `o200k_base` support. Its local tests precede activation
+on the hybrid consensus chain.
+The [six-profile cluster results](docs/results/profile-testnet-002/README.md)
+record 78 completed jobs, 156 signed audit receipts, validator-outage recovery
+and offline quorum/lineage verification.
+The [multi-profile GPU verification](docs/results/profile-gpu-run-001/README.md)
+binds real imported input weights to those certified token Blueprints, then checks
+CUDA reconstruction against signed CPU commitments through a separate Cortex provider.
+The [o200k GPU addendum](docs/results/o200k-gpu-run-001/README.md) extends this to
+real GPT-OSS input weights after verifying ordinary-token compatibility, with an
+explicit link from the original token Blueprint to a separate model-bound profile.
+**The Hypertrix Console** runs at `http://127.0.0.1:8882/`.
+Its [GPU verification control plane](http://127.0.0.1:8882/gpu) shows verifier
+receipts, checkpoint acceptance, Execution Leases and shared-device telemetry.
+The [Experiments & evidence presentation](http://127.0.0.1:8882/experiments)
+explains 13 recorded experiments with measured graphs, equations, interactive
+quorum/sampling illustrations and 38 inspectable public evidence files.
+The [protocol-4 architecture and runbook](docs/oracle_training.md) describe the
+running local testnet and its current trust and scaling limits.
+The opt-in [collaboration modes and branch protocol](docs/collaboration_modes.md)
+preserve homogeneous exact replay under a shared participation manifest and add
+independent model histories across execution cohorts. An offline
+[signed metadata rehearsal](docs/results/collaboration-rehearsal-001/README.md)
+demonstrates explicit forks and consumer choice; heterogeneous tensor verification
+and DiLoCo aggregation remain future work.
+The [Branches & modes explorer](http://127.0.0.1:8882/branches) distinguishes this
+rehearsal from the current live protocol-4 network.
+
+The [local economics fine-tuning methodology](docs/finetuning_lab.md) adds a
+Qwen3-0.6B continuation on 16 books and a [Trust Lab](http://127.0.0.1:8885/).
+It compares actual Ollama and OpenAI responses, explains development provenance
+in plain language, and preserves an identical-answer A/B/C disclosure experiment.
+This calibration branch has its own signed records and verification scope.
+The [completed pilot report](docs/results/finetune-economics-001/README.md)
+and [shareable evidence bundle](docs/results/finetune-economics-001.zip) record
+three completed epochs, successful artifact checks and the failed exact GPU replay.
+The [repeatability investigation](docs/results/finetune-repeatability-001/README.md)
+isolates the first backward-pass divergence and measures strict execution fixes.
+The [verification design](docs/training_verification.md) separates exact replay,
+future interval audits, numerical agreement and evidence for worker rewards.
 
 ## Current platform prototype
 
@@ -22,7 +96,8 @@ The [cluster validation report](docs/cluster_run_002.md) records the full-corpus
 run, quorum loss and recovery, public certificate verification and current limits.
 The [external cluster workflow](docs/external_cluster.md) adds operator-local key
 generation, a shared public genesis bundle, per-host deployment, certified worker
-reads and attributed incident records. External hosts have not yet been deployed.
+reads and attributed incident records. The hybrid pilot now connects Azure Norway
+East with the local machine through an authenticated WAN transport.
 The [external rehearsal results](docs/external_run_001.md) record full-corpus
 completion despite network isolation, forged RPC state and corrupted artifact pieces.
 
@@ -42,9 +117,9 @@ completion despite network isolation, forged RPC state and corrupted artifact pi
 The original platform and swarm remain preserved baselines. The new admitted
 cluster has consensus-ordered leases and complete sharded replay among configured
 workers. Three of four validators are required to commit. It does not yet provide
-open peer discovery, permissionless admission, executed training-run lineage or
-provenance for a generated answer. Imported GPT-2
-pretraining is an explicit boundary. The research branch and its provisional study
+permissionless admission or provenance for a generated answer. Protocol 4 adds
+Oracle-certified training-run lineage on a fresh local chain. Imported GPT-2 and
+SmolLM2 pretraining remain explicit boundaries. The research branch and its provisional study
 materials remain separate; model trust experiments follow the platform work.
 
 ## Preserved ingestion-node baseline
@@ -112,8 +187,10 @@ Sampling is unpredictable and verification is deterministic. With N committed
 chunks, m bad chunks, and k distinct uniform samples, detection probability is
 `1 - C(N-m,k)/C(N,k)`. A passed partial audit does not validate unsampled chunks.
 This is a commit-and-challenge audit, not zero-knowledge or proof of useful work.
-Data quality, rights, availability over time, public identity admission, incentives,
-and model training remain separate research and engineering stages.
+Data quality, rights, availability over time, public identity admission and incentives
+remain separate research and engineering stages. The new
+[training stage protocol](docs/distributed_training.md) links executed local updates
+to their parent model and certified token Blueprint, with explicit audit limits.
 
 ## Original Stage 1 experiment
 
@@ -133,10 +210,11 @@ See the [Stage 1 paper and research roadmap](docs/stage_1_data_ingestion.md),
 
 ## Implementation map
 
-The [Azure AKS pilot runbook](docs/azure_testnet.md) covers the prepared 20-worker
-testnet, its EUR 50/four-hour envelope, private networking, persistent identities,
-certificate capture and cleanup. Cloud deployment status is reported separately
-from the existing local rehearsals.
+The [hybrid testnet runbook](docs/hybrid_testnet.md) covers a three-vCPU Azure
+Container Instances pool in Norway East connected to a separate local pool,
+with four validators and twenty auditors. It includes the EUR 50/four-hour
+envelope, authenticated transport, certificate capture and cleanup. The earlier
+72-vCPU AKS proposal is superseded for this pilot.
 
 | Location | Responsibility |
 | --- | --- |

@@ -11,6 +11,7 @@ import (
  "flag"
  "fmt"
  "io"
+ "net"
  "net/http"
  "os"
  "os/signal"
@@ -127,8 +128,16 @@ func run() error {
  flags:=flag.NewFlagSet("bridge",flag.ContinueOnError)
  address:=flags.String("listen","tcp://127.0.0.1:26658","local ABCI socket")
  endpoint:=flags.String("application","http://127.0.0.1:26659","local deterministic application")
+ applicationSocket:=flags.String("application-socket","","private Unix socket for HTTP ABCI application")
  if err:=flags.Parse(os.Args[1:]);err!=nil{return err}
- b:=&bridge{endpoint:*endpoint,client:&http.Client{Timeout:30*time.Second}}
+ client:=&http.Client{Timeout:30*time.Second}
+ if *applicationSocket!="" {
+  *endpoint="http://localhost"
+  client.Transport=&http.Transport{DialContext:func(ctx context.Context,network,address string)(net.Conn,error){
+   return (&net.Dialer{}).DialContext(ctx,"unix",*applicationSocket)
+  }}
+ }
+ b:=&bridge{endpoint:*endpoint,client:client}
  s,err:=server.NewServer(*address,"socket",b); if err!=nil{return err}
  if err=s.Start();err!=nil{return err}
  stop:=make(chan os.Signal,1); signal.Notify(stop,syscall.SIGINT,syscall.SIGTERM); <-stop

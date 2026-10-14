@@ -1,0 +1,226 @@
+{
+  "schema": "dawl.container-topology/1",
+  "nodes": [
+    {
+      "name": "oracle-0",
+      "role": "validator",
+      "host": "127.70.0.10",
+      "site": "cloud",
+      "cpu": 0.5,
+      "memory_gb": 0.8
+    },
+    {
+      "name": "oracle-1",
+      "role": "validator",
+      "host": "127.70.0.11",
+      "site": "cloud",
+      "cpu": 0.5,
+      "memory_gb": 0.8
+    },
+    {
+      "name": "oracle-2",
+      "role": "validator",
+      "host": "127.70.0.12",
+      "site": "local",
+      "cpu": 0.5,
+      "memory_gb": 0.75
+    },
+    {
+      "name": "oracle-3",
+      "role": "validator",
+      "host": "127.70.0.13",
+      "site": "local",
+      "cpu": 0.5,
+      "memory_gb": 0.75
+    },
+    {
+      "name": "cortex-0",
+      "role": "provider",
+      "host": "127.70.0.20",
+      "site": "cloud",
+      "cpu": 0.5,
+      "memory_gb": 1.1
+    },
+    {
+      "name": "cortex-1",
+      "role": "provider",
+      "host": "127.70.0.21",
+      "site": "local",
+      "cpu": 0.5,
+      "memory_gb": 1
+    },
+    {
+      "name": "blueprint-publisher",
+      "role": "publisher",
+      "host": "127.70.0.30",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 0.5
+    },
+    {
+      "name": "daemon-0",
+      "role": "worker",
+      "host": "127.70.0.40",
+      "site": "cloud",
+      "cpu": 0.25,
+      "memory_gb": 1.2
+    },
+    {
+      "name": "daemon-1",
+      "role": "worker",
+      "host": "127.70.0.41",
+      "site": "cloud",
+      "cpu": 0.25,
+      "memory_gb": 1.2
+    },
+    {
+      "name": "daemon-2",
+      "role": "worker",
+      "host": "127.70.0.42",
+      "site": "cloud",
+      "cpu": 0.25,
+      "memory_gb": 1.2
+    },
+    {
+      "name": "daemon-3",
+      "role": "worker",
+      "host": "127.70.0.43",
+      "site": "cloud",
+      "cpu": 0.25,
+      "memory_gb": 1.2
+    },
+    {
+      "name": "daemon-4",
+      "role": "worker",
+      "host": "127.70.0.44",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-5",
+      "role": "worker",
+      "host": "127.70.0.45",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-6",
+      "role": "worker",
+      "host": "127.70.0.46",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-7",
+      "role": "worker",
+      "host": "127.70.0.47",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-8",
+      "role": "worker",
+      "host": "127.70.0.48",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-9",
+      "role": "worker",
+      "host": "127.70.0.49",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-10",
+      "role": "worker",
+      "host": "127.70.0.50",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-11",
+      "role": "worker",
+      "host": "127.70.0.51",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-12",
+      "role": "worker",
+      "host": "127.70.0.52",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-13",
+      "role": "worker",
+      "host": "127.70.0.53",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-14",
+      "role": "worker",
+      "host": "127.70.0.54",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-15",
+      "role": "worker",
+      "host": "127.70.0.55",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-16",
+      "role": "worker",
+      "host": "127.70.0.56",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-17",
+      "role": "worker",
+      "host": "127.70.0.57",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-18",
+      "role": "worker",
+      "host": "127.70.0.58",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    },
+    {
+      "name": "daemon-19",
+      "role": "worker",
+      "host": "127.70.0.59",
+      "site": "local",
+      "cpu": 1,
+      "memory_gb": 1.25
+    }
+  ],
+  "gateway": {
+    "cpu": 0.5,
+    "memory_gb": 0.5
+  },
+  "cloud_vcpus": 3
+}

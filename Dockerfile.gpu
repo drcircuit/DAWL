@@ -1,0 +1,8 @@
+# Override with a reviewed local base ID when building a live pilot image.
+ARG BASE_IMAGE=localhost/dawl-worker:node-v2
+FROM ${BASE_IMAGE}
+USER root
+COPY scripts/gpu_reconstruction_node.py scripts/cuda_gather.py scripts/contributor_node.py /app/scripts/
+ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
+USER 1000:1000
+ENTRYPOINT ["python", "/app/scripts/gpu_reconstruction_node.py"]

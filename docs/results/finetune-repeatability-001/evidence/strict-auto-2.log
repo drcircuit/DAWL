@@ -1,0 +1,8 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:  18%|█▊        | 55/311 [00:00<00:00, 544.37it/s]Loading weights:  35%|███▌      | 110/311 [00:00<00:00, 499.21it/s]Loading weights:  52%|█████▏    | 161/311 [00:00<00:00, 462.97it/s]Loading weights:  67%|██████▋   | 208/311 [00:00<00:00, 450.74it/s]Loading weights:  90%|████████▉ | 279/311 [00:00<00:00, 537.00it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 565.10it/s]
+/usr/local/lib/python3.12/site-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+{"policy": "strict-auto", "attempt": "strict-auto-2", "step": 1, "loss": 3.658588171005249, "seconds": 34.22600793838501}
+{"policy": "strict-auto", "attempt": "strict-auto-2", "step": 2, "loss": 3.761622190475464, "seconds": 5.485934257507324}
+{"policy": "strict-auto", "attempt": "strict-auto-2", "step": 3, "loss": 3.4379940032958984, "seconds": 4.717849016189575}
+{"policy": "strict-auto", "attempt": "strict-auto-2", "step": 4, "loss": 3.548992693424225, "seconds": 5.244677543640137}
+{"completed": "strict-auto-2", "attention_operations": ["ScaledDotProductFlashAttentionBackward0", "aten::_flash_attention_backward", "aten::_flash_attention_forward", "aten::_scaled_dot_product_flash_attention", "aten::_scaled_dot_product_flash_attention_backward", "aten::scaled_dot_product_attention", "autograd::engine::evaluate_function: ScaledDotProductFlashAttentionBackward0"], "wall_seconds": 55.69904589653015}

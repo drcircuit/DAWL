@@ -1,0 +1,10 @@
+test_all_replicas_recompute_same_weighted_round (test_training_protocol.TrainingProtocolTests.test_all_replicas_recompute_same_weighted_round) ... ok
+test_bad_updates_and_duplicate_identity_rejected (test_training_protocol.TrainingProtocolTests.test_bad_updates_and_duplicate_identity_rejected) ... ok
+test_book_holdouts_and_complete_window_coverage (test_training_protocol.TrainingProtocolTests.test_book_holdouts_and_complete_window_coverage) ... ok
+test_next_token_masks_no_cross_frag_or_double_shift (test_training_protocol.TrainingProtocolTests.test_next_token_masks_no_cross_frag_or_double_shift) ... ok
+test_shards_are_disjoint_and_parent_bound (test_training_protocol.TrainingProtocolTests.test_shards_are_disjoint_and_parent_bound) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.741s
+
+OK

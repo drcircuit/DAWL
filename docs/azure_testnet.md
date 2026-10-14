@@ -1,5 +1,10 @@
 # Azure AKS pilot
 
+**Superseded for the current pilot:** use the [3-vCPU Norway East hybrid
+runbook](hybrid_testnet.md). The user reduced the cloud allocation to three vCPUs
+and requested participation from local nodes. The AKS profile below is retained
+as a future deployment option; its 72-vCPU allocation is not currently authorized.
+
 Status: deployment tooling prepared and locally checked. An online run is only
 established by a populated `artifacts/azure-pilot-001/results/report.json` and its
 verified certificate. Template compilation and unit tests are not cloud validation.

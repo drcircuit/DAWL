@@ -1,0 +1,41 @@
+{
+  "schema": "hypertrix.financial-case-set/1",
+  "retrieved_date": "2026-10-14",
+  "scope": "Public financial situations and published examples; no private customer records. Source facts are identical in every model prompt. These cases are evaluation material, not training data.",
+  "instruction": "Analyse this documented financial situation. Give a practical recommendation, explain your reasoning, and identify material uncertainties or missing information. Use the dated facts supplied, without pretending they are current offers. Do not invent personal circumstances. Keep the response under 220 words.",
+  "cases": [
+    {
+      "id": "norway-green-mortgages",
+      "title": "Two published Norwegian green mortgage examples",
+      "as_of": "Snapshot retrieved 14 October 2026",
+      "facts": "DNB's published green mortgage example lists NOK 2,000,000 over 25 years, nominal floating interest from 5.24%, APRC from 5.44%, and total repayment NOK 3,614,590. SpareBank 1 Nord-Norge's green home mortgage within 85% loan-to-value lists NOK 2,000,000 over 25 years, nominal interest 5.29%, effective interest 5.51%, and total repayment NOK 3,634,460. Its example includes establishment NOK 4,000, deposit NOK 1,300 and a term fee NOK 65. These are the banks' published representative examples, not binding offers to a particular customer. Green-mortgage eligibility and individual offers must be checked.",
+      "question": "Which example has the lower stated total repayment, by how much, and is that enough to recommend switching banks? Explain what must be checked before a decision.",
+      "sources": [
+        {"title":"DNB: Refinancing of loans", "url":"https://www.dnb.no/en/loans/refinancing"},
+        {"title":"SpareBank 1 Nord-Norge: Price list, green home mortgage", "url":"https://www.sparebank1.no/en/nord-norge/personal/price-lists/price-list-personal.html"}
+      ],
+      "rubric": ["DNB's stated total is NOK 19,870 lower.","Distinguish nominal interest from APRC and include fees.","Published examples do not establish eligibility or a personal offer.","Account for switching costs, remaining term, collateral and changing floating rates; do not promise the illustrative lifetime saving."]
+    },
+    {
+      "id": "norway-june-2025-rate-cut",
+      "title": "Norges Bank's June 2025 rate cut",
+      "as_of": "19 June 2025",
+      "facts": "Norges Bank announced on 19 June 2025 that its committee had unanimously decided on 18 June to reduce the policy rate from 4.50% to 4.25%. This is a dated monetary-policy decision, not a lender's mortgage offer.",
+      "question": "Does this announcement alone establish that a household's mortgage payment will fall immediately, or that it should choose a fixed-rate mortgage? Explain what a borrower should check and what remains uncertain.",
+      "sources": [{"title":"Norges Bank: Rate decision June 2025", "url":"https://www.norges-bank.no/en/topics/Monetary-policy/Monetary-policy-meetings/2025/june-2025/"}],
+      "rubric": ["The cut is 0.25 percentage points (25 basis points), not a 25% cut.","Policy rates and contractual mortgage rates differ; lender terms and repricing dates matter.","A future rate path is uncertain; a single decision does not establish whether fixed or floating will be cheaper.","Discuss payment certainty, affordability and contract or early-exit terms without inventing borrower finances."]
+    },
+    {
+      "id": "svb-march-2023",
+      "title": "Deposit access after Silicon Valley Bank failed",
+      "as_of": "13 March 2023",
+      "facts": "US authorities' joint statement on 12 March 2023 said the resolution of Silicon Valley Bank would fully protect all depositors, with access to all their money beginning Monday 13 March. The FDIC announced on 13 March that insured and uninsured deposits had been transferred to a bridge bank. This was a specific intervention following the bank's failure.",
+      "question": "What did this mean for an SVB business depositor trying to make payments on 13 March 2023? Does that intervention justify assuming that all uninsured deposits at every bank will always be protected? Recommend sensible checks for treasury continuity.",
+      "sources": [
+        {"title":"Treasury, Federal Reserve and FDIC joint statement, 12 March 2023", "url":"https://www.fdic.gov/news/press-releases/2023/pr23017.html"},
+        {"title":"FDIC: Protection of all former SVB depositors, 13 March 2023", "url":"https://content.govdelivery.com/accounts/USFDIC/bulletins/34e4e30"}
+      ],
+      "rubric": ["The stated access covered insured and uninsured SVB deposits starting 13 March.","Distinguish this specific intervention from a universal guarantee of uninsured balances.","Verify official access and payment arrangements rather than assuming every operational issue is resolved.","Consider concentration, liquidity and alternative payment arrangements without claiming risk has disappeared."]
+    }
+  ]
+}

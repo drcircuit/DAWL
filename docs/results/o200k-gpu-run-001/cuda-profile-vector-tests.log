@@ -1,0 +1,10 @@
+test_table_above_old_256mib_limit_and_boundary_rows (test_profile_vectors.ProfileCudaTests.test_table_above_old_256mib_limit_and_boundary_rows) ... ok
+test_signed_namespace_blueprint_table_and_contract_substitution_rejected (test_profile_vectors.ProfileVectorTests.test_signed_namespace_blueprint_table_and_contract_substitution_rejected) ... ok
+test_token_commitment_wrong_hash_and_changed_bit_rejected (test_profile_vectors.ProfileVectorTests.test_token_commitment_wrong_hash_and_changed_bit_rejected) ... ok
+test_verified_import_widen_and_reassemble (test_profile_vectors.ProfileVectorTests.test_verified_import_widen_and_reassemble) ... ok
+test_wrong_checkpoint_tensor_and_corrupt_chunk_rejected (test_profile_vectors.ProfileVectorTests.test_wrong_checkpoint_tensor_and_corrupt_chunk_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.484s
+
+OK

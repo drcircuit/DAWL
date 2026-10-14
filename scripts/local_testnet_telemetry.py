@@ -1,0 +1,90 @@
+"""Host-only read-only collector. The web Console never receives a runtime socket or node keys."""
+import argparse
+from datetime import datetime, timezone
+import json
+import os
+from pathlib import Path
+import subprocess
+import time
+
+
+def command(*args):
+    return subprocess.check_output(args, text=True, timeout=20)
+
+
+def read(path, default=None):
+    try: return json.loads(path.read_text())
+    except (OSError, ValueError): return default
+
+
+def tail(path, count=30):
+    try:
+        with path.open('rb') as stream:
+            stream.seek(max(0, path.stat().st_size-128*1024)); lines=stream.read().splitlines()
+        values=[]
+        for line in lines[-count:]:
+            try: values.append(json.loads(line))
+            except ValueError: pass
+        return values
+    except OSError: return []
+
+
+def collect(root, run):
+    ids=command('podman','ps','-aq','--filter','label=org.hypertrix.oracle-training='+run).split()
+    containers=json.loads(command('podman','inspect',*ids)) if ids else []
+    alive=[c['Name'] for c in containers if c['State']['Running']]; stats={}; errors=[]
+    if alive:
+        try:
+            rows=json.loads(command('podman','stats','--no-stream','--format','json',*alive))
+            stats={r.get('name',r.get('Name')):r for r in rows}
+        except (subprocess.SubprocessError,ValueError) as error: errors.append('Resource sampling: '+str(error)[:120])
+    nodes=[]
+    prefix='hypertrix-t4-'+run+'-'
+    for c in containers:
+        name=c['Name'].removeprefix(prefix); folder=root/name
+        role=('oracle' if name.startswith('validator-') else 'trainer' if name.startswith('trainer-')
+              else 'gpu-verifier' if name.startswith('verifier-') else 'token-auditor' if name.startswith('worker-')
+              else 'cortex' if name=='provider' else 'discovery' if name=='discovery' else 'console' if name=='console' else 'operator')
+        config=read(folder/'cluster.json',{}); public=None
+        try:public=(folder/'key.public.hex').read_text().strip()
+        except OSError:pass
+        events=tail(folder/'events.jsonl')
+        node={'name':name,'role':role,'container':c['Name'],'id':c['Id'][:12], 'image':c['Image'],
+              'status':c['State']['Status'],'running':c['State']['Running'],'exit_code':c['State']['ExitCode'],
+              'started_at':c['State']['StartedAt'],'finished_at':c['State']['FinishedAt'],
+              'historical_attempt':name.endswith('-launch-failed'), 'public':public,
+              'host':config.get('training_host',config.get('abci_host','127.70.0.27' if role in ('cortex','discovery') else None)),
+              'stats':stats.get(c['Name'],{}),'events':events,'dht':read(folder/'dht-status.json'),
+              'final':read(folder/'public/final.json'),'replays':[]}
+        if role=='discovery':node['dht']=read(root/'provider/dht-status.json')
+        if role=='gpu-verifier':
+            node['replays']=[read(p) for p in sorted((folder/'public').glob('replay-*.json'))]
+        journal=tail(folder/'transfers.jsonl',10000)
+        node['recent_transfers']=len(journal) # bounded tail, not a total counter
+        nodes.append(node)
+    gpu=None
+    try:
+        raw=command('/usr/lib/wsl/lib/nvidia-smi','--query-gpu=name,utilization.gpu,memory.used,memory.total,temperature.gpu,power.draw','--format=csv,noheader,nounits')
+        values=[p.strip() for p in raw.strip().splitlines()[0].split(',')]
+        def number(value):
+            try:return float(value)
+            except ValueError:return None
+        gpu={'name':values[0],**dict(zip(('utilization_percent','memory_used_mib','memory_total_mib','temperature_c','power_w'),map(number,values[1:]))),
+             'scope':'Shared physical GPU; utilization and memory are device-wide, not per-node attribution.'}
+    except (OSError,subprocess.SubprocessError,IndexError) as error:errors.append('GPU telemetry: '+str(error)[:120])
+    return {'observed_at':datetime.now(timezone.utc).isoformat(),'run':run,'nodes':nodes,'gpu':gpu,'errors':errors,
+            'scope':'Operational telemetry only; node liveness and resource measurements are not quorum-certified claims.'}
+
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--exchange',type=Path,required=True)
+    p.add_argument('--run',default='003');p.add_argument('--once',action='store_true');a=p.parse_args();a.exchange.mkdir(parents=True,exist_ok=True)
+    while True:
+        try:
+            value=collect(a.root,a.run); pending=a.exchange/'status.pending';pending.write_text(json.dumps(value));os.replace(pending,a.exchange/'status.json')
+        except Exception as error:print(type(error).__name__+': '+str(error)[:200],flush=True)
+        if a.once:return
+        time.sleep(4)
+
+
+if __name__=='__main__':main()

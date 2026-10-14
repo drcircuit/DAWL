@@ -1,0 +1,8 @@
+{
+  "interrupted_exit_code": 75,
+  "durable_peer_0_updates": 2,
+  "peer_1_last_committed_round": 0,
+  "peer_1_has_pending_round_1_update": true,
+  "no_incomplete_round_finalized": true,
+  "stopped_at": "2026-10-14T10:30:36.784015145+02:00"
+}

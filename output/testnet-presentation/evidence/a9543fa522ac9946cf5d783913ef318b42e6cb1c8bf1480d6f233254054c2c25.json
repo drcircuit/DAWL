@@ -1,0 +1,57 @@
+{
+  "scope": "Isolated single-host rehearsal; simulated operators, not independent machines",
+  "phases": [
+    {
+      "name": "01-public-bootstrap",
+      "seconds": 122.485
+    },
+    {
+      "name": "02-one-isolated-validator",
+      "seconds": 154.321
+    },
+    {
+      "name": "03-quorum-loss",
+      "seconds": 169.603
+    },
+    {
+      "name": "04-recovered-and-abandoned-lease",
+      "seconds": 193.733
+    },
+    {
+      "name": "05-forged-rpc-rejected",
+      "seconds": 205.609
+    },
+    {
+      "name": "06-timeout-attributed",
+      "seconds": 275.786
+    },
+    {
+      "name": "07-full-corpus-certificate",
+      "seconds": 887.956
+    },
+    {
+      "name": "08-worker-verification-counters",
+      "seconds": 898.744
+    }
+  ],
+  "completed": true,
+  "seconds": 898.744,
+  "training_executed": false,
+  "dataset_release": "89e19d1c34a30770e7de816ad3dd3154fe1540eb1c77fad0c89c8ee6d98b658d",
+  "chunks": 1438,
+  "attestations": 52,
+  "fault_scope": [
+    "validator network disconnection",
+    "forged RPC state",
+    "one unavailable provider",
+    "corrupt artifact pieces with 100ms delay",
+    "abandoned worker lease"
+  ],
+  "not_tested": [
+    "independent operators",
+    "WAN performance",
+    "validator double-vote attack",
+    "economic penalties"
+  ],
+  "lab_containers_stopped": true
+}

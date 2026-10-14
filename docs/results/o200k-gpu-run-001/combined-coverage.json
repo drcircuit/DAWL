@@ -1,0 +1,13 @@
+{
+  "schema": "hypertrix.gpu-coverage-summary/1",
+  "source_runs": [
+    "profile-gpu-run-001",
+    "o200k-gpu-run-001"
+  ],
+  "ordinary_tokenizer_profiles": 6,
+  "books_per_profile": 13,
+  "profile_frags": 10842,
+  "dense_bytes": 59929890560,
+  "http_payload_bytes": 5489452823,
+  "scope": "Sum of two separate local runs, including cold tables in each profile. Not one simultaneous six-node throughput test."
+}

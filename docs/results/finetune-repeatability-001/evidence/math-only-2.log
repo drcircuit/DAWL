@@ -1,0 +1,8 @@
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:  18%|█▊        | 57/311 [00:00<00:00, 563.48it/s]Loading weights:  37%|███▋      | 114/311 [00:00<00:00, 534.59it/s]Loading weights:  54%|█████▍    | 168/311 [00:00<00:00, 517.59it/s]Loading weights:  71%|███████   | 220/311 [00:00<00:00, 487.89it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 582.39it/s]
+/usr/local/lib/python3.12/site-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+{"policy": "math-only", "attempt": "math-only-2", "step": 1, "loss": 3.6586074233055115, "seconds": 33.327986001968384}
+{"policy": "math-only", "attempt": "math-only-2", "step": 2, "loss": 3.762519955635071, "seconds": 4.339574575424194}
+{"policy": "math-only", "attempt": "math-only-2", "step": 3, "loss": 3.436605930328369, "seconds": 4.07085657119751}
+{"policy": "math-only", "attempt": "math-only-2", "step": 4, "loss": 3.548009216785431, "seconds": 4.206230640411377}
+{"completed": "math-only-2", "attention_operations": ["aten::_scaled_dot_product_attention_math", "aten::scaled_dot_product_attention"], "wall_seconds": 51.81314659118652}
