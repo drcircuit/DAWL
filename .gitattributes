@@ -5,3 +5,5 @@ output/testnet-presentation/** -text
 *.zip -text
 *.png -text
 *.sh text eol=lf
+# Seed implementation manifests hash source bytes across Windows and Linux.
+src/dawl_scratch/*.py text eol=lf

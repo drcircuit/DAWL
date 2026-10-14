@@ -1,0 +1,10 @@
+# GPU pilot uses the pinned hypertrix-finetune:005 container and records its runtime.
+# CPU development / unit tests / inference:
+torch>=2.11,<2.12
+numpy>=2.4,<2.6
+tokenizers==0.23.3
+safetensors>=0.6,<1
+cryptography>=49,<51
+fastapi>=0.135,<1
+uvicorn>=0.40,<1
+httpx>=0.28,<1

@@ -1,0 +1,38 @@
+{
+  "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+  "data_receipt_signature": true,
+  "models": {
+    "dense": {
+      "signed_records": 29,
+      "checkpoint_files_verified": 25,
+      "selected_step": 5844,
+      "replay_intervals": [
+        [
+          0,
+          250
+        ],
+        [
+          5500,
+          5844
+        ]
+      ]
+    },
+    "moe": {
+      "signed_records": 35,
+      "checkpoint_files_verified": 31,
+      "selected_step": 2900,
+      "replay_intervals": [
+        [
+          0,
+          100
+        ],
+        [
+          2800,
+          2900
+        ]
+      ]
+    }
+  },
+  "accepted": true,
+  "scope": "Artifact integrity against report anchors; signatures certify recorded claims, replay covers listed intervals."
+}

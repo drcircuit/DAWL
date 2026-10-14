@@ -1,0 +1,382 @@
+{
+  "schema": "hypertrix.seed-report/1",
+  "blueprint": {
+    "arrays": {
+      "test": {
+        "sha256": "1724bc5cfb6b254b62daba21ce6aac70923d118b78871da834cc27905d6900f6",
+        "targets": 2661973,
+        "windows": 5627
+      },
+      "train": {
+        "sha256": "4701b87e7d302672ae22594089fc07982f9a9b6f1bd20a42465d7d6d5bd4c3ff",
+        "targets": 22073339,
+        "windows": 46741
+      },
+      "validation": {
+        "sha256": "140b5130a242169639671623ebb0e7e1c94f22fb99fb563b5842ab773a13fd1d",
+        "targets": 2198518,
+        "windows": 4825
+      }
+    },
+    "context": 512,
+    "documents": 8199,
+    "domains": {
+      "code": 8183,
+      "economics": 3,
+      "literature": 13
+    },
+    "eos_id": 1,
+    "limitations": "Near-duplicate and related-project leakage are not exhaustively excluded. Local source admission, not Oracle certification.",
+    "pad_id": 2,
+    "parent": null,
+    "schema": "hypertrix.scratch-blueprint/1",
+    "sources_sha256": "ce6806f7f04e7c8de5e3e3a684e6bdbf512adc548b014244c4a5d5349843c29f",
+    "split_policy": "Whole books by domain and whole upstream repository families; exact duplicates retained once, holdout priority.",
+    "tokenizer_fit": "Train split only, first 32768 characters of each admitted document; byte alphabet included.",
+    "tokenizer_sha256": "2223d63de2d555bcfbcea430abb1dedcc9900a41d0d792cceb0e4a12ab7fda2f",
+    "vocab_size": 4096,
+    "windows_sha256": "781db11153881b686ebcf6ed17c42a057121fb69a932656770e8eb6542be69ba"
+  },
+  "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+  "source_counts": {
+    "train/code": 6518,
+    "test/code": 824,
+    "validation/code": 841,
+    "train/literature": 11,
+    "validation/economics": 1,
+    "train/economics": 1,
+    "test/literature": 1,
+    "test/economics": 1,
+    "validation/literature": 1
+  },
+  "duplicates_removed": 1028,
+  "models": {
+    "dense": {
+      "summary": {
+        "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+        "completed_steps": 5844,
+        "config": {
+          "context": 512,
+          "experts": 1,
+          "heads": 4,
+          "hidden": 1024,
+          "layers": 6,
+          "top_k": 2,
+          "vocab_size": 4096,
+          "width": 256
+        },
+        "elapsed_seconds": 744.3241061970002,
+        "parameters": 5773824,
+        "planned_steps": 5844,
+        "schema": "hypertrix.scratch-result/1",
+        "selected_step": 5844,
+        "selected_test": {
+          "code": {
+            "nll": 3.094753722941284,
+            "perplexity": 22.081799627170348,
+            "targets": 15015,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 3.523639404607167,
+            "perplexity": 33.90760768199665,
+            "targets": 16105,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 3.5396108062378273,
+            "perplexity": 34.45350749095126,
+            "targets": 16307,
+            "windows": 32
+          },
+          "mean_domain_nll": 3.3860013112620932
+        },
+        "status": "complete",
+        "target_tokens_this_session": 44146678,
+        "validation_mean_nll": 3.2502763104314116
+      },
+      "baseline": {
+        "test": {
+          "code": {
+            "nll": 8.363865098753175,
+            "perplexity": 4289.241109636301,
+            "targets": 15015,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 8.328185770282905,
+            "perplexity": 4138.901818017457,
+            "targets": 16105,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 8.339458093627398,
+            "perplexity": 4185.820803777068,
+            "targets": 16307,
+            "windows": 32
+          },
+          "mean_domain_nll": 8.343836320887826
+        },
+        "validation": {
+          "code": {
+            "nll": 8.3464215043184,
+            "perplexity": 4215.0701123976205,
+            "targets": 13294,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 8.36920863777239,
+            "perplexity": 4312.2221823154405,
+            "targets": 16376,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 8.329840380657433,
+            "perplexity": 4145.755756639988,
+            "targets": 16170,
+            "windows": 32
+          },
+          "mean_domain_nll": 8.348490174249408
+        }
+      },
+      "recipe": {
+        "batch_size": 16,
+        "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+        "budget_seconds": 5400,
+        "checkpoint_every": 250,
+        "data_order": "NumPy default_rng(seed+epoch) permutation of all training windows; each epoch includes final short batch.",
+        "epochs": 2,
+        "initialization": "Random normal std .02, zero linear biases; tied embeddings/head; LayerNorm default initialization.",
+        "learning_rate": 0.0006,
+        "max_steps": 5844,
+        "optimizer": "AdamW beta=(.9,.95), weight_decay=.1, clip=1, no fused/foreach; 5% warmup then cosine to 10%.",
+        "pad_id": 2,
+        "router_balance_weight": 0.01,
+        "runtime": {
+          "attention": "deterministic math SDPA",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+          "numpy": "2.5.3",
+          "precision": "FP32",
+          "safetensors": "0.8.0",
+          "tf32": false,
+          "threads": 4,
+          "tokenizers": "0.23.3",
+          "torch": "2.11.0+cu128"
+        },
+        "schema": "hypertrix.scratch-recipe/1",
+        "scope": "Single trainer local experimental lineage; no Oracle or multi-host training claim.",
+        "seed": 20261014,
+        "selection": "Minimum equal-domain validation NLL; test only initial and selected."
+      },
+      "operator_public_key": "9b07fb1a6741c91e2a64aad6200c5e9ebd0d57cd963b91bb122cb5be646ccef9",
+      "lineage_sha256": "fadb1787430565391ade51e10c506fbbb1dc86d0bf367c9164a53fbd733d2945",
+      "replay": [
+        {
+          "accepted": true,
+          "elapsed_seconds": 47.12611474200094,
+          "end_step": 250,
+          "exact_tensors": 51,
+          "max_absolute": 0.0,
+          "optimizer_exact": true,
+          "schema": "hypertrix.scratch-replay/1",
+          "scope": "Fresh process, same physical GPU and pinned runtime; only the stated interval was replayed.",
+          "start_step": 0,
+          "tensor_count": 51
+        },
+        {
+          "accepted": true,
+          "elapsed_seconds": 58.91289530699942,
+          "end_step": 5844,
+          "exact_tensors": 51,
+          "max_absolute": 0.0,
+          "optimizer_exact": true,
+          "schema": "hypertrix.scratch-replay/1",
+          "scope": "Fresh process, same physical GPU and pinned runtime; only the stated interval was replayed.",
+          "start_step": 5500,
+          "tensor_count": 51
+        }
+      ]
+    },
+    "moe": {
+      "summary": {
+        "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+        "completed_steps": 2922,
+        "config": {
+          "context": 512,
+          "experts": 4,
+          "heads": 4,
+          "hidden": 1024,
+          "layers": 6,
+          "top_k": 2,
+          "vocab_size": 4096,
+          "width": 256
+        },
+        "elapsed_seconds": 812.2224968280025,
+        "parameters": 10495488,
+        "planned_steps": 2922,
+        "schema": "hypertrix.scratch-result/1",
+        "selected_step": 2900,
+        "selected_test": {
+          "code": {
+            "nll": 2.8872369964877804,
+            "perplexity": 17.943662642869896,
+            "targets": 15015,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 3.392666025673962,
+            "perplexity": 29.7451479827572,
+            "targets": 16105,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 3.433684457720565,
+            "perplexity": 30.990616270816478,
+            "targets": 16307,
+            "windows": 32
+          },
+          "mean_domain_nll": 3.2378624932941023
+        },
+        "status": "complete",
+        "target_tokens_this_session": 22073339,
+        "validation_mean_nll": 3.1121747567803077
+      },
+      "baseline": {
+        "test": {
+          "code": {
+            "nll": 3.0947537088568833,
+            "perplexity": 22.081799316161437,
+            "targets": 15015,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 3.5236394652443916,
+            "perplexity": 33.90760973805993,
+            "targets": 16105,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 3.539610836180873,
+            "perplexity": 34.45350852259423,
+            "targets": 16307,
+            "windows": 32
+          },
+          "mean_domain_nll": 3.386001336760716
+        },
+        "validation": {
+          "code": {
+            "nll": 2.834633548044165,
+            "perplexity": 17.02416062023878,
+            "targets": 13294,
+            "windows": 32
+          },
+          "economics": {
+            "nll": 3.3035446826457746,
+            "perplexity": 27.208915154861973,
+            "targets": 16376,
+            "windows": 32
+          },
+          "literature": {
+            "nll": 3.6126506650307775,
+            "perplexity": 37.06416741536867,
+            "targets": 16170,
+            "windows": 32
+          },
+          "mean_domain_nll": 3.2502762985735725
+        }
+      },
+      "recipe": {
+        "batch_size": 16,
+        "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+        "budget_seconds": 1800,
+        "checkpoint_every": 100,
+        "data_order": "NumPy default_rng(seed+epoch) permutation of all training windows; each epoch includes final short batch.",
+        "epochs": 1,
+        "initialization": {
+          "checkpoint_sha256": "6cfd46a2167258c32cc5cd5c3bfbd2a368076583dc2077ea20a0446a1101856f",
+          "operation": "Copy each odd-layer dense FFN into four experts; seeded router; fresh AdamW state.",
+          "operator": "9b07fb1a6741c91e2a64aad6200c5e9ebd0d57cd963b91bb122cb5be646ccef9"
+        },
+        "learning_rate": 0.0002,
+        "max_steps": 2922,
+        "optimizer": "AdamW beta=(.9,.95), weight_decay=.1, clip=1, no fused/foreach; 5% warmup then cosine to 10%.",
+        "pad_id": 2,
+        "router_balance_weight": 0.01,
+        "runtime": {
+          "attention": "deterministic math SDPA",
+          "cuda": "12.8",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+          "numpy": "2.5.3",
+          "precision": "FP32",
+          "safetensors": "0.8.0",
+          "tf32": false,
+          "threads": 4,
+          "tokenizers": "0.23.3",
+          "torch": "2.11.0+cu128"
+        },
+        "schema": "hypertrix.scratch-recipe/1",
+        "scope": "Single trainer local experimental lineage; no Oracle or multi-host training claim.",
+        "seed": 20261014,
+        "selection": "Minimum equal-domain validation NLL; test only initial and selected."
+      },
+      "operator_public_key": "a8783f200dd2dd29226350adf02393362cfe7471579080f7f655c8aee39df0a1",
+      "lineage_sha256": "98ffdc7ba81040a9dbf518b0782e55762dfc9d9f33138628d3269165ad5e7ffb",
+      "replay": [
+        {
+          "accepted": true,
+          "elapsed_seconds": 44.079582637001295,
+          "end_step": 100,
+          "exact_tensors": 72,
+          "max_absolute": 0.0,
+          "optimizer_exact": true,
+          "schema": "hypertrix.scratch-replay/1",
+          "scope": "Fresh process, same physical GPU and pinned runtime; only the stated interval was replayed.",
+          "start_step": 0,
+          "tensor_count": 72
+        },
+        {
+          "accepted": true,
+          "elapsed_seconds": 43.53711487200053,
+          "end_step": 2900,
+          "exact_tensors": 72,
+          "max_absolute": 0.0,
+          "optimizer_exact": true,
+          "schema": "hypertrix.scratch-replay/1",
+          "scope": "Fresh process, same physical GPU and pinned runtime; only the stated interval was replayed.",
+          "start_step": 2800,
+          "tensor_count": 72
+        }
+      ]
+    }
+  },
+  "scope": "Local training and same-device replay; no Oracle certification or independent operator claim.",
+  "data_verification": {
+    "body": {
+      "accepted": true,
+      "blueprint_sha256": "b1e2630e4cc7ba7938408406cfc61924ae225317125a1b64decd33f2d70ebdb5",
+      "checks": [
+        "original source SHA256",
+        "exact recorded byte-range derivative",
+        "whole-source split isolation",
+        "exact document deduplication",
+        "all token windows",
+        "all target counts"
+      ],
+      "documents": 8199,
+      "elapsed_seconds": 164.64374200199745,
+      "schema": "hypertrix.scratch-data-replay/1",
+      "scope": "Independent verifier process under the same operator; source URL authenticity and rights are external metadata.",
+      "signer": "ee8f257a986ade4c5021f1dda2383fc0cce0e21d2015e9efefc50cb062a8280c",
+      "targets": 26933830,
+      "utc": "2026-10-14T21:35:26.618585+00:00",
+      "verification_code_sha256": "1a9d3bdb5a12404d9323b8e22639fcb0cb0ddd3f2a03e3638af2ad456d9bb3fb",
+      "windows": 57193
+    },
+    "id": "2b31d93fecd81242ed1d192a2d808570fedd368fe156d9e5205519def7e71052",
+    "signature": "cd5a5a9811857536f922fbe91c837212cd9a4d0f9850ef23a9bf86c7231ffd1fcd72d5c55915ac2f50b56a274d791d2fbbf4488444a40cdcb80feaa11ab43e02"
+  },
+  "runtime_image_id": "945ef0862c06a0458c86e85984865cb983d91b430c321e4e79081f7e25b3139f"
+}

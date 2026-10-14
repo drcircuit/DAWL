@@ -2,6 +2,10 @@
 
 Run the live terminal dashboard with `./hypertrix-console.ps1`. See the [network console guide](docs/network_console.md) for controls and metrics, and the [separate study review](docs/study_review.md) for the shareable research demo.
 
+The [Hypertrix Seed model lab](docs/scratch_model.md) adds a model trained from
+random initialization, a pinned public-code corpus, a small MoE branch and a
+local text/code playground (`http://127.0.0.1:8886/`).
+
 ## Public research observatory
 
 [Live Azure observatory](https://dawlh1013185918state.z1.web.core.windows.net/) ·
