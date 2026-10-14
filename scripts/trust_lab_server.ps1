@@ -14,4 +14,13 @@ if ($listener) {
     Stop-Process -Id $listener.OwningProcess
 }
 New-Item -ItemType Directory -Force -Path "$labRoot/artifacts/trust-lab-001" | Out-Null
-Start-Process -FilePath "$labRoot/.venv/Scripts/python.exe" -ArgumentList @('scripts/trust_lab.py','--pilot','\\wsl.localhost\kali-linux\var\lib\dawl\finetune-economics-001') -WorkingDirectory $labRoot -WindowStyle Hidden -RedirectStandardOutput "$labRoot/artifacts/trust-lab-001/server.stdout.log" -RedirectStandardError "$labRoot/artifacts/trust-lab-001/server.stderr.log" -PassThru | Select-Object Id
+$labArguments=@('scripts/trust_lab.py','--pilot','\\wsl.localhost\kali-linux\var\lib\dawl\finetune-economics-001')
+$studyDocument=Join-Path $labRoot 'research/trust-study-model-strict-002.json'
+if (Test-Path -LiteralPath $studyDocument) {
+    $studyPilot='\\wsl.localhost\kali-linux\var\lib\dawl\finetune-strict-002'
+    $studyConfig=Get-Content -LiteralPath $studyDocument -Raw | ConvertFrom-Json
+    $studyReleaseHash=(Get-FileHash -LiteralPath "$studyPilot/release.json" -Algorithm SHA256).Hash.ToLower()
+    if ($studyReleaseHash -ne $studyConfig.release_sha256) { throw 'Study release differs from frozen documentation.' }
+    $labArguments+=@('--study-pilot',$studyPilot,'--study-documentation','research/trust-study-model-strict-002.json')
+}
+Start-Process -FilePath "$labRoot/.venv/Scripts/python.exe" -ArgumentList $labArguments -WorkingDirectory $labRoot -WindowStyle Hidden -RedirectStandardOutput "$labRoot/artifacts/trust-lab-001/server.stdout.log" -RedirectStandardError "$labRoot/artifacts/trust-lab-001/server.stderr.log" -PassThru | Select-Object Id

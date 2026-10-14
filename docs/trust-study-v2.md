@@ -5,6 +5,15 @@ participant prototype. Existing exploratory outputs and the v1 lab remain intact
 Use `/study-admin` for previews and export, `/participant` for pilot collection.
 The financial scenarios and candidate good/bad labels remain provisional.
 
+The active documentation now describes the verified `finetune-strict-002` release:
+one complete epoch, 228 updates, 392/392 identical replay tensors, 4,427 matching
+token windows and 310 checked merged tensors. Its exact Norwegian wording and
+release hash are pinned in `research/trust-study-model-strict-002.json`. B and C
+still share identical statements. This documentation revision creates a new
+protocol snapshot and allocation block. Any older sessions retain their original
+disclosures and evidence; the original three-epoch model remains in the separate
+exploratory model lab. The participant advice is still researcher-authored.
+
 ## Experimental controls
 
 - The exact six supplied Norwegian advice strings are frozen in `research/trust-study-v2.json`.

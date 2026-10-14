@@ -18,7 +18,7 @@ New recipe schema 2 supports `strict-math` and `strict-auto`. These require `CUB
 
 `src/dawl_finetune/execution.py` defines the policies. `run.py prepare --execution-policy strict-math` creates a new recipe; training reads and validates the frozen policy. Policy changes require a new recipe, image and checkpoint lineage. The original 002 image, recipe, weights and failed receipt remain unchanged. The new runtime is built with `Dockerfile.finetune-exact` and versioned independently. No new full three-epoch model has been trained by this investigation.
 
-Before admitting a cohort, run identical short jobs in fresh processes on every proposed trainer/verifier combination. Pin the image digest, GPU capability and driver, framework/CUDA/cuDNN builds, attention backend, dtype/layout, optimizer, data order, tokenizer, batch/accumulation, clipping, schedule and random-number state. Repeat the preflight across restarts and relevant boundary shapes, including the final partial batch. Passing a short prefix is an admission test, not evidence that an entire epoch has already been replayed. A new full-epoch test remains necessary for this Qwen recipe.
+Before admitting a cohort, run identical short jobs in fresh processes on every proposed trainer/verifier combination. Pin the image digest, GPU capability and driver, framework/CUDA/cuDNN builds, attention backend, dtype/layout, optimizer, data order, tokenizer, batch/accumulation, clipping, schedule and random-number state. Repeat the preflight across restarts and relevant boundary shapes, including the final partial batch. Passing a short prefix is an admission test, not evidence that an entire epoch has already been replayed. The new [full-epoch run](results/finetune-strict-002/README.md) now passes all 228 updates: 392/392 tensors identical, zero relative L2 and maximum error. A separate CPU process checked the retained candidates. This schema-3 recipe explicitly spans one epoch; restart/resume qualification and other hardware remain separate tests.
 
 A hardware or software upgrade requires a new environment identity and qualification. A same-named GPU alone is insufficient. An honest incompatible execution can create a separately verified branch. It cannot silently replace the accepted checkpoint on an exact branch.
 
@@ -95,7 +95,7 @@ DiLoCo addresses a different part of scaling: workers perform many local AdamW s
 
 ## Recommended development order
 
-1. Qualify the strict Qwen recipe with a fresh full-epoch replay, including restart/resume and partial-batch cases. Keep exact homogeneous mode as the working baseline.
+1. Full-epoch strict replay is complete, including the final partial batch. Extend qualification to restart/resume and other trainer/verifier pairs. Keep exact homogeneous mode as the working baseline.
 2. Add complete restart-state commitments and short-interval replay; test tampering, missing artifacts and rollback before sampling.
 3. Introduce post-commitment sampling and signed scope-specific receipts, with measured detection and availability behavior.
 4. Calibrate numerical policies across actual heterogeneous machines. Preserve separate branches and consumer policy selection.

@@ -1,0 +1,11 @@
+{
+  "model_release": "finetune-strict-002",
+  "release_sha256": "fffeadd1ec58342fe2a9cfb894e65f37118e11e79f5c17ee9ea7857ebec99efa",
+  "steps": [
+    {"title":"Utgangspunkt","text":"Demonstrasjonsmodellen bygger på de publiserte vektene til Qwen3-0.6B. Den nøyaktige modellversjonen er registrert.","file":"base-lock.json"},
+    {"title":"Tekstgrunnlag","text":"16 bøker inngår i tilpasningen. Kildeadresser, originaltekster og inndelingen i trenings- og testdata er registrert. En separat kontroll gjenskapte alle 4 427 tekstvinduer.","file":"verification.json"},
+    {"title":"Trening","text":"Modellen ble finjustert gjennom én hel gjennomgang av treningsdataene, med 228 oppdateringer. Oppskrift, innstillinger og den ferdige modellversjonen følger historikken.","file":"training-summary.json"},
+    {"title":"Kontroll","text":"En separat prosess gjentok alle 228 oppdateringene fra grunnmodellen. Alle 392 kontrollerte vektdeler var helt identiske. En egen CPU-kontroll bekreftet resultatet og sammenslåingen av modellvektene.","file":"replay-artifact-verification.json"},
+    {"title":"Ferdig versjon","text":"Modellversjonen fra epoke 1 er eksportert som en kjørbar modell. Signerte poster knytter kildedata, trening, kontroller og modellfiler sammen. Filenes kontrollsummer gjør det mulig å kontrollere at de samsvarer med denne versjonen.","file":"release.json"}
+  ]
+}

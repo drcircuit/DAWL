@@ -36,9 +36,10 @@
       "evidence": "reports/public-observatory-001.zip"
     },
     {
-      "status": "in_progress",
+      "status": "complete",
       "title": "Full-epoch deterministic replay",
-      "detail": "New strict-policy fine-tune and a fresh-process replay of all 228 updates."
+      "detail": "228 updates replayed; 392/392 identical tensors, zero L2 difference. CPU checks confirmed tokens and exported weights.",
+      "evidence": "reports/finetune-strict-002.zip"
     },
     {
       "status": "planned",

@@ -4,13 +4,15 @@ Til Yngvar. Utarbeidet 14. oktober 2026. Eksperimentell plattform, én operatør
 
 ## Kort svar på det tekniske spørsmålet
 
-Vi har en fullført lokal finjustering av Qwen3-0.6B og en sporbar forbindelse fra
-bevarte kildetekster til en ferdig modell som kan kjøres i Ollama. En separat
-kontroll gjenskapte tekstvinduene, kontrollerte signaturene og filene, og
-etterprøvde sammenslåingen av modellvektene. Full gjentakelse av treningen har
-en annen status: første epoke ga tallforskjeller, og epoke 2 og 3 ble ikke gjentatt.
-En senere kort diagnose identifiserte en løsning for repeterbar kjøring på samme
-maskin. Den oppgraderer ikke den opprinnelige modellen til en fullt repetert modell.
+Vi har nå en fullført finjustering av Qwen3-0.6B med **eksakt gjentakelse av en
+hel epoke**. En ny prosess startet fra grunnmodellen og gjentok alle 228
+optimizer-oppdateringene: **392 av 392 adaptertensorer var bit-identiske**, med
+null maksimal forskjell og null relativ L2-avstand. Dette er den nye kjøringen
+`finetune-strict-002`, med strengt deterministisk math-attention-policy.
+
+Den tidligere tre-epokersmodellen er fortsatt kjørbar i Ollama. Dens opprinnelige
+replay-feil er bevart. Den nye kjøringen har egen oppskrift, modellversjon og
+signert historikk; den gjør ikke om på resultatene fra den gamle modellen.
 
 Det finnes også et separat SmolLM2-forsøk som faktisk har fordelt trening og
 verifisering mellom flere noder. Dette må ikke forveksles med Qwen-finjusteringen.
@@ -70,14 +72,36 @@ Den separate diagnosen fant avvik allerede i første bakoverpassering:
 attention-banen. Math attention fjernet avviket i to firestegs kjøringer.
 Streng deterministisk policy med math attention ga 392/392 identiske
 adaptertensorer etter 12 oppdateringer per prosess. En hel epoke med den nye
-policyen og validering på forskjellig maskinvare gjenstår.
+policyen er nå også fullført: 228 oppdateringer ga 392/392 identiske tensorer.
+Sammenligningen gjelder samme RTX 5090 og programvareoppsett.
+
+## Ny kjøring: en hel epoke gjentatt eksakt
+
+Den nye kjøringen brukte samme 16 bøker og grunnmodell, 3 647 treningsvinduer
+og 1 867 264 neste-token-mål. Begge LoRA-faktorene A og B ble trent. Oppskrift
+versjon 3 fastsetter én epoke, inkludert en læringsrateplan over denne epoken.
+Trening og evaluering tok 26,66 minutter; full replay tok 19,82 minutter.
+En separat CPU-prosess kontrollerte replay-kandidatens 392 tensorer på nytt,
+gjenskapte alle 4 427 tokenvinduer og verifiserte 310/310 eksporterte tensorer.
+Seks signerte historikkposter og en egen release-signatur binder kjeden.
+Alle 39 filer i release-manifestet ble kontrollert mot sine hasher.
+
+Den bevarte replay-kandidaten har identiske tensorverdier. Filhashene er ulike
+fordi lagringsformatets metadata er ulike; tensorlikhet og identiske filbyte er
+to forskjellige kontroller. Begge filhashene er registrert. Ingen epsilon ble
+brukt for å godkjenne resultatet.
+
+På det fryste testsettet falt økonomi-NLL fra 2,998517 til 2,517980 og
+litteratur-NLL fra 3,713179 til 3,303516. De små kontrollsettene gikk fra 8/12
+til 9/12 økonomisvar og fra 4/6 til 5/6 generelle svar. Dette er beskrivende
+resultater, ikke en bred måling av modellens evner.
 
 Signaturer og replikasjon viser hvilke byte og beregninger som er dokumentert.
 De etablerer ikke uavhengige organisasjoner, årsakssammenhengen mellom en
 bestemt boksetning og et svar, eller komplett historikk for grunnmodellens trening.
 Qwen-kjøringen har lokale signaturer, ikke et Oracle-sertifikat.
 
-Offentlig operatørnøkkel: `3eedb69bceac39ca67320c3a6d704fe12dc4462cac7a56171ab804f2bc3ec537`.
+Eldre modellnøkkel: `3eedb69bceac39ca67320c3a6d704fe12dc4462cac7a56171ab804f2bc3ec537`.
 Signert slutthode: `9e43d4e9ac8be1467131f457d947881c2286b005792f5501cb4d70b6c7d46e64`.
 GGUF SHA256 for valgt modell: `5c0030da683551e25f3f1eb5fc02312ca3246b3e5ae8dd44bd0b2605a26fd173`.
 
@@ -137,6 +161,8 @@ de blir ikke automatisk slått sammen ved gjenoppkobling.
 Rådsvisning og proveniensvisning er separate komponenter. De seks rådstekstene
 er lagret ordrett. Dokumentasjonsbetingelse A viser ingen ekstra dokumentasjon;
 B viser en utviklingsbeskrivelse; C viser de samme setningene med dokumentlenker.
+Den aktive dokumentasjonen gjelder nå den nye, fullt gjentatte én-epokersmodellen.
+Endringen har egen protokollhash; tidligere økter beholder sine fryste visninger.
 Én deltaker beholder samme betingelse gjennom tre scenarioer. Rekkefølgen trekkes
 tilfeldig, og hver deltaker ser bare én rådvariant per scenario. Blokker på 24
 tildelinger balanserer tre betingelser og åtte kombinasjoner av rådvarianter.
@@ -157,6 +183,7 @@ gjentatt identisk innsending dobbelttelles ikke. Tidsbruk inkluderer pauser.
 
 Forskerdata lagres bare lokalt og kan eksporteres som JSON. Det offentlige
 Azure-nettstedet har ingen innsamlingsendepunkter eller deltakerresultater.
+Plattform og deltakergrensesnitt har separat navigasjon uten lenker til hverandre.
 Forskerforhåndsvisning skriver ingen økter. Fasit og rådvariantetiketter sendes
 ikke med deltakerens oppgave. Dette er en lokal pilot, ikke en sikret ekstern
 rekrutteringsportal; forsker- og deltakersider bør separeres med autentisering
@@ -169,13 +196,47 @@ kontrollert: 3 600 mot 1 400 kroner spart rente under oppgavens forutsetninger;
 utbetaling. Dette er mekaniske kontroller, ikke en erstatning for fagfellevurdering.
 Ingen deltakereffekt eller konklusjon om tillit er målt i denne leveransen.
 
+## Kontrolloppskrift for den nye modellen
+
+Den nye én-epokersmodellen har offentlig nøkkel
+`a30bc71e898549c4f43320fe30c6c3ad90779c87fa39ed490fb4ef2349ba8eb5`.
+Release-manifestets SHA256 er
+`fffeadd1ec58342fe2a9cfb894e65f37118e11e79f5c17ee9ea7857ebec99efa`.
+Slutthodet i signaturkjeden er
+`9dbd3d40e9c67c77789d286734d41a2fa60b7ada1dddeceeba44666d15390f86`.
+
+1. **Hent evidenspakken:** velg full-epoch replay på konsollens evidensside.
+   ZIP-pakken inneholder oppskrift, kilderegister, signaturer, kjøretidsversjoner,
+   verifikasjonskode og måleresultater. Sammenlign filene med SHA256-manifestet.
+2. **Kontroller signaturen:** `release-attestation.json` signerer hashen til
+   `release.json`. Bruk nøkkelen ovenfor og kontroller de seks postene i
+   `lineage.jsonl`, inkludert rekkefølge og forbindelsen til slutthodet.
+3. **Følg inngangene:** `source-lock.json` oppgir kilder og hasher;
+   `dataset-lock.json` binder tokenizer, partisjoner og tokenvinduer;
+   `recipe.json` fastsetter optimizer, rekkefølge, policy og antall oppdateringer.
+4. **Les de separate kontrollene:** `verification.json` gjelder kilder og tokens;
+   `replay-verification.json` gjelder treningsgjentakelsen;
+   `replay-artifact-verification.json` sammenligner de bevarte kandidatene på CPU;
+   `merge-verification.json` etterprøver de ferdige modellvektene.
+5. **Gjenta beregningen:** med de hashbundne modell- og datafilene kan en ekstern
+   kontrollør kjøre den bevarte replay-koden i det festede CUDA-oppsettet.
+   Treningsadapter og replay-kandidat er begge bevart. CPU-verifikasjonskoden
+   følger pakken og kan kontrollere de faktiske tensorene og eksporten separat.
+
+Dermed kan kontrolløren gå fra en kildeadresse til eksakte datafiler, videre til
+treningsoppskriften og til de ferdige vektene. Signaturen gir en etterprøvbar
+forbindelse mellom disse artefaktene; replay gir den målte beregningskontrollen.
+
 ## Filer for teknisk oppfølging
 
 - `docs/results/finetune-economics-001/`: metode, signaturer, modellmålinger og opprinnelig replay-feil.
 - `docs/results/finetune-repeatability-001/`: kontrollerte tester av bakoverpassering og ny eksakt policy.
+- `docs/results/finetune-strict-002/`: full ny epoke, eksakt replay, signert release og bevarte kontrollkandidater.
 - `docs/results/oracle-training-run-003/`: sertifisert treningshistorikk, leases og replikkgjenoppretting.
 - `docs/training_verification.md`: verifikasjonsdesign og forskningsreferanser.
 - `research/trust-study-v2.json`: stimuli og foreløpig forskerrubrikk.
 - `docs/trust-study-v2.md`: protokoll, dataordbok og operatørveiledning.
 
-Kildekode og offentlig dokumentasjon: https://github.com/drcircuit/DAWL
+Delbar konsoll og evidens: https://dawlh1013185918state.z1.web.core.windows.net/
+
+Kildekode: https://github.com/drcircuit/DAWL (krever tilgang til repositoriet).

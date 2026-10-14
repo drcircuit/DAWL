@@ -1,0 +1,23 @@
+"""Frozen closed-book probes. Never used as training examples or model selection."""
+ECONOMICS = [
+    (3300,'What does Smith use the pin factory to illustrate?','Division of labour increases productivity',['Gold determines productivity','Rent alone creates output','Imports necessarily reduce employment']),
+    (3300,'According to Smith, what limits the division of labour?','The extent of the market',['The amount of gold in a vault','The legal interest rate alone','The number of landlords alone']),
+    (3300,'Which motive does Smith invoke in describing the butcher, brewer and baker?','Their own interest',['Government rationing orders','Pure benevolence alone','A compulsory guild quota']),
+    (3300,'Which three improvements does Smith associate with division of labour?','Dexterity, saving switching time, and machinery',['Higher rents, tariffs, and taxes','Gold, silver, and banknotes','War, colonies, and monopolies']),
+    (33310,'In Ricardo, why do more fertile lands earn differential rent?','Less productive land sets the marginal conditions of supply',['Landlords print the currency','Rent determines every production cost','All land has identical productivity']),
+    (33310,'In Ricardo\'s account, why is corn dear?','Production on marginal land requires more labour; rent is a consequence',['It is dear because rent is paid','Its price is fixed by the landlord alone','Money has no role in exchange']),
+    (33310,'What does Ricardo\'s England and Portugal example illustrate?','Trade can benefit both countries despite one having an absolute advantage in both goods',['Only the absolutely more productive country can gain','Trade requires equal wages','All imports should be prohibited']),
+    (33310,'In Ricardo, which goods are exceptions to value chiefly regulated by labour required for production?','Scarce non-reproducible goods',['All freely reproducible cloth','All agricultural output','All manufactured tools']),
+    (4359,'During a panic, what lending policy does Bagehot advocate?','Lend freely at a high rate against good security',['Refuse every loan','Lend without any security at zero interest','Permanently abolish all banks']),
+    (4359,'What does Bagehot emphasize as the foundation of the London money market?','Confidence and credit',['Universal barter','An absence of banking','A ban on deposit accounts']),
+    (4359,'In Lombard Street, which institution holds the central banking reserve?','The Bank of England',['The Federal Reserve','The European Central Bank','The Bank of Japan']),
+    (4359,'Why does Bagehot recommend a high rate for emergency lending?','To discourage unnecessary borrowing and protect the reserve',['To reward unnecessary borrowing','To make reserves irrelevant','To prevent any solvent borrower receiving funds']),
+]
+GENERAL = [
+    (0,'Which gas do plants mainly absorb in photosynthesis?','Carbon dioxide',['Oxygen','Helium','Neon']),
+    (0,'What is the capital of Norway?','Oslo',['Stockholm','Copenhagen','Helsinki']),
+    (0,'How many sides does a triangle have?','Three',['Four','Five','Six']),
+    (0,'Which planet is closest to the Sun?','Mercury',['Earth','Mars','Jupiter']),
+    (0,'Who wrote Pride and Prejudice?','Jane Austen',['Mary Shelley','Bram Stoker','Charles Dickens']),
+    (0,'What is twelve multiplied by seven?','84',['72','96','79']),
+]

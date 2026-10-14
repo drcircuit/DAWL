@@ -26,6 +26,8 @@ def strict_release_checks(evidence):
         if path.is_file():
             if hashfile(path)!=meta['sha256'] or path.stat().st_size!=meta['bytes']:raise ValueError('Strict release metadata changed')
             checked+=1
+        elif not name.startswith(('exports/','checkpoints/','replay-checkpoints/')):
+            raise ValueError('Missing required strict release metadata')
     previous=None
     rows=[json.loads(line) for line in (evidence/'lineage.jsonl').read_text().splitlines() if line]
     for i,row in enumerate(rows):

@@ -1,0 +1,1 @@
+{"checks":[{"checkpoint":"epoch-1","exact_tensors":392,"max_abs_difference":0.0,"relative_l2":0.0,"tensor_count":392}],"passed":true,"scope":"Independent CPU check of retained trainer and replay candidate tensors against their recorded receipt."}

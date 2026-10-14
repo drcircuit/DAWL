@@ -9,8 +9,11 @@
 
 Local compute publishes quorum-checked ledger snapshots to a read-only Azure
 site. The older cloud compute pilot is stopped with closed signing-state archives
-preserved. Participant responses stay local. The current strict full-epoch
-fine-tuning/replay run is a new lineage; the original failed replay stays recorded.
+preserved. Participant responses stay local. The [strict full-epoch run](docs/results/finetune-strict-002/README.md) completed
+228 updates and replayed all 392 adapter tensors exactly. Independent CPU checks
+confirmed all 4,427 token windows and 310 merged tensors. This is a new lineage;
+the original failed replay stays recorded. The [roadmap](https://dawlh1013185918state.z1.web.core.windows.net/#roadmap)
+tracks completed, active and planned platform work.
 
 
 A research project toward a **Linux of AI**: independently operated infrastructure
