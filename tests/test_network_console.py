@@ -47,5 +47,15 @@ class NetworkAccountingTests(unittest.TestCase):
         v=view(p,datetime(2026,10,14,18,0,10,tzinfo=timezone.utc))
         self.assertFalse(v['activities'][0]['live']);self.assertNotIn('targets_per_second',v['activities'][0])
 
+    def test_slow_training_reporting_cadence_is_bounded(self):
+        p={'certified':True,'state':{},'telemetry':self.sample(10,10,1000,100)}
+        activity={'observed_at':'2026-10-14T17:59:30+00:00','job':'Seed III','live':True,
+                  'status':'running','phase':'Training weights','freshness_seconds':90,'targets_per_second':100}
+        p['telemetry']['nodes'][0].update(role='model-trainer',name='seed3',activity=activity)
+        now=datetime(2026,10,14,18,0,10,tzinfo=timezone.utc)
+        self.assertTrue(view(p,now)['activities'][0]['live'])
+        activity.update(observed_at='2026-10-14T17:58:00+00:00',freshness_seconds=9999)
+        self.assertFalse(view(p,now)['activities'][0]['live'])
+
 
 if __name__=='__main__':unittest.main()

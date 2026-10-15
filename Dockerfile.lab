@@ -1,0 +1,8 @@
+ARG BASE_IMAGE=localhost/hypertrix-finetune:005
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates build-essential && rm -rf /var/lib/apt/lists/*
+RUN python -m pip install --no-cache-dir pyarrow==23.0.1
+ENV PYTHONPATH=/work/src PYTHONSAFEPATH=1 TOKENIZERS_PARALLELISM=false CUBLAS_WORKSPACE_CONFIG=:4096:8
+WORKDIR /work
+ENTRYPOINT ["python", "-P"]

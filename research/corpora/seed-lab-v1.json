@@ -1,0 +1,40 @@
+{
+  "schema": "hypertrix.lab-corpus-plan/1",
+  "name": "Seed III balanced English / Norwegian / code",
+  "context": 1024,
+  "vocab_size": 16384,
+  "seed": 20261015,
+  "mixture": {
+    "books_fiction": 0.20,
+    "books_nonfiction": 0.10,
+    "web_en": 0.25,
+    "web_no": 0.20,
+    "parliament_no": 0.025,
+    "historical_no": 0.025,
+    "code": 0.20
+  },
+  "wikipedia_revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+  "wikipedia_files": [
+    "20231101.en/train-00000-of-00041.parquet",
+    "20231101.en/train-00010-of-00041.parquet",
+    "20231101.simple/train-00000-of-00001.parquet",
+    "20231101.no/train-00000-of-00003.parquet",
+    "20231101.no/train-00001-of-00003.parquet",
+    "20231101.no/train-00002-of-00003.parquet",
+    "20231101.nn/train-00000-of-00001.parquet"
+  ],
+  "wikipedia_max_characters": {"en": 260000000, "simple": 80000000, "no": 140000000, "nn": 40000000},
+  "npsc_revision": "e906435cc445e38961d86f3ebf53a7b38603b903",
+  "gutenberg_fiction": [11,12,84,1342,158,161,105,121,1400,730,98,1661,2852,829,74,76,35,36,5230,159,43,120,2701,514,520,113,45,86,236,219,2097,55,244,345,174,768,62,209,215,4217,932,910,16389,28054,325,2891,19033,805,2500,205,940,1257,974,1934,271,2776,1155,17192,17157,42671],
+  "gutenberg_nonfiction": [3300,1232,7370,2270,1228,944,2009,1023,5001,14725,1656,1497,1998,4363,5740,3207,3600,205,2148,20203,815,24526,61,1164,2028,2171,7377,132,1080,10814,849,1227,2680,12320,42324,19155,15784,3296,2186,29448],
+  "gutenberg_mirror": "https://gutenberg.pglaf.org",
+  "github_owner": "drcircuit",
+  "tokenizer_characters_per_domain": 12000000,
+  "notes": [
+    "Weights are deterministic training-window sampling targets; actual nonpadding token proportions are reported separately.",
+    "Book catalog/RDF metadata is reviewed before admission. Unknown rights or failed downloads are exclusions, not silently accepted sources.",
+    "Wikipedia is a dated, openly licensed web-text source, not unrestricted OpenWebText. Preserve article URLs, source-file hashes, attribution/history links and the dataset license snapshot.",
+    "Existing book/repository/author holdouts remain held out. Refreshes of a repository share its existing split.",
+    "No raw corpus or private node keys belong in the portable source release."
+  ]
+}

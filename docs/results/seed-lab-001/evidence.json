@@ -1,0 +1,107 @@
+{
+  "schema": "hypertrix.lab-evidence-export/1",
+  "status": "calibration-complete-main-training-active",
+  "files": [
+    {
+      "path": "dataset/blueprint.json",
+      "sha256": "4b7331add9246e4c966cbb67478687755f9daf5bfe5c19124effcb41affb7c63",
+      "bytes": 2132
+    },
+    {
+      "path": "data-verification.json",
+      "sha256": "b8e5af6f11d6621096060d560fbda711f481c0a8ff5730cb5218ee66eebfec0b",
+      "bytes": 380
+    },
+    {
+      "path": "benchmark/benchmark.json",
+      "sha256": "5b5fa2958414888702992fe687d1834a03de2a40eb4215559ef17d7f5cee7fb6",
+      "bytes": 2070
+    },
+    {
+      "path": "compile-benchmark-v2/benchmark.json",
+      "sha256": "1b439a2cef770500c49ae4bab475d78fe160c0065437e1ed4df62544b19623f8",
+      "bytes": 669
+    },
+    {
+      "path": "compile-batch32/benchmark.json",
+      "sha256": "59903ba16e033a9799a565fccb96bc2bed916dd92f258686c98f22927bbd56f6",
+      "bytes": 669
+    },
+    {
+      "path": "probe/artifact-verification.json",
+      "sha256": "1f80a214fac86a37e9006343073e40988b98751b085f5db6244a705762038026",
+      "bytes": 294
+    },
+    {
+      "path": "probe/replay-0000010-0000020.json",
+      "sha256": "949c731c98f2c9f73dc3f6840db23a8525ffcb42d1226ff54f1e9fd04fea71b2",
+      "bytes": 12347
+    },
+    {
+      "path": "probe/lineage.jsonl",
+      "sha256": "a51920d9e218684ccee1997e3bcca74b930729d69b36975c46afe30247dd2107",
+      "bytes": 6613
+    },
+    {
+      "path": "probe/recipe.json",
+      "sha256": "6e91c2ee01dbbad54cb08d1236207c258ee4a3295c9ccb73535893aff1f396ac",
+      "bytes": 1094
+    },
+    {
+      "path": "probe/implementation.json",
+      "sha256": "998e3225c5dfdaf66edd669a3190b1e4c7d0388b9eac581e47756653c6109353",
+      "bytes": 1331
+    },
+    {
+      "path": "probe/operator.public.key",
+      "sha256": "1aba9c602f7506914f11e3f925c038fec4f9bd647d0fa8b9b8251f1bf2393784",
+      "bytes": 65
+    },
+    {
+      "path": "integration-004/integration.json",
+      "sha256": "8b7f25e570095eeb4e9126d66e0a0e6f9aadd324fd654d22577114b624273372",
+      "bytes": 1753
+    },
+    {
+      "path": "isolated-auditor/result/receipt.json",
+      "sha256": "de0368de7883278b10fd7d20fc2ff437684baa1fcbeadb569de108d568ec8c3d",
+      "bytes": 3652
+    },
+    {
+      "path": "import-check/doctor.json",
+      "sha256": "5eb32fc7fa0edb84fd3b3856c947a83d24c0af400d8581ec024ead8208c2b0ef",
+      "bytes": 835
+    },
+    {
+      "path": "calibration-publication.json",
+      "sha256": "5610d0e16ed1a3ce1467d65b3beffde733da3281c86e10b99007844c4d1dcce9",
+      "bytes": 198
+    },
+    {
+      "path": "calibration-transfer.json",
+      "sha256": "3a31d4b9da5899f13739d1458dbd78ebd41765e8ec197d37469e92229a5f1171",
+      "bytes": 5073
+    },
+    {
+      "path": "calibration-package-verification.json",
+      "sha256": "b6ab1eae9202c2190fa01472dd032e206965308f001b588ff8c687debe8fd2a5",
+      "bytes": 457
+    },
+    {
+      "path": "run/recipe.json",
+      "sha256": "b34d6204ac62c44c4beb0ca19b609a75b24095a47a4f899aa55fe2f4ed06b99f",
+      "bytes": 1097
+    },
+    {
+      "path": "run/schedule.json",
+      "sha256": "5aa9e9d5bcc2278fd4daac6699ad9184088a22bc72c07bd776573539b660cc2c",
+      "bytes": 526
+    },
+    {
+      "path": "release.json",
+      "sha256": "6a10583d44836375f8c40f122874908c04ec79d5494b4a209afda71025d5b20f",
+      "bytes": 543
+    }
+  ],
+  "scope": "Frozen evidence export before completion of the 6000-update phase. No final language-quality or multi-machine GPU result is claimed."
+}

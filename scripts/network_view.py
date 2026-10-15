@@ -7,7 +7,7 @@ import re
 ROLES={'oracle':'Oracle','cortex':'Cortex Unit','trainer':'Trainer','gpu-verifier':'Replay Daemon',
        'token-auditor':'Audit Daemon','discovery':'Discovery','console':'Console',
        'local-adaptation':'Fine-tuning','local-replay':'Replay','publisher':'Publisher',
-       'tokenizer':'Tokenizer','model-trainer':'Weight trainer','model-replay':'Weight replay'}
+       'tokenizer':'Tokenizer','model-trainer':'Weight trainer','model-replay':'Weight replay','model-host':'Model host'}
 
 
 def clean(value):return re.sub(r'[\x00-\x1f\x7f-\x9f]','',str(value))[:160]
@@ -92,7 +92,9 @@ def view(payload,now=None):
     for n in tele.get('nodes',[]):
         if not n.get('activity',{}).get('job'):continue
         activity=dict(n['activity'])
-        try:current=fresh and -5<=(now-datetime.fromisoformat(activity['observed_at'])).total_seconds()<=30 and activity.get('live',False)
+        try:
+            cadence=min(90,max(30,float(activity.get('freshness_seconds',30))))
+            current=fresh and -5<=(now-datetime.fromisoformat(activity['observed_at'])).total_seconds()<=cadence and activity.get('live',False)
         except (ValueError,KeyError):current=False
         activity['live']=current
         if not current:

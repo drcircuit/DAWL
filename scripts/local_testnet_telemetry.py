@@ -34,6 +34,7 @@ def collect(root, run):
     ids=command('podman','ps','-aq','--filter','label=org.hypertrix.oracle-training='+run).split()
     ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.seed').split()
     ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.recovery').split()
+    ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.lab-role').split()
     ids=list(dict.fromkeys(ids))
     containers=json.loads(command('podman','inspect',*ids)) if ids else []
     current_recovery=max(((c['Config'].get('Labels') or {}).get('org.hypertrix.recovery','') for c in containers),default='')
@@ -47,20 +48,38 @@ def collect(root, run):
     prefix='hypertrix-t4-'+run+'-'
     for c in containers:
         labels=c['Config'].get('Labels') or {}
+        if labels.get('org.hypertrix.lab-role'):
+            folder=Path(labels.get('org.hypertrix.work-root','/nonexistent')).resolve()
+            if not folder.is_relative_to(Path('/var/lib/dawl')):continue
+            nodes.append({'name':c['Name'],'role':labels['org.hypertrix.lab-role'],'id':c['Id'][:12],
+                          'running':c['State']['Running'],'status':c['State']['Status'],'exit_code':c['State']['ExitCode'],
+                          'stats':stats.get(c['Name'],{}),'dht':read(folder/'dht-status.json'),'events':[]})
+            continue
         if labels.get('org.hypertrix.seed'):
             folder=Path(labels.get('org.hypertrix.work-root','/nonexistent')).resolve()
             if not folder.is_relative_to(Path('/var/lib/dawl')):continue
             activity=read(folder/'progress.json',{})
-            if activity.get('execution_id') and not c['Id'].startswith(activity['execution_id']):activity={}
-            if folder.name=='probe' and activity:activity={**activity,'job':'Seed II calibration'}
+            identity=activity.get('execution_id')
+            if identity and not (identity==labels.get('org.hypertrix.execution-id') or c['Id'].startswith(identity)):activity={}
+            if not activity and not c['State']['Running']:continue
+            if not activity and c['State']['Running'] and 'dawl_lab.verify' in (c['Config'].get('Cmd') or []):
+                activity={'phase':'Verifying token windows','job':'Corpus verifier','status':'running',
+                          'observed_at':datetime.now(timezone.utc).isoformat(),'execution_id':c['Id'][:12]}
+            if folder.name=='probe' and activity:
+                generation='Seed III' if folder.parent.name.startswith('seed-lab-') else 'Seed II'
+                activity={**activity,'job':generation+' calibration'}
             if folder.name=='probe-replay' and activity:activity={**activity,'job':'Calibration replay'}
             age=None
             try:age=(datetime.now(timezone.utc)-datetime.fromisoformat(activity['observed_at'])).total_seconds()
             except (ValueError,KeyError):pass
-            live=c['State']['Running'] and age is not None and -5<=age<=30
-            phase=activity.get('phase','Starting')
+            # The full-model runner emits progress every ten updates (~35 s).
+            # Keep its bounded reporting cadence explicit instead of making
+            # healthy work appear paused between ordinary progress records.
+            freshness=90 if folder.parent.name.startswith('seed-lab-') else 30
+            live=c['State']['Running'] and age is not None and -5<=age<=freshness
+            phase=activity.get('phase','Starting' if c['State']['Running'] else 'Stopped')
             if activity.get('status')=='running' and not live:phase='Updates paused' if c['State']['Running'] else 'Stopped'
-            activity={**activity,'phase':phase,'live':live,'age_seconds':age,'node_id':c['Id'][:12]}
+            activity={**activity,'phase':phase,'live':live,'age_seconds':age,'freshness_seconds':freshness,'node_id':c['Id'][:12]}
             if not live:activity.pop('targets_per_second',None)
             compute=None
             if live and activity.get('target_tokens') and activity.get('parameters'):

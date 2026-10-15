@@ -1,0 +1,1 @@
+{"accepted":true,"blueprint_sha256":"4b7331add9246e4c966cbb67478687755f9daf5bfe5c19124effcb41affb7c63","checks":["metadata/token-file hashes","source-object hashes","disjoint exact hashes and source families","source-to-window token reconstruction"],"documents_retokenized":162497,"mode":"all-documents","schema":"hypertrix.lab-data-verification/1","source_objects_hashed":162497}

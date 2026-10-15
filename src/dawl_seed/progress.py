@@ -10,7 +10,7 @@ def progress(root, phase, **values):
     root = Path(os.environ.get('HYPERTRIX_PROGRESS_ROOT') or root)
     root.mkdir(parents=True, exist_ok=True)
     value = {'schema': 'hypertrix.work-progress/1', 'observed_at': datetime.now(timezone.utc).isoformat(),
-             'phase': phase, 'execution_id': os.environ.get('HOSTNAME'), **values}
+             'phase': phase, 'execution_id': os.environ.get('HYPERTRIX_EXECUTION_ID') or os.environ.get('HOSTNAME'), **values}
     pending = root/'progress.pending'
     pending.write_text(json.dumps(value, allow_nan=False), encoding='utf-8')
     pending.replace(root/'progress.json')

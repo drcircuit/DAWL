@@ -1,0 +1,31 @@
+{
+  "schema": "hypertrix.lab-doctor/1",
+  "utc": "2026-10-15T13:48:26.270110+00:00",
+  "runtime": {
+    "device": "cuda",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "capability": [
+      12,
+      0
+    ],
+    "precision": "fp32",
+    "attention": "math",
+    "deterministic": true,
+    "tf32": false,
+    "threads": 4,
+    "numpy": "2.5.3",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0"
+  },
+  "python": "3.12.15",
+  "kernel": "6.18.33.2-microsoft-standard-WSL2",
+  "driver": "616.92",
+  "logical_cpus": 24,
+  "storage_free_bytes": 854650855424,
+  "gpu_memory_bytes": 25622413312,
+  "forward_repeat_exact": true,
+  "backpropagation_finite": true,
+  "scope": "Hardware and local forward/backward smoke test. Cross-GPU training replay requires separate measurement."
+}

@@ -11,6 +11,8 @@ secrets/
 tmp/
 output/public-site/
 output/study-review/
+output/home-lab-preview/
+output/home-lab/
 *.sqlite3
 *.sqlite3-journal
 *.sqlite3-wal

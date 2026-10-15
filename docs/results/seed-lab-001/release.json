@@ -1,0 +1,13 @@
+{
+  "kit": "hypertrix-home-lab-20261015-r1.zip",
+  "kit_sha256": "60228418acae2da5814000072fb61237b116635b69f625ea86998a2bb531300d",
+  "kit_bytes": 540577,
+  "manifest_sha256": "551847c32aacec4d1904193c536782e8ba3fc573ff740dc2321ffd91edd06a16",
+  "runtime": {
+    "image_id": "63903e5429e4df3b7a44574caf6c4a503add040b81e2265a42b1846d7eb8d33f",
+    "archive": "hypertrix-lab-runtime-004.oci.tar.gz",
+    "archive_sha256": "71803b363ffdcb091964cdf7123ca19afa22ea2085dffdf290553b157071dfd4",
+    "archive_bytes": 4582221862
+  },
+  "files": 217
+}

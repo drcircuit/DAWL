@@ -1,0 +1,14 @@
+{
+  "schema": "hypertrix.lab-quality-prompts/1",
+  "purpose": "Frozen before Seed III training; qualitative continuation checks, not an instruction-following benchmark.",
+  "prompts": [
+    {"id":"story-en","domain":"English narrative","text":"The old lighthouse had been dark for years. One evening, a small boat approached the shore, and"},
+    {"id":"context-name","domain":"Short context retention","text":"Mira put the red notebook in the wooden drawer. She left the blue notebook on the table. When she returned to find the red notebook, she opened"},
+    {"id":"science-en","domain":"English explanatory prose","text":"Plants use sunlight to convert water and carbon dioxide into"},
+    {"id":"economics-en","domain":"Economics prose","text":"When the price of a good rises and everything else remains the same, consumers generally"},
+    {"id":"story-no","domain":"Modern Norwegian narrative","text":"Det hadde regnet hele dagen. Da Nora kom hjem fra skolen, oppdaget hun at"},
+    {"id":"explanation-no","domain":"Modern Norwegian explanatory prose","text":"Et bibliotek er et sted hvor mennesker kan låne bøker, finne informasjon og"},
+    {"id":"javascript","domain":"Code continuation","text":"function sum(numbers) {\n  let total = 0;\n  for (const number of numbers) {\n    "},
+    {"id":"python","domain":"Code continuation","text":"def maximum(values):\n    if not values:\n        return None\n    result = values[0]\n    for value in values[1:]:\n        "}
+  ]
+}

@@ -8,6 +8,9 @@ local text/code playground (`http://127.0.0.1:8886/`).
 The [Seed II expansion](docs/seed_expansion.md) adds Nasjonalbiblioteket's CC0
 Norwegian literature, a 40.6M-parameter model, deterministic BF16 training and
 live corpus/training progress in both dashboards.
+The [Seed III home lab](docs/home_training_lab.md) adds a curated multilingual
+corpus, a 125.9M decoder, signed checkpoint replication, parent-linked training
+branches and a [Windows/WSL2 quickstart](lab/README.md).
 
 ## Public research observatory
 
