@@ -1,0 +1,20 @@
+[
+  {
+    "file": "bokselskap.tar.gz",
+    "url": "https://www.nb.no/sbfil/tekst/20230119_bokselskap.no.tar.gz",
+    "sha256": "5bca77169226f9f2e9ca142cd10b7a8c39b922e43b3fd6739daba68eda00c7fb",
+    "bytes": 38661436
+  },
+  {
+    "file": "bokselskap-catalog.html",
+    "url": "https://www.nb.no/sprakbanken/ressurskatalog/oai-nb-no-sbr-81/",
+    "sha256": "35bbec19cf6d30d4a6c94631e718ff9c88f2072ff6e87087f7bf2c9ac3463c25",
+    "bytes": 14980
+  },
+  {
+    "file": "bokselskap-data-norge.html",
+    "url": "https://data.norge.no/en/datasets/246b8421-5aa8-3efe-ac4b-3b05fe243ef3/bokselskapno-2023",
+    "sha256": "2415cb544e3b1999da9dfec5b19060883bfe9a743bda23dd9402c66968d2d938",
+    "bytes": 134260
+  }
+]

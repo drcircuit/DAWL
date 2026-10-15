@@ -64,7 +64,7 @@ def report(root,intake,output):
     verify(output,result,metadata_only=True)
     attestation=sign({'schema':'hypertrix.seed-release/1','report_sha256':digest(output/'report.json'),
                       'artifact_verification_sha256':digest(output/'artifact-verification.json')},load_key(model/'operator.private.pem'))
-    write_json(output/'release-attestation.json',attestation)
+    write_json(output/'artifact-attestation.json',attestation)
     print(json.dumps({'selected_step':summary['selected_step'],'status':summary['status'],**verification}),flush=True)
     return result
 

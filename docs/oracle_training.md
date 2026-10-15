@@ -239,6 +239,10 @@ wsl -d kali-linux -u root -- sh scripts/local_testnet_console.sh status
 # wsl -d kali-linux -u root -- env DAWL_TRAINING_RUN=004 sh scripts/local_testnet_console.sh start
 ```
 
+The [15 October capability review](capability_review_2026-10-15.md) distinguishes
+the archived run from subsequent full-model replay and the opt-in
+[governed recovery extension](training_recovery.md).
+
 The completed training stage remains served by trainers and verifiers. It does
 not restart training automatically. A subsequent stage requires an explicit
 manifest and admission transaction, followed by pointing worker configuration at

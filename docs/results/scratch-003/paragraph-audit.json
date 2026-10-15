@@ -1,0 +1,12 @@
+{
+  "schema": "hypertrix.paragraph-overlap-audit/1",
+  "blueprint_sha256": "9d66f8302d3244334eda0430f93c1e9612bf4c48f74cc162cd20c26eeaa13c4e",
+  "implementation_sha256": "15c2e0d44925cc9b85710669c18e3aa6539b1474d6895422e96d3b0691aba0c4",
+  "documents": 378,
+  "unique_paragraphs": 117875,
+  "minimum_characters": 200,
+  "cross_split_document_pairs": 0,
+  "highest_document_overlap": [],
+  "highest_pairs": [],
+  "scope": "Exact stripped paragraph overlap of at least 200 Unicode characters in the Norwegian domain; not exhaustive near-duplicate detection."
+}

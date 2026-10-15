@@ -89,7 +89,7 @@ def build(output=None):
     if (seed/'release-attestation.json').is_file():
         from verify_seed_release import verify_release
         checks['seed_release']=verify_release(seed,SEED_PUBLIC_KEY)
-        allowed=[seed/name for name in ('report.json','artifact-verification.json','release-attestation.json','sha256-manifest.json','comparison.json','comparison-receipt.json',
+        allowed=[seed/name for name in ('report.json','artifact-verification.json','artifact-attestation.json','release-attestation.json','sha256-manifest.json','comparison.json','comparison-receipt.json',
             'comparison-implementation.py','paragraph-audit.json','paragraph-audit-implementation.py','benchmark.json','benchmark-flash.json',
             'benchmark-blueprint.json','calibration-replay.json','README.md','learning.png','learning.pdf')]
         for directory in ('dataset','intake','dense'):
@@ -105,7 +105,9 @@ def build(output=None):
         copy(ROOT/'docs/seed_expansion.md','reports/seed-ii/methodology.md')
         index=output/'index.html';index.write_text(index.read_text(encoding='utf-8').replace('data-seed-ready="false"','data-seed-ready="true"'),encoding='utf-8')
     for name in ('research-handoff-2026-10-14.md',):copy(ROOT/'docs'/name,'reports/'+name)
-    for name in ('oracle_training.md','training_verification.md','public_observatory.md'):copy(ROOT/'docs'/name,'reports/'+name)
+    for name in ('oracle_training.md','training_verification.md','public_observatory.md',
+                 'training_recovery.md','capability_review_2026-10-15.md','collective_funding.md'):
+        copy(ROOT/'docs'/name,'reports/'+name)
     oracle=ROOT/'docs/results/oracle-training-run-003'
     from public_snapshot import wsl_path, GENESIS_PIN
     checked=subprocess.run(['wsl','-d','kali-linux','-u','root','--exec',wsl_path(ROOT/'artifacts/check-certificate'),

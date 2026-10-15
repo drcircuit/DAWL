@@ -8,7 +8,7 @@ import copy
 from dawl_node.common import canonical_json, sha256, verify_signature
 from data_ingestion.protocol import require_digest
 from .incidents import observe, worker_conflict
-from . import contributions, profile_protocol, training_protocol, collaboration
+from . import contributions, profile_protocol, training_protocol, collaboration, training_recovery
 
 MAX_TX = 65536
 AUDIT = "AUDIT_CPU"
@@ -100,7 +100,9 @@ def apply(state, tx):
     kind, payload = body["kind"], body["payload"]
     hats = contributions.actor_hats(state,public)
     result = {}
-    if kind in collaboration.COMMANDS:
+    if kind in training_recovery.COMMANDS:
+        result = training_recovery.apply(state, public, hats, kind, payload, tx['id'])
+    elif kind in collaboration.COMMANDS:
         result = collaboration.apply(state, public, hats, kind, payload, tx['id'])
     elif kind in training_protocol.COMMANDS:
         result = training_protocol.apply(state, public, hats, kind, payload, tx['id'])

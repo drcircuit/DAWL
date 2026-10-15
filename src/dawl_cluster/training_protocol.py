@@ -9,7 +9,7 @@ from dawl_node.common import canonical_json, sha256
 from data_ingestion.protocol import require_digest
 from .contributions import descriptor
 from .profile_protocol import integer
-from . import collaboration
+from . import collaboration, training_recovery
 
 COMMANDS = {'activate_training', 'admit_training_worker', 'register_training_stage',
             'claim_training', 'renew_training', 'result_training', 'verify_training_round'}
@@ -40,10 +40,11 @@ def validate_stage(state, stage):
     if set(stage) != {'id', 'body'} or stage['id'] != identity(stage['body']):
         raise ValueError('stage identity mismatch')
     b = stage['body']
-    governed = b['schema'] == 'hypertrix.oracle-training-stage/2'
+    recoverable = b['schema'] == training_recovery.SCHEMA
+    governed = b['schema'] == 'hypertrix.oracle-training-stage/2' or recoverable
     fields = {'schema', 'profile_id', 'token_blueprint', 'manifest', 'initial_adapter',
               'parent_model', 'rounds', 'shards', 'local_steps', 'work', 'verifiers', 'lease_blocks'}
-    if set(b) != fields | ({'branch', 'parent_checkpoint', 'model_contract'} if governed else set()):
+    if set(b) != fields | ({'branch', 'parent_checkpoint', 'model_contract'} if governed else set()) | ({'recovery'} if recoverable else set()):
         raise ValueError('invalid training stage fields')
     if governed:
         if not state.get('collaboration_protocol'): raise ValueError('collaboration activation required')
@@ -74,6 +75,7 @@ def validate_stage(state, stage):
         require_digest(work['data']); integer(work['target_tokens'], width, width*128)
     if len({w['data'] for w in b['work']}) != len(b['work']): raise ValueError('duplicate data shard')
     if governed: collaboration.validate_stage(state, b)
+    if recoverable: training_recovery.validate(state, b)
     return b
 
 
@@ -92,6 +94,8 @@ def candidate(state, stage, adapter):
             'verification': 'full-replay-and-reduce/1'}
     if 'branch' in stage['body']:
         value.update(schema='hypertrix.oracle-weight-round/2', **collaboration.candidate_fields(state, stage))
+    if training_recovery.enabled(stage):
+        value.update(schema='hypertrix.oracle-weight-round/3', recovery_revision=stage['recovery_revision'])
     return value
 
 
@@ -128,6 +132,7 @@ def apply(state, public, hats, kind, payload, txid):
             raise ValueError('duplicate stage or bounded stage registry full')
         stage = {**value, 'round': 0, 'head': b.get('parent_checkpoint', value['id']), 'adapter': b['initial_adapter'],
                  'status': 'active', 'votes': {}, 'checkpoints': [], 'transaction': txid, 'height': state['height']}
+        if training_recovery.enabled(stage): training_recovery.initialize(state, stage)
         if 'branch' in b: state['model_branches'][b['branch']]['active_stage'] = value['id']
         state['training_stages'][value['id']] = stage; enqueue(state, stage)
         return {'stage': value['id']}
@@ -147,7 +152,7 @@ def apply(state, public, hats, kind, payload, txid):
                 return {'stage': stage['id'], 'job': i, **job['leases'][public]}
         if any(j['contribution'] and j['contribution']['signer'] == public for _, j in jobs): return {'job': None}
         for i, job in jobs:
-            if job['contribution'] is None and not job['leases']:
+            if job['contribution'] is None and not job['leases'] and public not in job.get('rejected_trainers', []):
                 lease = {'generation': txid, 'expires': state['height']+stage['body']['lease_blocks']}
                 job['leases'][public] = lease; job['attempts'] += 1
                 return {'stage': stage['id'], 'job': i, **lease}
@@ -169,9 +174,13 @@ def apply(state, public, hats, kind, payload, txid):
         job['leases'].clear()
         return {'job': payload['job'], 'accepted': True, 'checkpoint_promoted': False}
     if kind == 'verify_training_round':
+        if training_recovery.enabled(stage) and training_recovery.pending_failures(state, stage):
+            raise ValueError('unresolved failure reports prevent checkpoint promotion')
         if member['role'] != 'VERIFIER' or public not in stage['body']['verifiers'] or set(payload) != {'stage', 'candidate'}:
             raise ValueError('named independent verifier required')
         body = payload['candidate']; expected = candidate(state, stage, body['adapter'])
+        if training_recovery.enabled(stage) and canonical_json(body) != canonical_json(expected):
+            raise ValueError('candidate differs from canonical recovery round')
         if body != expected or public in stage['votes']: raise ValueError('wrong round, parent, roster or repeated verification')
         # Distinct verifier role cannot also hold a training identity under this key.
         stage['votes'][public] = {'candidate': body, 'transaction': txid, 'height': state['height']}
@@ -184,6 +193,7 @@ def apply(state, public, hats, kind, payload, txid):
             state['training_checkpoints'][record['id']] = record
             stage['head'] = record['id']; stage['adapter'] = body['adapter']
             stage['checkpoints'].append(record['id']); stage['round'] += 1; stage['votes'] = {}
+            if training_recovery.enabled(stage): stage['round_started_height'] = state['height']
             stage['status'] = 'complete' if stage['round'] == stage['body']['rounds'] else 'active'
             if 'branch' in stage['body']: collaboration.promoted(state, stage, record)
             if stage['status'] == 'active': enqueue(state, stage)
@@ -195,5 +205,8 @@ def summary(state):
     return {i: {'status': s['status'], 'round': s['round'], 'rounds': s['body']['rounds'],
                 'head': s['head'], 'shards': s['body']['shards'], 'profile_id': s['body']['profile_id'],
                 'accepted_updates': sum(j['contribution'] is not None for j in state['training_jobs'].values() if j['spec']['stage'] == i),
-                'active_leases': sum(len(j['leases']) for j in state['training_jobs'].values() if j['spec']['stage'] == i)}
+                'active_leases': sum(len(j['leases']) for j in state['training_jobs'].values() if j['spec']['stage'] == i),
+                **({'recovery_revision': s['recovery_revision'], 'failure_reports': len(s['failure_reports']),
+                    'round_deadline_height': s['round_started_height']+s['body']['recovery']['round_timeout_blocks']}
+                   if training_recovery.enabled(s) else {})}
             for i, s in state.get('training_stages', {}).items()}

@@ -15,15 +15,17 @@ import uvicorn
 from dawl_node.common import load_key, read_json, write_json, canonical_json
 from dawl_cluster.client import Client
 from dawl_cluster.training_protocol import round_jobs, candidate
+from dawl_cluster.training_recovery import enabled as recoverable, pending_failures
 from dawl_platform.workflow import implementation_digest
 from dawl_platform.artifacts import PublicPeer
 from dawl_profiles.workspace import Workspace
 from dawl_profiles.bundles import import_bundle, descriptors
-from dawl_profiles.profiles import ProfileTokenizer, describe
+from dawl_profiles.profiles import ProfileTokenizer
 from dawl_swarm.dht import DHT, validate as validate_peer
 from .network import Network, serve
 from .data import make_dataset
 from .work import validate_manifest, records, reduce_updates
+from .recovery import ContributionFailure, verify_contribution, current_failure, store_failure
 
 
 def lineage(ws, state, stage, network):
@@ -122,6 +124,9 @@ async def work(root, role, device, abandon=False):
         log(root, 'ready', role=role, stage=stage['id'], public=client.public)
         while not stop.is_set():
             state = await client.state(); stage = state['training_stages'][config['training_stage']]
+            if stage['status'] == 'cancelled':
+                log(root, 'cancelled', stage=stage['id'], head=stage['head'])
+                await stop.wait(); break
             if stage['status'] == 'disputed': raise ValueError('Oracle stage disputed; operator investigation required')
             if stage['status'] == 'complete':
                 await discover(client, network, state)
@@ -135,7 +140,8 @@ async def work(root, role, device, abandon=False):
                 if not eligible or not any(not j['contribution'] and (not j['leases'] or client.public in j['leases']) for _, j in jobs):
                     await asyncio.sleep(1); continue
                 lease = await client.command('claim_training', {'stage': stage['id']})
-                if not lease['job']: continue
+                if not lease['job']:
+                    await asyncio.sleep(1); continue
                 state = await client.state(); job = state['training_jobs'][lease['job']]
                 fields = {k: lease[k] for k in ('stage', 'job', 'generation')}
                 log(root, 'claimed', **lease, spec=job['spec'])
@@ -162,28 +168,62 @@ async def work(root, role, device, abandon=False):
                     write_json(root/'public'/('work-'+lease['job']+'-'+lease['generation']+'.json'), payload)
                 finally:
                     heartbeat.cancel(); await asyncio.gather(heartbeat, return_exceptions=True)
-                result = await client.command('result_training', payload)
+                if recoverable(stage):
+                    latest = await client.state()
+                    current = latest['training_stages'][stage['id']]
+                    if current['status'] != 'active' or latest['training_jobs'][lease['job']]['leases'].get(client.public, {}).get('generation') != lease['generation']:
+                        log(root, 'superseded_work', job=lease['job']); continue
+                try:
+                    result = await client.command('result_training', payload)
+                except ValueError:
+                    if not recoverable(stage): raise
+                    log(root, 'submission_rejected', job=lease['job']); continue
                 log(root, 'contributed', **result, adapter=adapter, seconds=seconds, loss=loss)
             else:
-                if client.public in stage['votes'] or any(not j['contribution'] for _, j in jobs):
+                if (client.public in stage['votes'] or any(not j['contribution'] for _, j in jobs)
+                        or (recoverable(stage) and pending_failures(state, stage))):
                     await asyncio.sleep(1); continue
                 await discover(client, network, state)
                 def replay():
                     network.fetch(stage['adapter']); checks = []
                     for job_id, job in jobs:
-                        network.fetch(job['contribution']['adapter'])
-                        restore(model, ws.objects.read(stage['adapter']), manifest['adapter_layout'])
-                        train_local(model, records(dataset, job['spec']), ws.objects, manifest['recipe'], device)
-                        _, payload = export(model)
-                        if describe(payload) != job['contribution']['adapter']:
-                            raise ValueError('full numerical training replay differs')
-                        checks.append({'job': job_id, 'update': job['contribution']['transaction'], 'bit_exact': True})
+                        def reconstruct():
+                            restore(model, ws.objects.read(stage['adapter']), manifest['adapter_layout'])
+                            train_local(model, records(dataset, job['spec']), ws.objects, manifest['recipe'], device)
+                            return export(model)[1]
+                        checks.append(verify_contribution(network, job_id, job, reconstruct))
                     adapter = ws.objects.put(reduce_updates(ws.objects, stage['adapter'], [j for _, j in jobs]))
                     return candidate(state, stage, adapter), checks
-                body, checks = await asyncio.to_thread(replay)
+                try:
+                    body, checks = await asyncio.to_thread(replay)
+                except ContributionFailure as failure:
+                    if not recoverable(stage): raise
+                    latest = await client.state()
+                    if not current_failure(latest, stage, failure):
+                        log(root, 'superseded_failure', job=failure.job_id); continue
+                    payload = store_failure(ws.objects, stage, failure)
+                    try:
+                        result = await client.command('report_training_failure', payload)
+                        log(root, 'failure_reported', **payload, **result)
+                    except ValueError:
+                        log(root, 'failure_report_rejected', job=failure.job_id)
+                    await asyncio.sleep(1); continue
+                if recoverable(stage):
+                    latest = await client.state(); current = latest['training_stages'][stage['id']]
+                    try:
+                        unchanged = current['status'] == 'active' and not pending_failures(latest, current) and candidate(latest, current, body['adapter']) == body
+                    except ValueError:
+                        unchanged = False
+                    if not unchanged:
+                        log(root, 'superseded_replay', round=stage['round']); continue
                 # Persist evidence and serve all referenced artifacts BEFORE attesting.
-                write_json(root/'public'/f"replay-{stage['round']:03d}.json", {'candidate': body, 'checks': checks})
-                result = await client.command('verify_training_round', {'stage': stage['id'], 'candidate': body})
+                revision = '-revision-'+str(stage['recovery_revision']) if recoverable(stage) else ''
+                write_json(root/'public'/f"replay-{stage['round']:03d}{revision}.json", {'candidate': body, 'checks': checks})
+                try:
+                    result = await client.command('verify_training_round', {'stage': stage['id'], 'candidate': body})
+                except ValueError:
+                    if not recoverable(stage): raise
+                    log(root, 'verification_rejected', round=body['round']); continue
                 log(root, 'verified', round=body['round'], checks=checks, **result)
         return 0
     finally:

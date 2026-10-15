@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "milestones": [
     {
       "status": "complete",
@@ -47,13 +47,30 @@
       "detail": "Role-based web and terminal dashboards, current node state, activity history and aggregate resource counters."
     },
     {
+      "status": "complete",
+      "title": "Seed II: corpus and model growth",
+      "detail": "40.6M parameters trained from scratch over four epochs; 8,577 documents including 378 Norwegian texts. Paired evaluation and exact model/AdamW interval replay.",
+      "evidence": "reports/seed-ii.zip"
+    },
+    {
+      "status": "complete",
+      "title": "Shared manifests and model branches",
+      "detail": "Homogeneous execution cohorts, explicit participation and independently selectable model branches; signed protocol tests preserve exact verification."
+    },
+    {
+      "status": "in_progress",
+      "title": "Training recovery and verifier replacement",
+      "detail": "Opt-in failure reports, rejection/reassignment, revision fencing and cancellation preserve full replay quorum. Signed transition and HTTP fault tests pass; the new worker deployment trial is next.",
+      "evidence": "reports/training_recovery.md"
+    },
+    {
       "status": "planned",
       "title": "Distributed optimizer state",
       "detail": "Extend Qwen/AdamW training contracts with optimizer-state exchange and DiLoCo-style outer updates."
     },
     {
       "status": "planned",
-      "title": "Heterogeneous training branches",
+      "title": "Numerical verification across hardware",
       "detail": "Calibrate numerical verification across GPUs and runtimes; extend branch selection and contribution policies."
     },
     {
@@ -63,8 +80,14 @@
     },
     {
       "status": "planned",
-      "title": "Artifact availability and verifier recovery",
-      "detail": "Availability challenges, verifier replacement and broader checkpoint replication."
+      "title": "Durable artifact availability",
+      "detail": "Ongoing possession challenges, retention leases, repair and broader checkpoint replication."
+    },
+    {
+      "status": "planned",
+      "title": "Measured sampling and quality gates",
+      "detail": "Compare full replay with post-commitment interval sampling; measure detection, cost and quality against adversarial updates.",
+      "evidence": "reports/capability_review_2026-10-15.md"
     },
     {
       "status": "planned",
@@ -75,6 +98,12 @@
       "status": "planned",
       "title": "Worker compute accounting",
       "detail": "Emit operation counts from training and verification kernels; expand transport measurements across independent nodes."
+    },
+    {
+      "status": "planned",
+      "title": "Foundation and collective funding",
+      "detail": "Tiered API service revenue, auditable contribution rewards and a foundation whose administration grows with service demand. Begin with metering and simulated accounting.",
+      "evidence": "reports/collective_funding.md"
     }
   ]
 }

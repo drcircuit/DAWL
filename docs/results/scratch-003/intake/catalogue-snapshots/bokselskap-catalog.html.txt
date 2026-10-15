@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bokselskap.no 2023 – Ressurskatalog</title>
+<meta name="description" content="bokselskap.no er et korpus av bøker og tekster som har falt i det fri, dvs. materiale produsert av forfattere som har vært døde i minst 70 år, eller bøker og tekster som rettighetshaver har gitt sin t">
+<link rel="canonical" href="https://www.nb.no/sprakbanken/ressurskatalog/oai-nb-no-sbr-81/">
+<link rel="alternate" hreflang="nb" href="https://www.nb.no/sprakbanken/ressurskatalog/oai-nb-no-sbr-81/">
+<link rel="alternate" hreflang="en" href="https://www.nb.no/sprakbanken/ressurskatalog/en/oai-nb-no-sbr-81/">
+<link rel="alternate" hreflang="x-default" href="https://www.nb.no/sprakbanken/ressurskatalog/oai-nb-no-sbr-81/">
+<link rel="stylesheet" href="../assets/css/font.css">
+<link rel="stylesheet" href="../assets/css/shared.css">
+<link rel="stylesheet" href="../assets/css/detail.css">
+<script>
+  (function() {
+    var t = localStorage.getItem('nb-theme');
+    if (t === 'dark') document.documentElement.classList.add('dark-mode');
+    else if (t === 'light') document.documentElement.classList.add('light-mode');
+  })();
+</script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Hopp til innhold</a>
+
+<header class="nb-header">
+  <div class="nb-header__inner">
+    <div class="nb-site-logo nb-site-logo--has-sublabel">
+      <a href="https://www.nb.no/forsking-og-utvikling/" rel="home" aria-label="Gå til Forskning og utvikling på nb.no">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 26" height="26" width="20" class="nb-logo" aria-hidden="true" focusable="false"><path d="M1.33333 7.49151C2.06971 7.49151 2.66666 6.89962 2.66666 6.16948C2.66666 5.43934 2.06971 4.84744 1.33333 4.84744C0.596953 4.84744 0 5.43934 0 6.16948C0 6.89962 0.596953 7.49151 1.33333 7.49151Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M20 0H4.44448V21.5932H20V0ZM15.1111 6.16948C15.1111 6.8996 14.5142 7.4915 13.7778 7.4915C13.0414 7.4915 12.4444 6.8996 12.4444 6.16948C12.4444 5.43935 13.0414 4.84746 13.7778 4.84746C14.5142 4.84746 15.1111 5.43935 15.1111 6.16948ZM8.88888 6.16948C8.88888 6.8996 8.29192 7.4915 7.55556 7.4915C6.8192 7.4915 6.22224 6.8996 6.22224 6.16948C6.22224 5.43935 6.8192 4.84746 7.55556 4.84746C8.29192 4.84746 8.88888 5.43935 8.88888 6.16948ZM13.7778 13.661C14.5142 13.661 15.1111 13.0691 15.1111 12.339C15.1111 11.6088 14.5142 11.017 13.7778 11.017C13.0414 11.017 12.4444 11.6088 12.4444 12.339C12.4444 13.0691 13.0414 13.661 13.7778 13.661ZM15.1111 18.5085C15.1111 19.2386 14.5142 19.8305 13.7778 19.8305C13.0414 19.8305 12.4444 19.2386 12.4444 18.5085C12.4444 17.7783 13.0414 17.1864 13.7778 17.1864C14.5142 17.1864 15.1111 17.7783 15.1111 18.5085Z" fill="currentColor"/><path d="M13.7778 26C14.5142 26 15.1111 25.4081 15.1111 24.678C15.1111 23.9478 14.5142 23.3559 13.7778 23.3559C13.0414 23.3559 12.4445 23.9478 12.4445 24.678C12.4445 25.4081 13.0414 26 13.7778 26Z" fill="currentColor"/></svg>
+        <span class="nb-site-logo__label">Nasjonalbiblioteket</span>
+      </a>
+      <span class="nb-site-logo__sublabel">
+        <span class="separator" aria-hidden="true">|</span>
+        <a href="/sprakbanken/ressurskatalog/">Språkbankens ressurskatalog</a>
+      </span>
+    </div>
+    <div class="nb-header__controls">
+      <button class="nb-dark-mode-btn" aria-label="Skru på/av nattmodus" aria-pressed="false">
+        <svg class="icon-day" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11.7 2.817a.761.761 0 0 0-.384.399c-.109.241-.109 1.328 0 1.564.225.487.804.618 1.179.267.225-.21.263-.362.263-1.047 0-.685-.038-.837-.263-1.047a.752.752 0 0 0-.795-.136M5.234 5.515a.734.734 0 0 0-.209 1.052c.058.085.29.331.514.546.331.319.443.403.6.447.553.155 1.033-.317.922-.907-.023-.125-.117-.243-.515-.648-.267-.272-.544-.519-.615-.55a.766.766 0 0 0-.697.06m12.809-.052c-.186.08-.986.885-1.062 1.069-.247.591.294 1.218.886 1.027.219-.071 1.108-.951 1.197-1.185.229-.598-.417-1.174-1.021-.911M11.2 7.823c-1.683.305-3.101 1.487-3.659 3.048a4.74 4.74 0 0 0 0 3.258c.481 1.346 1.631 2.45 3.002 2.883a4.745 4.745 0 0 0 5.439-1.932 4.723 4.723 0 0 0 .477-4.209c-.476-1.331-1.647-2.456-3.004-2.884-.703-.222-1.583-.286-2.255-.164m1.64 1.542c1.056.263 1.94 1.126 2.286 2.235.081.259.094.383.094.9s-.013.641-.094.9c-.365 1.168-1.251 1.996-2.446 2.286-.283.069-1.077.069-1.36 0a3.159 3.159 0 0 1-1.314-.627A3.374 3.374 0 0 1 8.874 13.4c-.081-.259-.094-.383-.094-.9s.013-.641.094-.9c.537-1.721 2.22-2.669 3.966-2.235M2.7 11.817c-.248.111-.458.425-.458.683 0 .259.242.604.491.697.062.024.402.043.767.043s.705-.019.767-.043c.249-.093.491-.438.491-.697 0-.259-.242-.604-.491-.697-.169-.064-1.418-.053-1.567.014m17 0c-.248.111-.458.425-.458.683 0 .259.242.604.491.697.062.024.402.043.767.043s.705-.019.767-.043c.249-.093.491-.438.491-.697 0-.259-.242-.604-.491-.697-.169-.064-1.418-.053-1.567.014M6.115 17.453c-.079.03-.196.091-.26.136-.21.15-.859.85-.917.99-.197.471.165 1.021.671 1.021a1 1 0 0 0 .322-.055c.071-.031.348-.278.615-.55.523-.532.569-.615.522-.96-.057-.427-.552-.73-.953-.582m11.369-.024c-.16.03-.385.203-.477.367a.817.817 0 0 0-.026.672c.079.19.881.992 1.071 1.071.459.192.979-.088 1.051-.566.046-.305-.047-.462-.593-1.001-.555-.548-.672-.61-1.026-.543M11.7 19.817a.761.761 0 0 0-.384.399c-.062.137-.074.264-.074.784 0 .685.038.837.263 1.047.375.351.954.22 1.179-.267.062-.134.074-.261.074-.78 0-.685-.038-.837-.263-1.047a.752.752 0 0 0-.795-.136"/></svg>
+        <svg class="icon-night" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.88 2.819c-1.873.222-3.497.906-5.04 2.125-.452.357-1.191 1.113-1.548 1.582-2.02 2.659-2.566 5.98-1.506 9.15a9.6 9.6 0 0 0 2.283 3.668c1.532 1.543 3.333 2.455 5.533 2.803.715.114 2.281.102 2.971-.021 2.303-.411 4.351-1.554 5.777-3.226 1.439-1.685 2.248-3.673 2.367-5.82.043-.763.015-.901-.224-1.127a.67.67 0 0 0-.497-.193c-.238 0-.384.079-.731.395a5.8 5.8 0 0 1-2.665 1.352c-.261.056-.517.073-1.1.073-.839 0-1.15-.046-1.8-.269a5.76 5.76 0 0 1-3.029-2.451c-.58-.967-.869-2.242-.759-3.345.13-1.296.612-2.382 1.476-3.328.274-.299.343-.439.343-.687a.75.75 0 0 0-.464-.697c-.145-.056-.852-.047-1.387.016m-.722 1.986a7.11 7.11 0 0 0 .657 7.455 7.1 7.1 0 0 0 6.19 2.82 7 7 0 0 0 2.615-.7c.242-.116.445-.207.452-.2s-.026.161-.073.345a8.4 8.4 0 0 1-3.019 4.558c-1.151.871-2.72 1.485-4.18 1.636-1.852.192-3.979-.36-5.484-1.423-.91-.643-1.776-1.555-2.338-2.462-.55-.888-.898-1.819-1.124-3.014-.098-.516-.117-1.862-.035-2.42.414-2.794 2.104-5.122 4.588-6.319.61-.294 1.438-.583 1.943-.679.006-.001-.081.18-.192.403"/></svg>
+      </button>
+      <div class="lang-switch" role="group" aria-label="Språkvalg">
+        <a class="lang-btn" href="/sprakbanken/ressurskatalog/oai-nb-no-sbr-81/" hreflang="nb" lang="nb" aria-current="page">Norsk</a>
+        <span class="lang-sep" aria-hidden="true">|</span>
+        <a class="lang-btn" href="/sprakbanken/ressurskatalog/en/oai-nb-no-sbr-81/" hreflang="en" lang="en">English</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main-content" class="detail-wrap">
+  <a class="back-link" href="/sprakbanken/ressurskatalog/">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    <span>Tilbake til katalogen</span>
+  </a>
+
+  <div class="detail-layout">
+    <div class="detail-main">
+
+      
+      <div class="type-pills">
+        
+        <span class="type-pill tekst">Tekst</span>
+        
+      </div>
+      
+
+      <h1 class="res-title">bokselskap.no 2023</h1>
+      <p class="res-desc">bokselskap.no er et korpus av bøker og tekster som har falt i det fri, dvs. materiale produsert av forfattere som har vært døde i minst 70 år, eller bøker og tekster som rettighetshaver har gitt sin tillatelse til å publisere fritt.
+
+Tekstene er kodet i xml-standarden P5 fra Text Encoding Initiative (TEI). Per 19. januar 2023 inneholder korpuset om lag 380 bøker/tekster. Innholdsfortegnelse finnes i de vedlagte pdf- og txt-filene. Se ellers https://www.bokselskap.no/ for en mer utførlig beskrivelse av de ulike bøkene.</p>
+
+      
+
+      
+      <div class="files-section">
+        <h2>Nedlastinger</h2>
+        <ul class="file-list">
+          
+          <li>
+            <a class="file-item" href="https://www.nb.no/sbfil/tekst/20230119_bokselskap.no.tar.gz" target="_blank" rel="noopener">
+              <span class="file-url">https://www.nb.no/sbfil/tekst/20230119_bokselskap.no.tar.gz</span>
+              <span class="file-meta">
+                <span class="file-mime">X-GTAR</span>
+                
+                <span class="file-size">36.9 MB</span>
+                
+              </span>
+              <svg class="file-dl" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="21" x2="19" y2="21"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span class="sr-only"> (åpnes i ny fane)</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="file-item" href="https://www.nb.no/sbfil/tekst/20230119_bokselskap.pdf" target="_blank" rel="noopener">
+              <span class="file-url">https://www.nb.no/sbfil/tekst/20230119_bokselskap.pdf</span>
+              <span class="file-meta">
+                <span class="file-mime">PDF</span>
+                
+                <span class="file-size">183.2 KB</span>
+                
+              </span>
+              <svg class="file-dl" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="21" x2="19" y2="21"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span class="sr-only"> (åpnes i ny fane)</span>
+            </a>
+          </li>
+          
+          <li>
+            <a class="file-item" href="https://www.nb.no/sbfil/tekst/20230119_bokselskap.txt" target="_blank" rel="noopener">
+              <span class="file-url">https://www.nb.no/sbfil/tekst/20230119_bokselskap.txt</span>
+              <span class="file-meta">
+                <span class="file-mime">TXT</span>
+                
+                <span class="file-size">14.1 KB</span>
+                
+              </span>
+              <svg class="file-dl" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="21" x2="19" y2="21"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span class="sr-only"> (åpnes i ny fane)</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </div>
+
+    <aside class="detail-sidebar" aria-label="Metadata">
+      <dl class="meta-grid">
+        
+        <div class="meta-row">
+          <dt class="meta-key">Språk</dt>
+          <dd class="meta-val">
+            
+              norsk
+            
+          </dd>
+        </div>
+        
+        <div class="meta-row">
+          <dt class="meta-key">Lisens</dt>
+          <dd class="meta-val">
+            
+              
+              <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC Zero (fri bruk)</a>
+              
+            
+          </dd>
+        </div>
+        
+        <div class="meta-row">
+          <dt class="meta-key">Tilgjengeliggjort av</dt>
+          <dd class="meta-val">
+            
+              Språkbanken
+            
+          </dd>
+        </div>
+        
+        <div class="meta-row">
+          <dt class="meta-key">Permanent lenke</dt>
+          <dd class="meta-val">
+            
+              
+              <a href="https://hdl.handle.net/21.11146/81" target="_blank" rel="noopener"><code>hdl:21.11146/81</code></a>
+              
+            
+          </dd>
+        </div>
+        
+        <div class="meta-row">
+          <dt class="meta-key">Opprettet</dt>
+          <dd class="meta-val">
+            
+              19.01.2023
+            
+          </dd>
+        </div>
+        
+        <div class="meta-row">
+          <dt class="meta-key">Sist oppdatert</dt>
+          <dd class="meta-val">
+            
+              08.08.2023
+            
+          </dd>
+        </div>
+        
+      </dl>
+      
+      <a href="https://www.nb.no/sprakbanken/oai?verb=GetRecord&amp;identifier=oai:nb.no:sbr-81&amp;metadataPrefix=cmdi" target="_blank" rel="noopener" class="cmdi-btn">CMDI-metadata <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 5C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (åpnes i ny fane)</span></a>
+      
+    </aside>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <img src="../assets/img/nb-logo-aubergine.svg" alt="Nasjonalbiblioteket" class="nb-logo-footer"
+         data-logo-light="../assets/img/nb-logo-aubergine.svg"
+         data-logo-dark="../assets/img/nb-logo-hvit.svg">
+    <div class="footer-contact">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+      </svg>
+      <a href="mailto:sprakbanken@nb.no">sprakbanken@nb.no</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/dark-mode.js"></script>
+<script>
+// The page language is fixed by its URL (build.py renders one page per
+// language), so the only runtime state left is the light/dark theme.
+function syncTheme() {
+  const dark = isDark();
+  document.querySelectorAll(".nb-logo-footer").forEach(logo => {
+    logo.src = dark ? logo.dataset.logoDark : logo.dataset.logoLight;
+  });
+  syncDarkModeBtn();
+}
+initDarkMode(syncTheme);
+syncTheme();
+</script>
+</body>
+</html>
