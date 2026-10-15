@@ -58,10 +58,10 @@
       "detail": "Homogeneous execution cohorts, explicit participation and independently selectable model branches; signed protocol tests preserve exact verification."
     },
     {
-      "status": "in_progress",
+      "status": "complete",
       "title": "Training recovery and verifier replacement",
-      "detail": "Opt-in failure reports, rejection/reassignment, revision fencing and cancellation preserve full replay quorum. Signed transition and HTTP fault tests pass; the new worker deployment trial is next.",
-      "evidence": "reports/training_recovery.md"
+      "detail": "Activated protocol 6: a withheld GPU update was reassigned, a missing-verifier stage cancelled, and its replacement completed with full quorum. Seven contributions, ten exact replay checks and two checkpoints; complete signed history reproduced.",
+      "evidence": "reports/training-recovery-003.md"
     },
     {
       "status": "planned",

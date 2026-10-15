@@ -12,6 +12,7 @@ from dawl_node.common import verify_signature
 PUBLIC_KEY='3eedb69bceac39ca67320c3a6d704fe12dc4462cac7a56171ab804f2bc3ec537'
 STRICT_PUBLIC_KEY='a30bc71e898549c4f43320fe30c6c3ad90779c87fa39ed490fb4ef2349ba8eb5'
 SEED_PUBLIC_KEY='487126ddb843e78c4ed992362c9e84878a32460909310e4f536f187b8c5b5f34'
+RECOVERY_GENESIS_PIN='c01049042db83678873cb366cba6a91869a818d16b7a3c50a9246c37d6744df7'
 
 def hashfile(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -121,6 +122,26 @@ def build(output=None):
             if path.is_file():archive.write(path,path.relative_to(oracle.parent))
     files['reports/oracle-training-run-003.zip']=hashfile(oracle_zip)
     copy(oracle/'README.md','reports/oracle-training-run-003.md')
+    recovery=ROOT/'docs/results/training-recovery-003'
+    if recovery.is_dir():
+        approved=json.loads((recovery/'sha256-manifest.json').read_text())
+        for name,digest in approved.items():
+            path=(recovery/name).resolve()
+            if not path.is_relative_to(recovery.resolve()) or 'private' in path.name or hashfile(path)!=digest:
+                raise ValueError('Recovery archive changed or contains an unsafe path')
+        checked=subprocess.run(['wsl','-d','kali-linux','-u','root','--exec','podman','run','--rm','--network','none',
+            '--read-only','--cap-drop','ALL','-v',wsl_path(recovery)+':/evidence:ro','--entrypoint','python',
+            'localhost/hypertrix-training-recovery:003','-P','/evidence/scripts/verify_recovery_pilot.py',
+            '--root','/evidence','--genesis-sha256',RECOVERY_GENESIS_PIN],capture_output=True,text=True,timeout=120)
+        if checked.returncode:raise ValueError('Recovery certificate or full history replay failed: '+checked.stderr[-1000:])
+        checks['training_recovery']=json.loads(checked.stdout)
+        archive=output/'reports/training-recovery-003.zip'
+        with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as bundle:
+            for name in sorted(approved):bundle.write(recovery/name,name)
+            bundle.write(recovery/'sha256-manifest.json','sha256-manifest.json')
+        files['reports/training-recovery-003.zip']=hashfile(archive)
+        copy(recovery/'README.md','reports/training-recovery-003.md')
+        copy(recovery/'verification.json','reports/training-recovery-003.json')
     split=ROOT/'docs/results/public-observatory-001'
     for name,expected in json.loads((split/'sha256-manifest.json').read_text()).items():
         path=(split/name).resolve()

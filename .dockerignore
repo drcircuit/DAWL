@@ -29,6 +29,9 @@
 !scripts/training_pilot.py
 !scripts/profile_testnet.py
 !scripts/oracle_training_pilot.py
+!scripts/recovery_pilot.py
+!scripts/verify_recovery_pilot.py
+!scripts/retain_recovery_adapter.py
 !scripts/finetune_prepare.py
 !scripts/finetune_chat.py
 !scripts/replay_finetune.py

@@ -133,7 +133,7 @@ create_empty_blocks_interval = "500ms"
     print('Prepared six profile namespaces; fresh validators and worker identities.', flush=True)
 
 
-async def bootstrap(root):
+async def bootstrap(root, provider_endpoint='http://127.70.0.27:8900'):
     clients={name:Client(root/name,load_key(root/name/'key.private.pem')) for name in ('publisher','provider','worker-0','worker-1')}
     try:
         publisher=clients['publisher']; recipe=implementation_digest()
@@ -144,7 +144,7 @@ async def bootstrap(root):
                 'outcome':'pass','checked_chunks':1,'tokens_checked':1,'dense_bytes':4,'implementation_sha256':recipe,'execution_ms':0,'error':''}})
         await publisher.command('publish_dataset',{})
         await publisher.command('activate_contributions',dict(version=2,implementation_sha256=recipe,runtime_manifest='f'*64,tokenizer_sha256='1'*64,embedding_sha256='2'*64))
-        await clients['provider'].command('announce_provider', {'name':'profile-cortex','endpoint':'http://127.70.0.27:8900','capabilities':['PROVIDER','TOKENIZER']})
+        await clients['provider'].command('announce_provider', {'name':'profile-cortex','endpoint':provider_endpoint,'capabilities':['PROVIDER','TOKENIZER']})
         await publisher.command('activate_profiles',read_json(root/'activation.json'))
         ws=Workspace(root/'provider')
         for proposal in read_json(root/'proposals.json'):

@@ -17,8 +17,8 @@ and signed archives are preserved; this review records the current position.
 | No optimizer sharding, model splitting or stale-gradient merging | Still applies. Exact optimizer-state restart/replay is implemented locally, not sharded across nodes. | Prototype outer optimizer/state exchange from a pinned common parent before adding staleness or model partitions. |
 | No BitTorrent piece scheduling | True for the training artifact transport. Elsewhere, the swarm already has bounded 1 MiB piece pulls, piece caching, peer fallback and whole-object verification. | Integrate the transport into training, then test rarest-first scheduling, resume under churn and piece inventories. Existing piece transfer is not a complete BitTorrent scheduler. |
 | Every contribution recomputed twice | True for run 003 and still the strict Oracle promotion rule. Seed II verified two 250-update intervals in separate processes. | Those fixed intervals are reproduction evidence, not an unpredictable anti-cheating sample. Post-commitment sampling and measured detection/cost remain open. |
-| A corrupt/withheld submitted update stalls its stage | Previously no recovery transition existed after submission. Submission acceptance is not checkpoint promotion. | New opt-in protocol 6 supports signed failure observations, owner rejection, revision fencing and reassignment. CPU/HTTP fault tests pass; new GPU deployment test remains. |
-| Missing required verifier or disputed votes stall forever | Previously no stage cancellation/unlock transition existed. | New stages have committed deadlines and owner cancellation. Replacement stages explicitly choose an admitted cohort and retain full quorum; previous verified head is preserved. |
+| A corrupt/withheld submitted update stalls its stage | Live protocol-6 trial 003 recovered from an actual withheld GPU update. The replacement reproduced the same weight hash, then both verifiers approved. | Signed failure observations, owner rejection, revision fencing and reassignment are activated. Corrupt-byte and replay-mismatch handling also have CPU/HTTP tests; live malicious-update and multi-operator trials remain. |
+| Missing required verifier or disputed votes stall forever | Live trial 003 cancelled a stage after its fixed deadline with one verifier absent; the verified head was preserved and a late vote rejected. | A replacement stage with an explicit roster completed under full quorum. Disputed-stage cancellation has transition tests; automatic replacement selection remains future work. |
 | Durable artifact availability | Replication at verification time and cold-consumer recovery are demonstrated. Continuing possession is not. | Add epoch-bound possession challenges, retention leases, repair and independent storage operators. Recovery does not replace availability proofs. |
 | Model quality gates | Seed II uses validation-based checkpoint selection and fixed held-out comparisons. Oracle promotion is based on computation replay, not quality improvement. | Version quality criteria and evaluation custody separately from replay acceptance. |
 
@@ -46,10 +46,12 @@ reports an observation; the collaboration owner can discard work or cancel a
 stage; only the unchanged full verification quorum can promote a checkpoint.
 Reports and discarded votes stay auditable. A timeout is not proof of malice.
 
-The extension is implemented and tested, but not activated on the running
-historical network. Compatibility testing reconstructs that network's recorded
-state exactly. The next live pilot needs a fresh pinned build and new manifests;
-no additional GPU training was started during this review.
+The extension is activated on the fresh [recovery testnet](results/training-recovery-003/README.md).
+The authorized live trial completed seven real GPU contributions, ten bit-exact
+replay checks and two fully certified checkpoints. Complete offline replay of
+160 signed transactions over 1,952 blocks reproduced the final state exactly.
+The retained final adapter was fetched through HTTP after the GPU workers
+stopped. Historical protocol-4 state and its evidence remain unchanged.
 
 Validation: 33 recovery, Oracle, collaboration and release checks passed, plus
 40 cluster, profile, training/reduction and swarm checks. Eleven of these checks
@@ -58,16 +60,14 @@ requires byte-identical state after replaying the original signed history.
 
 ## Next experiments, in order
 
-1. Run protocol-6 recovery on actual training workers and archive the signed
-   failure, reassignment, replacement and final checkpoint evidence.
-2. Add durable availability challenges with delayed deletion, corrupt responses,
+1. Add durable availability challenges with delayed deletion, corrupt responses,
    provider churn and a bounded repair budget.
-3. Compare full replay against committed interval sampling: verification time,
+2. Compare full replay against committed interval sampling: verification time,
    transfer bytes, missed faults and false rejections, with unpredictable
    post-commitment challenges and complete restart state.
-4. Extend training contracts to full-model optimizer exchange and an explicit
+3. Extend training contracts to full-model optimizer exchange and an explicit
    outer optimizer; then evaluate staleness and heterogeneous cohorts separately.
-5. Repeat across independently operated machines with controlled network faults
+4. Repeat across independently operated machines with controlled network faults
    and sustained workloads. Measure WAN behavior rather than extrapolating it
    from loopback throughput.
 

@@ -33,8 +33,10 @@ def tail(path, count=30):
 def collect(root, run):
     ids=command('podman','ps','-aq','--filter','label=org.hypertrix.oracle-training='+run).split()
     ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.seed').split()
+    ids+=command('podman','ps','-aq','--filter','label=org.hypertrix.recovery').split()
     ids=list(dict.fromkeys(ids))
     containers=json.loads(command('podman','inspect',*ids)) if ids else []
+    current_recovery=max(((c['Config'].get('Labels') or {}).get('org.hypertrix.recovery','') for c in containers),default='')
     alive=[c['Name'] for c in containers if c['State']['Running']]; stats={}; errors=[]
     if alive:
         try:
@@ -71,10 +73,20 @@ def collect(root, run):
                 'exit_code':c['State']['ExitCode'],'stats':stats.get(c['Name'],{}),'activity':activity,
                 'compute':compute,'events':tail(folder/'events.jsonl',30)})
             continue
-        name=c['Name'].removeprefix(prefix); folder=root/name
-        role=('oracle' if name.startswith('validator-') else 'trainer' if name.startswith('trainer-')
-              else 'gpu-verifier' if name.startswith('verifier-') else 'token-auditor' if name.startswith('worker-')
-              else 'cortex' if name=='provider' else 'discovery' if name=='discovery' else 'console' if name=='console' else 'operator')
+        name=c['Name'].removeprefix(prefix); folder=root/name; role_name=name
+        recovery=labels.get('org.hypertrix.recovery')
+        if recovery:
+            if recovery!=current_recovery and not c['State']['Running']:continue
+            mounts=[m for m in c.get('Mounts',[]) if m.get('Destination')=='/node']
+            if len(mounts)!=1:continue # Helper processes are not network nodes.
+            folder=Path(mounts[0]['Source']).resolve()
+            if not folder.is_relative_to(Path('/var/lib/dawl')/('training-recovery-'+recovery)/'state'):continue
+            role_name=folder.name
+            name='recovery-'+recovery+'-'+c['Name'].removeprefix('hypertrix-r6-'+recovery+'-')
+        role=('oracle' if role_name.startswith('validator-') else 'trainer' if role_name.startswith('trainer-')
+              else 'gpu-verifier' if role_name.startswith('verifier-') else 'token-auditor' if role_name.startswith('worker-')
+              else 'cortex' if role_name=='provider' else 'discovery' if role_name=='discovery' else 'console' if role_name=='console' else 'operator')
+        if recovery and c['Name'].endswith('-discovery'):role='discovery'
         config=read(folder/'cluster.json',{}); public=None
         try:public=(folder/'key.public.hex').read_text().strip()
         except OSError:pass
@@ -83,11 +95,12 @@ def collect(root, run):
               'status':c['State']['Status'],'running':c['State']['Running'],'exit_code':c['State']['ExitCode'],
               'started_at':c['State']['StartedAt'],'finished_at':c['State']['FinishedAt'],
               'historical_attempt':name.endswith('-launch-failed'), 'public':public,
+              'network':config.get('network_sha256'), 'experiment':'recovery-'+recovery if recovery else 'oracle-training-'+run,
               'host':config.get('training_host',config.get('abci_host','127.70.0.27' if role in ('cortex','discovery') else None)),
               'stats':stats.get(c['Name'],{}),'events':events,'dht':read(folder/'dht-status.json'),
               'final':read(folder/'public/final.json'),'replays':[],
               'compute':read(folder/'public/compute-metrics.json')}
-        if role=='discovery':node['dht']=read(root/'provider/dht-status.json')
+        if role=='discovery':node['dht']=read((folder if recovery else root/'provider')/'dht-status.json')
         if role=='gpu-verifier':
             node['replays']=[read(p) for p in sorted((folder/'public').glob('replay-*.json'))]
         journal=tail(folder/'transfers.jsonl',10000)

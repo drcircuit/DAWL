@@ -1,0 +1,42 @@
+[
+  [
+    "Stage A registered",
+    481
+  ],
+  [
+    "Unavailable update reported",
+    897
+  ],
+  [
+    "Owner rejects exact update",
+    902
+  ],
+  [
+    "Replacement shard and full quorum",
+    1105
+  ],
+  [
+    "Stage B registered",
+    1153
+  ],
+  [
+    "One verifier approves",
+    1390
+  ],
+  [
+    "Fixed round deadline",
+    1453
+  ],
+  [
+    "Stage B cancelled",
+    1458
+  ],
+  [
+    "Replacement stage C registered",
+    1499
+  ],
+  [
+    "Stage C full quorum",
+    1785
+  ]
+]

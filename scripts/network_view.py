@@ -18,15 +18,24 @@ def display_name(node):
     number=str(int(match[1])+1) if match and not name.startswith('hypertrix-') else ''
     if name.startswith('hypertrix-'):
         number=(node.get('id') or node.get('public') or '')[:5]
-    return (ROLES.get(role,'Node')+' '+number).strip()
+    prefix='Recovery · ' if node.get('experiment','').startswith('recovery-') else ''
+    return prefix+(ROLES.get(role,'Node')+' '+number).strip()
 
 
 def phase(node):
     if node.get('activity'):return node['activity'].get('phase','Starting')
-    if not node.get('running'):return 'Complete' if node.get('exit_code')==0 else 'Stopped'
+    if not node.get('running'):
+        if node.get('final'):return 'Checkpoint retained'
+        if node.get('role') in ('trainer','gpu-verifier'):return 'Stopped'
+        return 'Complete' if node.get('exit_code')==0 else 'Stopped'
     if node.get('final'):return 'Serving checkpoint'
     events=node.get('events') or []
     event=(events[-1].get('event') or '') if events else ''
+    if node.get('role') in ('trainer','gpu-verifier'):
+        return {'ready':'Awaiting lease' if node['role']=='trainer' else 'Awaiting updates',
+                'claimed':'Training','contributed':'Awaiting verification','verified':'Replay accepted',
+                'failure_reported':'Failure reported','cancelled':'Stage cancelled',
+                'superseded_work':'Work superseded','superseded_replay':'Replay superseded'}.get(event,'Active' if event else 'Preparing inputs')
     return {'round_committed':'Checkpoint accepted','contribution_accepted':'Contribution accepted',
             'waiting':'Ready','training':'Training','replaying':'Verifying','replay_complete':'Replay complete'}.get(event,'Ready')
 

@@ -1,9 +1,11 @@
 # Governed training recovery
 
-Implemented 15 October 2026. This is an opt-in protocol extension, exercised with
-signed state transitions and HTTP fault injection. It has not been activated in
-the running protocol-4 demonstration network. Its historical implementation,
-certificates and evidence remain unchanged.
+Implemented and activated 15 October 2026 on a fresh protocol-6 testnet.
+[Live trial 003](results/training-recovery-003/README.md) recovered actual GPU
+training from a withheld submitted update and a missing verifier. Seven GPU
+contributions, ten bit-exact replay checks and two certified checkpoints are
+archived with the complete signed history. The historical protocol-4 demo,
+implementation and certificates remain unchanged.
 
 ## Contract
 
@@ -118,7 +120,7 @@ bootstrap discovery failures and invalid aggregate bounds can still require
 operator intervention and eventual cancellation. Cancelled workers keep serving
 their stored artifacts until stopped.
 
-## Validation and remaining deployment test
+## Validation and live deployment
 
 `tests/test_training_recovery.py` covers rejected-update reassignment, retained
 evidence, stale votes/reports/results, unauthorized recovery, immutable rosters,
@@ -129,7 +131,48 @@ fallback; corrupt content never enters the local object store. These tests use
 synthetic adapter bytes, not simulated claims of GPU training.
 
 The regression suite also replays the archived protocol-4 transaction history
-and requires byte-identical final state. Next deployment test: fresh pinned
-validators and workers, two actual GPU contributions, a withheld update, owner
-reassignment, a missing verifier, and replacement-stage completion. That test
-must record the complete transaction history and numerical replay receipts.
+and requires byte-identical final state.
+
+The live trial used four fresh CometBFT validators, two source auditors, three
+trainers and three admitted verifier identities (one intentionally absent).
+All 13 books received both source audits. A trainer was stopped after submitting
+its GPU update. Signed availability failures blocked promotion; owner rejection
+allowed another trainer to acquire the shard. Its adapter matched the withheld
+commitment exactly, and both verifiers approved the recovered checkpoint.
+
+A second stage received one replay vote while its other verifier remained
+absent. After the committed 300-block deadline, cancellation preserved the
+verified head. A late signed vote was rejected. A new stage explicitly named a
+replacement roster, repeated the work and earned both required replay votes.
+
+Offline verification replayed **160 signed transactions over 1,952 blocks** and
+reproduced the certified state exactly. Eight numerical replay checks support
+the two promoted checkpoints; two more belong to the cancelled attempt. With
+all trial GPU workers stopped, a fresh HTTP client retrieved the final adapter
+from the Cortex and matched its committed hash.
+
+This establishes supervised recovery with real workers on one host and GPU.
+Automated replacement selection, continuing availability challenges and trials
+across independent operators remain future work. See the linked archive for
+genesis pins, frozen source, stage manifests, failures and numerical receipts.
+
+## Repeat the trial
+
+`scripts/recovery_pilot.sh` prepares new identities and separate containers.
+It never resets an existing trial. The fixed recovery listener addresses must
+be free before another run; stop the completed recovery deployment using its
+explicit run ID, leaving the historical testnet untouched.
+
+```sh
+HYPERTRIX_RECOVERY_RUN=003 sh scripts/recovery_pilot.sh stop
+HYPERTRIX_RECOVERY_RUN=004 sh scripts/recovery_pilot.sh build
+HYPERTRIX_RECOVERY_RUN=004 sh scripts/recovery_pilot.sh prepare
+HYPERTRIX_RECOVERY_RUN=004 timeout --signal=TERM --kill-after=60 2400 sh scripts/recovery_pilot.sh trial
+```
+
+Run inside the configured WSL/Podman environment. Preparation uses the retained
+public model and corpus objects from `training-001` and `profile-v3-002`, and
+checks the discovery/provider route allowlists. Workers preserve their DHT
+sequence across stage-specific stores. The driver stops trial GPU workers on
+completion or failure; validator and provider state is retained. Evidence is
+written to `/var/lib/dawl/training-recovery-RUN/evidence`.

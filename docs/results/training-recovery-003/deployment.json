@@ -1,0 +1,8 @@
+{
+  "image": "localhost/hypertrix-training-recovery:003",
+  "image_id": "5d38e8296cb1b9915a6e09a9bed9b1c8f7b3cf71543cf8f712eaa239e055f307",
+  "driver_sha256": "94cf9378ab4a6e5c76c722e4555e6adbb1d9fce0908ba532b367866c806c4134",
+  "execution_helper": "scripts/recovery_pilot-executed.py",
+  "export_helper": "scripts/recovery_pilot.py",
+  "export_fix": "Height-qualified immutable observation filenames; application source and training execution unchanged"
+}
