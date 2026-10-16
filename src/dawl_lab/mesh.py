@@ -18,7 +18,7 @@ from dawl_node.common import canonical_json,load_key,read_json,sha256,sign,verif
 
 K=8
 ALPHA=3
-ROLES={'PROVIDER','TOKENIZER','TRAINER','TRAINING_VERIFIER','MODEL_HOST'}
+ROLES={'PROVIDER','TOKENIZER','TRAINER','TRAINING_VERIFIER','MODEL_HOST','CONSUMER','EVIDENCE_PROVIDER','EVIDENCE_ASSESSOR'}
 NETWORK_POLICY=None
 
 
@@ -60,14 +60,31 @@ def validate(record,network,now=None):
     now=time.time() if now is None else now
     body=verify_signature(record,record['body']['signer'])
     fields={'schema','network','peer_id','name','roles','endpoint','provider','sequence','issued','expires','signer'}
-    if body.get('schema') == 'hypertrix.lab-peer/2':
+    if body.get('schema') in ('hypertrix.lab-peer/2','hypertrix.lab-peer/3','hypertrix.lab-peer/4'):
         fields.add('profiles')
         profiles=body['profiles']
         if not isinstance(profiles,list) or len(profiles)>32 or profiles!=sorted(set(profiles)):raise ValueError('invalid profile capabilities')
         for identity in profiles:require_digest(identity)
+    if body.get('schema') in ('hypertrix.lab-peer/3','hypertrix.lab-peer/4'):
+        fields.add('services')
+        services=body['services']
+        expected_services={'evidence'} if 'EVIDENCE_PROVIDER' in body['roles'] else set()
+        if body['schema']=='hypertrix.lab-peer/4':
+            fields.add('assessment')
+            if 'EVIDENCE_ASSESSOR' not in body['roles']:raise ValueError('Peer schema 4 requires an Investigator')
+            expected_services.add('investigator')
+            if not isinstance(body['assessment'],dict) or set(body['assessment'])!={'evaluator_sha256','policy_sha256'}:
+                raise ValueError('Invalid assessment capabilities')
+            for identity in body['assessment'].values():require_digest(identity)
+        if not isinstance(services,dict) or set(services)!=expected_services:
+            raise ValueError('invalid evidence service capabilities')
+        if 'evidence' in services:route(services['evidence'],8914)
+        if 'investigator' in services:route(services['investigator'],8915)
+    elif set(body.get('roles',[])) & {'CONSUMER','EVIDENCE_PROVIDER','EVIDENCE_ASSESSOR'}:
+        raise ValueError('Evidence roles require peer schema 3')
     if set(body)!=fields:
         raise ValueError('invalid discovery fields')
-    if body['schema'] not in ('hypertrix.lab-peer/1','hypertrix.lab-peer/2') or body['network']!=network or body['peer_id']!=peer_id(body['signer']):
+    if body['schema'] not in ('hypertrix.lab-peer/1','hypertrix.lab-peer/2','hypertrix.lab-peer/3','hypertrix.lab-peer/4') or body['network']!=network or body['peer_id']!=peer_id(body['signer']):
         raise ValueError('wrong network or peer identity')
     if (not isinstance(body['name'],str) or not 1<=len(body['name'])<=40 or not isinstance(body['roles'],list)
         or not body['roles'] or body['roles']!=sorted(set(body['roles'])) or not set(body['roles'])<=ROLES
@@ -163,6 +180,12 @@ class DHT:
         now=int(time.time())
         profile_path=self.root/'profile-capabilities.json'
         extension={'schema':'hypertrix.lab-peer/2','profiles':read_json(profile_path)} if profile_path.exists() else {}
+        if set(self.roles) & {'CONSUMER','EVIDENCE_PROVIDER','EVIDENCE_ASSESSOR'}:
+            extension={'schema':'hypertrix.lab-peer/3','profiles':read_json(profile_path) if profile_path.exists() else [],
+                       'services':{'evidence':'http://'+self.host+':8914'} if 'EVIDENCE_PROVIDER' in self.roles else {}}
+        if 'EVIDENCE_ASSESSOR' in self.roles and (self.root/'assessment-capabilities.json').exists():
+            extension.update(schema='hypertrix.lab-peer/4',assessment=read_json(self.root/'assessment-capabilities.json'))
+            extension['services']['investigator']='http://'+self.host+':8915'
         self.own=sign({'schema':'hypertrix.lab-peer/1','network':self.network,'peer_id':self.id,'name':self.name,
             'roles':self.roles,'endpoint':'http://'+self.host+':8913',
             'provider':'http://'+self.host+':8911' if 'PROVIDER' in self.roles else None,

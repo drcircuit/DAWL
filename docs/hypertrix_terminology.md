@@ -11,6 +11,7 @@ operation performed. A name does not strengthen the evidence behind a claim.
 | **The Oracle** | The consensus validator ring | Four equal-weight CometBFT validators; at least three votes to commit |
 | **Cortex Units** | Persistent artifact providers | Content-addressed source bytes, tokens, tokenizer assets and the embedding table |
 | **Daemons** | CPU replay auditors | Independently fetch, verify and reconstruct assigned inputs; sign audit results |
+| **Investigators** | Evidence assessment agents that examine claims, sources and their relationships | `EVIDENCE_ASSESSOR` service; pinned CPU NLI, verified passages, signed judgments and replay; calibration and broader semantic validation remain open |
 | **The Hypertrix Console** | The live observability interface | Read-only dashboard on localhost:8882; no signing keys |
 | **Frags** | Discrete source/token chunks | Chunk IDs, token positions and content-addressed artifacts |
 | **Synapses** | Reconstructed input embeddings | Token-indexed, 768-dimensional GPT-2 input embeddings; not semantic document vectors |

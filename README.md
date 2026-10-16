@@ -11,6 +11,11 @@ live corpus/training progress in both dashboards.
 The [Seed III home lab](docs/home_training_lab.md) adds a curated multilingual
 corpus, a 125.9M decoder, signed checkpoint replication, parent-linked training
 branches and a [Windows/WSL2 quickstart](lab/README.md).
+The [model architecture diagrams](docs/seed_model_architecture.md) show the Seed
+family, transformer blocks, grouped-query attention and the MoE branch.
+The [consumer evidence network](docs/evidence_network.md) adds a separate source
+search role, signed retrieval receipts and Blueprint-checked citations, with a
+design for local or delegated evidence assessment.
 
 ## Public research observatory
 

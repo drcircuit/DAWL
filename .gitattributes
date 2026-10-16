@@ -9,6 +9,9 @@ output/testnet-presentation/** -text
 src/dawl_scratch/*.py text eol=lf
 src/dawl_seed/*.py text eol=lf
 src/dawl_lab/*.py text eol=lf
+src/dawl_evidence/*.py text eol=lf
+scripts/evidence_*.py text eol=lf
+scripts/investigator_*.py text eol=lf
 lab/*.py text eol=lf
 scripts/lab_*.py text eol=lf
 scripts/verify_seed_data.py text eol=lf

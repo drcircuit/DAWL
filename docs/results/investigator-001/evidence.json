@@ -1,0 +1,43 @@
+{
+  "schema": "hypertrix.investigator-export/1",
+  "files": {
+    "evaluation.json": {
+      "sha256": "c3070596135c9774c46cd7bc62fc5a37f0c9d2cbf92f345b3fbc6af107643941",
+      "bytes": 18841
+    },
+    "model-manifest.json": {
+      "sha256": "811ca0d441e754022ded0e84f8952fa5d8e6379b2f1e354a8caeb0992feee8bb",
+      "bytes": 2162
+    },
+    "fixtures.json": {
+      "sha256": "5d44caf0f57f64cfec6ed797cc3aceae302ee5f2a3d845604bf3b7237355a588",
+      "bytes": 5278
+    },
+    "trial.json": {
+      "sha256": "15210d48a9091fcb6c19da96bd62e7909a8fe37d9e5c7273c8471d8845278c86",
+      "bytes": 2398
+    },
+    "seed-continuation-investigation.json": {
+      "sha256": "9893f0c3a1d67b7aa468dda1e806d24ca4697e04ab64797161d2575d9668cb6a",
+      "bytes": 4951
+    },
+    "positive-retrieval-control-investigation.json": {
+      "sha256": "7664857c8ed30b42ae98af212427675cca49452ee7f1fa5aac05b494b725672f",
+      "bytes": 4670
+    },
+    "false-retrieval-control-investigation.json": {
+      "sha256": "ff5ed0dbf2a0c63c8c950ba5ad4917bf7d367bad0a7108a897164dfb0be777f5",
+      "bytes": 4664
+    }
+  },
+  "evidence_implementation": {
+    "provider.py": "425d827cb0f0032592a98efc756e735041e174b14f81ea091c1df2d549a7494e",
+    "consumer.py": "551c18c81393a8e734240e4c1cb90fb171c0b4f2026a7c3ed2d20f8f24f86048",
+    "evaluate.py": "96c78c6a58f7a5d92906b4040e787350887c92e01e7b23d00b057060b43f05a0",
+    "assessment_service.py": "152ad5302712c80961513fb5ac0b86594c8774ebe6a0451a49a3f796afb20347",
+    "__main__.py": "97e61b1e96b18ab7a90a09a276576d684daad9e637db7cb201cc626625a28ed2",
+    "__init__.py": "983732cdbd47914b806534b3eca992f2ac0dc02d30ea4e12e839402f19df319f",
+    "index.py": "764b28b2590b02c95dfc9f982fec7df38930aee5baabdfdf3dcd53218010b391",
+    "investigator.py": "1cf58b4ba41ede254476bbdfa4dd030b47072bfeee1fdb9bd5987e7c43decb93"
+  }
+}

@@ -7,7 +7,9 @@ import re
 ROLES={'oracle':'Oracle','cortex':'Cortex Unit','trainer':'Trainer','gpu-verifier':'Replay Daemon',
        'token-auditor':'Audit Daemon','discovery':'Discovery','console':'Console',
        'local-adaptation':'Fine-tuning','local-replay':'Replay','publisher':'Publisher',
-       'tokenizer':'Tokenizer','model-trainer':'Weight trainer','model-replay':'Weight replay','model-host':'Model host'}
+       'tokenizer':'Tokenizer','model-trainer':'Weight trainer','model-replay':'Weight replay','model-host':'Model host',
+       'evidence-provider':'Evidence Cortex','evidence-indexer':'Evidence indexer','evidence-assessor':'Investigator',
+       'consumer':'Consumer'}
 
 
 def clean(value):return re.sub(r'[\x00-\x1f\x7f-\x9f]','',str(value))[:160]

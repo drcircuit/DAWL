@@ -1,0 +1,132 @@
+{
+  "schema": "hypertrix.seed-architecture-samples/1",
+  "created_at": "2026-10-16T00:00:28.354447+00:00",
+  "purpose": "One illustrative sample per configuration; no cherry-picking or edits; not a controlled quality benchmark.",
+  "parameters": {
+    "prompt": "The traveller looked up at the stars and",
+    "max_tokens": 128,
+    "temperature": 0.7,
+    "seed": 42
+  },
+  "samples": [
+    {
+      "label": "Seed I dense",
+      "request": {
+        "prompt": "The traveller looked up at the stars and",
+        "max_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "model": "dense"
+      },
+      "response": {
+        "text": " the sticken\r\nwatched storm from the boothor. The little boats, and the boothoop\r\nthat was to behaviour. The bit, the coast-hoop, threw, as culled by the\r\nsame. The stairs of a house, in the palaceful face, and the boats.\r\n\r\n“Good!” replied the boats.\r\n\r\n“You know him from the astonishment of",
+        "tokens": 128,
+        "elapsed_seconds": 2.7145549420000066,
+        "prompt_tokens": 13,
+        "prompt_truncated": false,
+        "checkpoint_sha256": "6d07293881a6f137eac5fd24af2abf89c3a65e5dc97ab2663612aafc6ec6ee39",
+        "step": 5844,
+        "seed": 42,
+        "finish_reason": "length"
+      },
+      "config": {
+        "context": 512,
+        "experts": 1,
+        "heads": 4,
+        "hidden": 1024,
+        "layers": 6,
+        "top_k": 2,
+        "vocab_size": 4096,
+        "width": 256
+      },
+      "sampler": "top-k=40; no repetition penalty"
+    },
+    {
+      "label": "Seed I MoE",
+      "request": {
+        "prompt": "The traveller looked up at the stars and",
+        "max_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "model": "moe"
+      },
+      "response": {
+        "text": " the standling\r\nhigh wide a horrise slipping on the slaspacing, and the ladies of\r\nthe birth of the eye.\r\n\r\nWhen we had gone towards her faces, that at presently deadly,\r\nand she looked at her hands to the water. “That’s a faceful. I think\r\nand satisfied,” he saw a kitchen, putting up him on the bir",
+        "tokens": 128,
+        "elapsed_seconds": 3.7401267160000202,
+        "prompt_tokens": 13,
+        "prompt_truncated": false,
+        "checkpoint_sha256": "be141bd0956194be712725217ac64ae8649dff8c5bd4d3769b9660ae9545d526",
+        "step": 2900,
+        "seed": 42,
+        "finish_reason": "length"
+      },
+      "config": {
+        "context": 512,
+        "experts": 4,
+        "heads": 4,
+        "hidden": 1024,
+        "layers": 6,
+        "top_k": 2,
+        "vocab_size": 4096,
+        "width": 256
+      },
+      "sampler": "top-k=40; no repetition penalty"
+    },
+    {
+      "label": "Seed II",
+      "request": {
+        "prompt": "The traveller looked up at the stars and",
+        "max_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "model": "seed2"
+      },
+      "response": {
+        "text": " the\r\nwhole city had astonished at all. The words were broken through the\r\nwhale. The boat had been pressed to the slippery twisted cheese.\r\n\r\n“I saw Drummle and the fire, but I had a boat turning into the room\r\nof the water, and then the slope of my broad hair was astonished\r\nin the twilight, and he was a h",
+        "tokens": 128,
+        "elapsed_seconds": 12.24019776900002,
+        "prompt_tokens": 13,
+        "prompt_truncated": false,
+        "checkpoint_sha256": "e5c0264f4dcfef83784164e956a6fded2e35b418a93b2dda8067033d3c226a6e",
+        "step": 7500,
+        "seed": 42,
+        "finish_reason": "length"
+      },
+      "config": {
+        "context": 512,
+        "experts": 1,
+        "heads": 8,
+        "hidden": 1408,
+        "layers": 12,
+        "top_k": 2,
+        "vocab_size": 4096,
+        "width": 512
+      },
+      "sampler": "top-k=40; no repetition penalty"
+    },
+    {
+      "label": "Seed III",
+      "request": {
+        "prompt": "The traveller looked up at the stars and",
+        "max_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "top_p": 0.9,
+        "repetition_penalty": 1.1
+      },
+      "response": {
+        "text": " at the stars and at the stars. He was sitting on a stool, with his hands in his mouth, talking to the animals, and looking about him. The traveller had brought his rumpled hair of the boy out of his mouth, for he knew that he must have done it, though he did not know what to do with those beautiful creatures who were not so modestly and so dearly loved.\n\n“Now, where are you going?” he asked, when they were all in a dream.\n\n“Ay, that is the story of my life,” answered the traveller, “for",
+        "tokens": 128,
+        "prompt_tokens": 9,
+        "context": 1024,
+        "prompt_truncated": false,
+        "elapsed_seconds": 7.460641152000051,
+        "finish_reason": "length",
+        "checkpoint": "7ed04a5b644d02bc657d5336d9314d3145ea7cb57b267337e123e7c3cdb45f5d",
+        "step": 3750
+      },
+      "sampler": "top-p=0.9; repetition penalty=1.1"
+    }
+  ]
+}
